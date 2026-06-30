@@ -1,0 +1,19 @@
+@use "variables" as *;
+@use "typography" as *;
+@use "buttons" as *;
+@use "forms" as *;
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100svh;
+}
+
+#root {
+  min-height: 100svh;
+}

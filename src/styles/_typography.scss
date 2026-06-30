@@ -1,0 +1,46 @@
+.title {
+  font-family: "Roboto", sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--primary-text);
+  margin: 0;
+
+  &--primary {
+    color: var(--primary-text);
+  }
+
+  &--secondary {
+    color: var(--secondary-text);
+  }
+
+  &--accent {
+    color: var(--accent-text);
+  }
+
+  &--xl {
+    font-size: 48px;
+    font-weight: 900;
+    letter-spacing: -0.02em;
+  }
+
+  &--l {
+    font-size: 32px;
+    font-weight: 700;
+  }
+
+  &--m {
+    font-size: 24px;
+    font-weight: 500;
+  }
+
+  &--s {
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 1.4;
+  }
+
+  span {
+    color: var(--accent-text);
+  }
+}

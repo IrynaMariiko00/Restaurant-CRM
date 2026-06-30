@@ -1,0 +1,39 @@
+{
+  "common": {
+    "welcome": "Welcome!",
+    "scan_qr": "Please scan the QR code on your restaurant table",
+    "scan_hint": "Point the camera at the code to open the menu",
+    "open_camera": "Open camera",
+    "close_camera": "Close camera",
+    "camera_error": "Could not access the camera",
+    "waiting": "Waiting..."
+  },
+  "guest": {
+    "cart": "Cart",
+    "total": "Total",
+    "add_to_order": "Add to Order",
+    "main_menu": "Main Menu",
+    "main_menu_desc": "Dishes, desserts, sides",
+    "drinks": "Drinks Map",
+    "drinks_desc": "Wines, cocktails, coffee",
+    "about_us": "About Us",
+    "about_us_desc": "Contacts & working hours",
+    "call_waiter": "Call a waiter"
+  },
+  "staff": {
+    "login": "Log In",
+    "login_subtitle": "Staff access only",
+    "email": "Email",
+    "password": "Password",
+    "logging_in": "Signing in...",
+    "login_error": "Invalid email or password",
+    "logout": "Log out",
+    "guest_hint": "Are you a guest?",
+    "guest_link": "Go to QR scan",
+    "welcome_waiter": "Hello, waiter!",
+    "welcome_waiter_desc": "You are signed in as a waiter",
+    "welcome_admin": "Hello, admin!",
+    "welcome_admin_desc": "You are signed in as an administrator",
+    "table_status": "Table Status"
+  }
+}

@@ -1,0 +1,33 @@
+.form-field {
+  margin-bottom: 1rem;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--secondary-text);
+}
+
+.form-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+  background: var(--bg-primary);
+  color: var(--primary-text);
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+
+  &::placeholder {
+    color: color-mix(in srgb, var(--secondary-text), transparent 40%);
+  }
+
+  &:focus {
+    border-color: var(--color-violet-blue);
+    box-shadow: 0 0 0 3px
+      color-mix(in srgb, var(--color-violet-blue), transparent 80%);
+  }
+}

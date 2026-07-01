@@ -16,15 +16,18 @@ export const ScannerFrame = ({ isCameraOpen, videoRef }: ScannerFrameProps) => {
   return (
     <div className="relative group">
       <div className="relative w-64 h-64 bg-[var(--bg-light)] rounded-[20px] border border-[var(--border-color)] shadow-inner flex items-center justify-center overflow-hidden">
-        {isCameraOpen ? (
-          <video
-            ref={videoRef}
-            className="absolute inset-0 h-full w-full object-cover"
-            playsInline
-            muted
-          />
-        ) : (
-          <QRCodeIcon />
+        <video
+          ref={videoRef}
+          className={`absolute inset-0 h-full w-full object-cover transition-opacity ${
+            isCameraOpen ? "opacity-100" : "opacity-0 pointer-events-none"
+          }`}
+          playsInline
+          muted
+        />
+        {!isCameraOpen && (
+          <div className="relative z-10">
+            <QRCodeIcon />
+          </div>
         )}
 
         {corners.map((cornerClass, index) => (

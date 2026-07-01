@@ -18,6 +18,15 @@ export const useCamera = () => {
     setIsCameraOpen(false);
   }, []);
 
+  const attachStream = useCallback(async () => {
+    const video = videoRef.current;
+    const stream = streamRef.current;
+    if (!video || !stream) return;
+
+    video.srcObject = stream;
+    await video.play();
+  }, []);
+
   const startCamera = useCallback(async () => {
     setIsLoading(true);
     setError(null);
@@ -33,12 +42,6 @@ export const useCamera = () => {
       });
 
       streamRef.current = stream;
-
-      if (videoRef.current) {
-        videoRef.current.srcObject = stream;
-        await videoRef.current.play();
-      }
-
       setIsCameraOpen(true);
     } catch {
       setError("CAMERA_ERROR");
@@ -47,6 +50,11 @@ export const useCamera = () => {
       setIsLoading(false);
     }
   }, [stopCamera]);
+
+  useEffect(() => {
+    if (!isCameraOpen) return;
+    attachStream().catch(() => setError("CAMERA_ERROR"));
+  }, [isCameraOpen, attachStream]);
 
   const toggleCamera = useCallback(() => {
     if (isCameraOpen) {

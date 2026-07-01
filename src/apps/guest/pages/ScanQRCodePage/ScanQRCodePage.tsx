@@ -38,7 +38,7 @@ export const ScanQRCodePage = () => {
 
         {error && (
           <p className="mt-3 text-sm text-[var(--error-color)] max-w-[280px]">
-            {t(`errors.${error}`)}
+            {t("common.camera_error")}
           </p>
         )}
 

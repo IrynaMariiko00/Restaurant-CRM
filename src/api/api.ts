@@ -1,13 +1,10 @@
 import axios from "axios";
 
-function normalizeBaseUrl(url: string | undefined) {
-  if (!url) return undefined;
-
-  return url.replace(/[;\s]+$/, "").replace(/\/$/, "");
-}
-
+// Запити завжди йдуть на поточний домен (/auth/*).
+// Dev: Vite proxy (vite.config.ts) → бекенд
+// Prod: Vercel rewrites (vercel.json) → бекенд
+// Не використовуйте VITE_API_URL тут — це викличе CORS у браузері.
 export const api = axios.create({
-  baseURL: normalizeBaseUrl(import.meta.env.VITE_API_URL),
   withCredentials: true,
   headers: {
     "Content-Type": "application/json",

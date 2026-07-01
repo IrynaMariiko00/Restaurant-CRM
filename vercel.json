@@ -1,5 +1,9 @@
 {
   "rewrites": [
+    {
+      "source": "/auth/:path*",
+      "destination": "https://accanto.adammudrak.pp.ua/auth/:path*"
+    },
     { "source": "/(.*)", "destination": "/index.html" }
   ]
 }

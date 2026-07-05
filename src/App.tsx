@@ -2,8 +2,9 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import { GuestApp } from "@/GuestApp";
 import { StaffApp } from "@/apps/staff/StaffApp";
 import { ScanQRCodePage } from "@/apps/guest/pages/ScanQRCodePage/ScanQRCodePage";
-import { LoginPage } from "@/apps/staff/pages/LoginPage/LoginPage";
+import { LoginPage } from "@/pages/LoginPage/LoginPage";
 import { PublicOnlyRoute } from "@/components/auth/AuthRoutes";
+import { ForgotPasswordPage } from "./pages/ForgotPasswordPage/ForgotPasswordPage";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
       {/* Спільний логін для офіціанта та адміна */}
       <Route element={<PublicOnlyRoute />}>
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/forgot-password" element={<ForgotPasswordPage />} />
       </Route>
 
       {/* Захищена зона персоналу */}

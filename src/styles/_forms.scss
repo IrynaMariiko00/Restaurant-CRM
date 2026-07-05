@@ -21,6 +21,10 @@
   outline: none;
   transition: border-color 0.15s ease, box-shadow 0.15s ease;
 
+  &--with-toggle {
+    padding-right: 3rem;
+  }
+
   &::placeholder {
     color: color-mix(in srgb, var(--secondary-text), transparent 40%);
   }
@@ -29,5 +33,36 @@
     border-color: var(--color-violet-blue);
     box-shadow: 0 0 0 3px
       color-mix(in srgb, var(--color-violet-blue), transparent 80%);
+  }
+}
+
+.form-input-wrapper {
+  position: relative;
+}
+
+.form-input-toggle {
+  position: absolute;
+  top: 50%;
+  right: 0.75rem;
+  transform: translateY(-50%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.25rem;
+  border: none;
+  background: transparent;
+  color: var(--secondary-text);
+  cursor: pointer;
+  transition: color 0.15s ease, transform 0.15s ease;
+
+  &:hover {
+    color: var(--color-violet-blue);
+    transform: translateY(-50%) scale(1.05);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--color-violet-blue);
+    outline-offset: 2px;
+    border-radius: 6px;
   }
 }

@@ -26,7 +26,7 @@ export const useLogin = () => {
       const defaultPath = isAdmin ? "/staff/admin" : "/staff";
       navigate(from ?? defaultPath, { replace: true });
     } catch {
-      setError(t("`common`.login_error"));
+      setError(t("common.login_error"));
     }
   };
 

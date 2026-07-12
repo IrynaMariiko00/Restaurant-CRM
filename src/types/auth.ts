@@ -28,17 +28,7 @@ export interface SetPasswordRequest {
   confirmPassword: string;
 }
 
-export interface Employee {
-  id: number;
-  firstName: string;
-  lastName: string;
-  email: string;
-  emailConfirmed: boolean;
-  phone: string;
-  isDeleted: boolean;
-}
-
-interface BaseResponse<T = null> {
+export interface BaseResponse<T = null> {
   success: boolean;
   message: string | null;
   data: T;
@@ -46,4 +36,3 @@ interface BaseResponse<T = null> {
 }
 
 export type ActionResponse = BaseResponse<null>;
-export type EmployeeResponse = BaseResponse<Employee>;

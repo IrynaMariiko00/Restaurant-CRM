@@ -2,12 +2,12 @@ import type {
   ActionResponse,
   ChangePasswordRequest,
   EmailRequest,
-  EmployeeResponse,
   LoginRequest,
   RegisterEmployeeRequest,
   SetPasswordRequest,
 } from "@/types/auth";
 import { api } from "./api";
+import type { EmployeeResponse } from "@/types/employee";
 
 export const authApi = {
   login: async (credentials: LoginRequest): Promise<ActionResponse> => {

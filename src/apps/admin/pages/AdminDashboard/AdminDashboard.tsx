@@ -11,13 +11,18 @@ export const AdminDashboard = () => {
       <p className="title title--s title--accent mb-2 uppercase tracking-widest">
         Restaurant CRM
       </p>
-      <h1 className="title title--l title--primary">{t("staff.welcome_admin")}</h1>
+      <h1 className="title title--l title--primary">
+        {t("staff.welcome_admin")}
+      </h1>
       <p className="mt-3 text-sm text-[var(--secondary-text)]">
         {t("staff.welcome_admin_desc")}
       </p>
 
-      <AccentButton onClick={() => void logout()} className="mt-10 w-full max-w-xs">
-        {t("staff.logout")}
+      <AccentButton
+        onClick={() => void logout()}
+        className="mt-10 w-full max-w-xs"
+      >
+        {t("common.logout")}
       </AccentButton>
     </main>
   );

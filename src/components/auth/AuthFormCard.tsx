@@ -6,6 +6,7 @@ type AuthFormCardProps = {
   submitText: string;
   isLoading?: boolean;
   error?: string | null;
+  hideSubmit?: boolean;
   children: ReactNode;
 };
 
@@ -14,6 +15,7 @@ export const AuthFormCard = ({
   submitText,
   isLoading,
   error,
+  hideSubmit = false,
   children,
 }: AuthFormCardProps) => {
   return (
@@ -27,9 +29,15 @@ export const AuthFormCard = ({
         <p className="mt-4 text-sm text-[var(--error-color)]">{error}</p>
       )}
 
-      <AccentButton type="submit" disabled={isLoading} className="mt-6 w-full">
-        {submitText}
-      </AccentButton>
+      {!hideSubmit && (
+        <AccentButton
+          type="submit"
+          disabled={isLoading}
+          className="mt-3 w-full"
+        >
+          {submitText}
+        </AccentButton>
+      )}
     </form>
   );
 };

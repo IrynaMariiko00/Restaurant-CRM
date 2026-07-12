@@ -25,6 +25,16 @@
     padding-right: 3rem;
   }
 
+  &--error {
+    border-color: var(--error-color);
+
+    &:focus {
+      border-color: var(--error-color);
+      box-shadow: 0 0 0 3px
+        color-mix(in srgb, var(--error-color), transparent 80%);
+    }
+  }
+
   &::placeholder {
     color: color-mix(in srgb, var(--secondary-text), transparent 40%);
   }

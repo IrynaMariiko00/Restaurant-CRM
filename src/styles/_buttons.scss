@@ -12,29 +12,78 @@
   font-size: 0.875rem;
   font-weight: 600;
   color: var(--color-white);
-
   background-color: var(--color-violet-blue);
+
   box-shadow:
+    0 4px 6px -1px color-mix(in srgb, var(--color-violet-blue), transparent 70%),
     0 10px 15px -3px
-      color-mix(in srgb, var(--color-violet-blue), transparent 70%),
-    0 4px 6px -4px color-mix(in srgb, var(--color-violet-blue), transparent 70%);
+      color-mix(in srgb, var(--color-violet-blue), transparent 80%);
 
   transition-property: all;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 150ms;
+  transition-duration: 200ms;
+
+  &:hover {
+    transform: translateY(-2px);
+    background-color: color-mix(in srgb, var(--color-violet-blue), black 5%);
+    box-shadow:
+      0 10px 20px -5px
+        color-mix(in srgb, var(--color-violet-blue), transparent 50%),
+      0 4px 6px -2px
+        color-mix(in srgb, var(--color-violet-blue), transparent 60%);
+  }
 
   &:active {
-    transform: scale(0.98);
+    transform: scale(0.96) translateY(0);
+    box-shadow: 0 2px 4px
+      color-mix(in srgb, var(--color-violet-blue), transparent 60%);
   }
 
   &:disabled {
     opacity: 0.6;
     cursor: not-allowed;
     pointer-events: none;
+    box-shadow: none;
   }
 
   span {
     display: inline-flex;
     line-height: 1;
+  }
+}
+
+.btn-ghost {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0.75rem 1.5rem;
+  border: 1px solid var(--border-color);
+  border-radius: 9999px;
+  cursor: pointer;
+
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--secondary-text);
+  background: transparent;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+
+  transition:
+    color 150ms ease,
+    background-color 150ms ease,
+    box-shadow 150ms ease,
+    transform 150ms ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    color: var(--primary-text, #000);
+    box-shadow:
+      0 4px 6px -1px rgba(0, 0, 0, 0.1),
+      0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  }
+
+  &:active {
+    transform: scale(0.98);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
   }
 }

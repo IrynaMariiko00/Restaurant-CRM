@@ -2,6 +2,7 @@
 @use "typography" as *;
 @use "buttons" as *;
 @use "forms" as *;
+@use "theme-toggle" as *;
 
 *,
 *::before,
@@ -12,6 +13,8 @@
 body {
   margin: 0;
   min-height: 100svh;
+  background-color: var(--bg-primary);
+  color: var(--primary-text);
 }
 
 #root {

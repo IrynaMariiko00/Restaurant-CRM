@@ -9,6 +9,8 @@
     "waiting": "Waiting...",
     "login": "Log In",
     "email": "Email",
+    "edit": "Edit",
+    "cancel": "Cancel",
     "password": "Password",
     "forgot_password-link": "Forgot password?",
     "show_password": "Show password",
@@ -16,6 +18,8 @@
     "logging_in": "Signing in...",
     "login_error": "Invalid email or password",
     "logout": "Log out",
+    "theme_light": "Light theme",
+    "theme_dark": "Dark theme",
     "guest_hint": "Are you a guest?",
     "guest_link": "Go to QR scan",
     "forgot_password-title": "Forgot password?",
@@ -27,6 +31,14 @@
     "forgot_password-success-subtitle": "We sent instructions to your inbox",
     "forgot_password-success": "We sent a link to {{email}}",
     "forgot_password-back-link-text": "Back to login"
+  },
+  "validation": {
+    "required": "This field is required",
+    "name_min": "At least 2 characters",
+    "name_max": "Maximum 50 characters",
+    "name_format": "Letters, spaces, hyphens or apostrophes only",
+    "email_format": "Invalid email",
+    "phone_ua": "Format: 0XXXXXXXXX"
   },
   "guest": {
     "cart": "Cart",
@@ -42,10 +54,27 @@
   },
   "staff": {
     "login_subtitle": "Staff access only",
-    "welcome_waiter": "Hello, waiter!",
+    "welcome_waiter": "Hello, {{firstName}} {{lastName}}!",
+    "welcome_waiter_fallback": "Hello!",
     "welcome_waiter_desc": "You are signed in as a waiter",
     "welcome_admin": "Hello, admin!",
     "welcome_admin_desc": "You are signed in as an administrator",
-    "table_status": "Table Status"
+    "table_status": "Table Status",
+    "profile_title": "My profile",
+    "profile_subtitle": "Your account details",
+    "profile_edit_subtitle": "Update your contact details",
+    "profile_loading": "Loading profile...",
+    "profile_save": "Save",
+    "profile_saving": "Saving...",
+    "profile_save_success": "Profile updated",
+    "profile_email_pending": "Profile updated. Confirm the new email from the link we sent",
+    "profile_load_error": "Could not load profile",
+    "profile_save_error": "Could not save profile",
+    "first_name": "First name",
+    "last_name": "Last name",
+    "phone": "Phone",
+    "email_confirmed": "Email confirmed",
+    "email_unconfirmed": "Email not confirmed yet",
+    "back_to_home": "Back"
   }
 }

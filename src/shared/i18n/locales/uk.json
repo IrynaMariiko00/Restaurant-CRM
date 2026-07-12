@@ -10,6 +10,8 @@
     "login": "Увійти в систему",
     "login_subtitle": "Доступ лише для персоналу ресторану",
     "email": "Email",
+    "edit": "Редагувати",
+    "cancel": "Скасувати",
     "password": "Пароль",
     "forgot_password-link": "Забули пароль?",
     "forgot_password-title": "Забули пароль?",
@@ -26,8 +28,18 @@
     "logging_in": "Вхід...",
     "login_error": "Невірний email або пароль",
     "logout": "Вийти",
+    "theme_light": "Світла тема",
+    "theme_dark": "Темна тема",
     "guest_hint": "Ви гість?",
     "guest_link": "Перейти до сканування QR"
+  },
+  "validation": {
+    "required": "Обовʼязкове поле",
+    "name_min": "Мінімум 2 символи",
+    "name_max": "Максимум 50 символів",
+    "name_format": "Лише літери, пробіл, дефіс або апостроф",
+    "email_format": "Некоректний email",
+    "phone_ua": "Формат: 0XXXXXXXXX"
   },
   "guest": {
     "cart": "Кошик",
@@ -42,10 +54,27 @@
     "call_waiter": "Викликати офіціанта"
   },
   "staff": {
-    "welcome_waiter": "Привіт, офіціанте!",
+    "welcome_waiter": "Привіт, {{firstName}} {{lastName}}!",
+    "welcome_waiter_fallback": "Привіт!",
     "welcome_waiter_desc": "Ви увійшли як офіціант",
     "welcome_admin": "Привіт, адмін!",
     "welcome_admin_desc": "Ви увійшли як адміністратор",
-    "table_status": "Статус столу"
+    "table_status": "Статус столу",
+    "profile_title": "Мій профіль",
+    "profile_subtitle": "Ваші дані в системі",
+    "profile_edit_subtitle": "Оновіть свої контактні дані",
+    "profile_loading": "Завантаження профілю...",
+    "profile_save": "Зберегти",
+    "profile_saving": "Збереження...",
+    "profile_save_success": "Профіль оновлено",
+    "profile_email_pending": "Профіль оновлено. Підтвердіть новий email у листі",
+    "profile_load_error": "Не вдалося завантажити профіль",
+    "profile_save_error": "Не вдалося зберегти профіль",
+    "first_name": "Імʼя",
+    "last_name": "Прізвище",
+    "phone": "Телефон",
+    "email_confirmed": "Email підтверджено",
+    "email_unconfirmed": "Email ще не підтверджено",
+    "back_to_home": "Назад"
   }
 }

@@ -1,75 +1,81 @@
-# React + TypeScript + Vite
+# Restaurant CRM
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Frontend for a restaurant CRM: guest QR entry at the table, staff authentication with role-based access, and employee profile management. Built with React 19, TypeScript, and Vite.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **Guest flow** — QR scan screen with camera access and table-scoped guest app route (`/table/:tableId`)
+- **Staff auth** — login, logout, forgot-password flow; cookie-based sessions via Axios (`withCredentials`)
+- **Role-based routing** — protected staff area and admin-only routes (`waiter` / `admin`)
+- **Employee profile** — view/edit name, email, phone; avatar upload with validation
+- **Theming** — light/dark mode with CSS variables
+- **i18n** — Ukrainian and English (i18next + language detection)
+- **API layer** — Axios client with Vite proxy in development
 
-## React Compiler
+## Tech Stack
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+| Area | Tools |
+|------|--------|
+| UI | React 19, TypeScript, Vite 8 |
+| Routing | React Router 7 |
+| Styling | Tailwind CSS 4, Sass/SCSS |
+| HTTP | Axios |
+| i18n | i18next, react-i18next |
+| Tooling | ESLint, Prettier, React Compiler |
 
-Note: This will impact Vite dev & build performances.
+## Getting Started
 
-## Expanding the ESLint configuration
+### Prerequisites
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- Node.js 20+
+- npm
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### Install & run
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+The app starts at `http://localhost:5173`. In development, API calls are proxied to the backend (see `vite.config.ts`).
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### Environment
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+Copy `.env.example` to `.env`:
+
+```env
+# Production / preview — backend base URL
+VITE_API_URL=https://your-api.example.com
+
+# Development — leave empty to use the Vite proxy
 ```
+
+### Scripts
+
+| Command | Description |
+|---------|-------------|
+| `npm run dev` | Start Vite dev server |
+| `npm run build` | Typecheck and production build |
+| `npm run preview` | Preview production build |
+| `npm run lint` | Run ESLint |
+| `npm run format` | Format with Prettier |
+
+## Project Structure
+
+```
+src/
+├── api/           # Axios client and API modules
+├── apps/
+│   ├── guest/     # QR scan, guest layout & welcome
+│   ├── staff/     # Staff app, employee profile
+│   └── admin/     # Admin dashboard shell
+├── components/    # Shared auth/UI building blocks
+├── context/       # Auth & theme providers
+├── pages/         # Login, forgot password, welcome
+├── shared/        # i18n, validation
+└── ui/            # Reusable UI primitives
+```
+
+## License
+
+Private project.

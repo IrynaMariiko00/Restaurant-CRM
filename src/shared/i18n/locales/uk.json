@@ -39,7 +39,9 @@
     "name_max": "Максимум 50 символів",
     "name_format": "Лише літери, пробіл, дефіс або апостроф",
     "email_format": "Некоректний email",
-    "phone_ua": "Формат: 0XXXXXXXXX"
+    "phone_ua": "Формат: 0XXXXXXXXX",
+    "avatar_format": "Лише JPG або PNG",
+    "avatar_size": "Максимум 5 МБ"
   },
   "guest": {
     "cart": "Кошик",
@@ -58,7 +60,9 @@
     "welcome_waiter_fallback": "Привіт!",
     "welcome_waiter_desc": "Ви увійшли як офіціант",
     "welcome_admin": "Привіт, адмін!",
+    "welcome_admin_named": "Привіт, {{firstName}} {{lastName}}!",
     "welcome_admin_desc": "Ви увійшли як адміністратор",
+    "admin_dashboard": "Адмін-панель",
     "table_status": "Статус столу",
     "profile_title": "Мій профіль",
     "profile_subtitle": "Ваші дані в системі",
@@ -75,6 +79,8 @@
     "phone": "Телефон",
     "email_confirmed": "Email підтверджено",
     "email_unconfirmed": "Email ще не підтверджено",
+    "change_avatar": "Змінити фото",
+    "change_avatar_hint": "Натисніть на камеру (JPG або PNG, до 5 МБ)",
     "back_to_home": "Назад"
   }
 }

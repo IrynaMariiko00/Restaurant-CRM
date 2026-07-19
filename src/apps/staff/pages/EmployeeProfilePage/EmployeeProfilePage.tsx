@@ -12,6 +12,8 @@ export const EmployeeProfilePage = () => {
     startEditing,
     cancelEditing,
     emailConfirmed,
+    avatarUrl,
+    handleAvatarChange,
     isLoading,
     isSaving,
     loadError,
@@ -60,7 +62,9 @@ export const EmployeeProfilePage = () => {
             setField={setField}
             isEditing={isEditing}
             emailConfirmed={emailConfirmed}
+            avatarUrl={avatarUrl}
             fieldErrors={fieldErrors}
+            onAvatarChange={handleAvatarChange}
           />
 
           <div className="mt-2 flex flex-col gap-2">

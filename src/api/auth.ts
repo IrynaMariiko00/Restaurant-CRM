@@ -58,4 +58,20 @@ export const authApi = {
     );
     return response.data;
   },
+  /**
+   * GET /test/admin-auth → 200 admin, 403 not admin.
+   * Note: api error interceptor resolves 403 instead of throwing,
+   * so we must check status (not try/catch alone).
+   */
+  checkRole: async (): Promise<boolean> => {
+    const response = await api.get("/test/admin-auth", {
+      headers: {
+        "Cache-Control": "no-cache",
+        Pragma: "no-cache",
+      },
+      params: { _t: Date.now() },
+    });
+
+    return response.status === 200 && response.data?.success === true;
+  },
 };

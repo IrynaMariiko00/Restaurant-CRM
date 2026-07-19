@@ -8,6 +8,7 @@ type ProfileViewProps = {
   email: string;
   phone: string;
   emailConfirmed: boolean | null;
+  avatarUrl?: string | null;
 };
 
 export const ProfileView = ({
@@ -16,6 +17,7 @@ export const ProfileView = ({
   email,
   phone,
   emailConfirmed,
+  avatarUrl,
 }: ProfileViewProps) => {
   const { t } = useTranslation();
   const initials =
@@ -24,8 +26,16 @@ export const ProfileView = ({
   return (
     <div className="space-y-6">
       <div className="flex flex-col items-center text-center">
-        <div className="mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-[var(--color-violet-blue)] text-2xl font-bold text-white shadow-lg shadow-[color-mix(in_srgb,var(--color-violet-blue),transparent_70%)]">
-          {initials}
+        <div className="mb-4 flex h-20 w-20 items-center justify-center overflow-hidden rounded-full bg-[var(--color-violet-blue)] text-2xl font-bold text-white shadow-lg shadow-[color-mix(in_srgb,var(--color-violet-blue),transparent_70%)]">
+          {avatarUrl ? (
+            <img
+              src={avatarUrl}
+              alt=""
+              className="h-full w-full object-cover"
+            />
+          ) : (
+            initials
+          )}
         </div>
         <h2 className="title title--m title--primary">
           {firstName} {lastName}

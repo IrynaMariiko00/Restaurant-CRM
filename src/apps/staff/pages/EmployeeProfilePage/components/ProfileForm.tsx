@@ -12,7 +12,9 @@ type ProfileFormProps = {
     value: UpdateEmployeeRequest[K],
   ) => void;
   emailConfirmed: boolean | null;
+  avatarUrl?: string | null;
   fieldErrors: ProfileFormErrors;
+  onAvatarChange?: (file: File) => void;
 };
 
 export const ProfileForm = ({
@@ -20,7 +22,9 @@ export const ProfileForm = ({
   isEditing,
   setField,
   emailConfirmed,
+  avatarUrl,
   fieldErrors,
+  onAvatarChange,
 }: ProfileFormProps) => {
   const { t } = useTranslation();
 
@@ -37,6 +41,7 @@ export const ProfileForm = ({
         email={form.email}
         phone={form.phone}
         emailConfirmed={emailConfirmed}
+        avatarUrl={avatarUrl}
       />
     );
   }
@@ -47,13 +52,16 @@ export const ProfileForm = ({
       lastName={form.lastName}
       email={form.email}
       phone={form.phone}
+      avatarUrl={avatarUrl}
       errors={{
         firstName: errorText("firstName"),
         lastName: errorText("lastName"),
         email: errorText("email"),
         phone: errorText("phone"),
+        avatar: errorText("avatar"),
       }}
       onChange={(field, value) => setField(field, value)}
+      onAvatarChange={onAvatarChange}
     />
   );
 };

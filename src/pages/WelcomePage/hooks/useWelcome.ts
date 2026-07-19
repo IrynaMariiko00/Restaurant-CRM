@@ -6,7 +6,7 @@ type StaffName = {
   lastName: string;
 };
 
-export const useStaffWelcome = () => {
+export const useWelcome = () => {
   const [name, setName] = useState<StaffName | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 

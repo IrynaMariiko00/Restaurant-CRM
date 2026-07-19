@@ -38,7 +38,9 @@
     "name_max": "Maximum 50 characters",
     "name_format": "Letters, spaces, hyphens or apostrophes only",
     "email_format": "Invalid email",
-    "phone_ua": "Format: 0XXXXXXXXX"
+    "phone_ua": "Format: 0XXXXXXXXX",
+    "avatar_format": "JPG or PNG only",
+    "avatar_size": "Maximum 5 MB"
   },
   "guest": {
     "cart": "Cart",
@@ -58,7 +60,9 @@
     "welcome_waiter_fallback": "Hello!",
     "welcome_waiter_desc": "You are signed in as a waiter",
     "welcome_admin": "Hello, admin!",
+    "welcome_admin_named": "Hello, {{firstName}} {{lastName}}!",
     "welcome_admin_desc": "You are signed in as an administrator",
+    "admin_dashboard": "Admin dashboard",
     "table_status": "Table Status",
     "profile_title": "My profile",
     "profile_subtitle": "Your account details",
@@ -75,6 +79,8 @@
     "phone": "Phone",
     "email_confirmed": "Email confirmed",
     "email_unconfirmed": "Email not confirmed yet",
+    "change_avatar": "Change photo",
+    "change_avatar_hint": "Tap the camera (JPG or PNG, up to 5 MB)",
     "back_to_home": "Back"
   }
 }

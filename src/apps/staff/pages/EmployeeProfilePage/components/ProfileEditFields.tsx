@@ -1,58 +1,25 @@
 import { useTranslation } from "react-i18next";
-import { FieldError } from "@/shared/validation/FieldError";
-
-type ProfileTextFieldProps = {
-  id: string;
-  label: string;
-  value: string;
-  error?: string | null;
-  type?: string;
-  autoComplete?: string;
-  placeholder?: string;
-  onChange: (value: string) => void;
-};
-
-export const ProfileTextField = ({
-  id,
-  label,
-  value,
-  error,
-  type = "text",
-  autoComplete,
-  placeholder,
-  onChange,
-}: ProfileTextFieldProps) => (
-  <div className="form-field">
-    <label className="form-label" htmlFor={id}>
-      {label}
-    </label>
-    <input
-      id={id}
-      type={type}
-      required
-      value={value}
-      onChange={(e) => onChange(e.target.value)}
-      className={`form-input${error ? " form-input--error" : ""}`}
-      autoComplete={autoComplete}
-      placeholder={placeholder}
-      aria-invalid={Boolean(error)}
-    />
-    <FieldError message={error} />
-  </div>
-);
+import { ChangeAvatar } from "./ChangeAvatar";
+import { ProfileTextField } from "./ProfileTextField";
 
 type ProfileEditFieldsProps = {
   firstName: string;
   lastName: string;
   email: string;
   phone: string;
+  avatarUrl?: string | null;
   errors: {
     firstName?: string | null;
     lastName?: string | null;
     email?: string | null;
     phone?: string | null;
+    avatar?: string | null;
   };
-  onChange: (field: "firstName" | "lastName" | "email" | "phone", value: string) => void;
+  onChange: (
+    field: "firstName" | "lastName" | "email" | "phone",
+    value: string,
+  ) => void;
+  onAvatarChange?: (file: File) => void;
 };
 
 export const ProfileEditFields = ({
@@ -60,13 +27,22 @@ export const ProfileEditFields = ({
   lastName,
   email,
   phone,
+  avatarUrl,
   errors,
   onChange,
+  onAvatarChange,
 }: ProfileEditFieldsProps) => {
   const { t } = useTranslation();
 
   return (
     <div className="space-y-4">
+      <ChangeAvatar
+        firstName={firstName}
+        lastName={lastName}
+        avatarUrl={avatarUrl}
+        avatarError={errors.avatar}
+        onAvatarChange={onAvatarChange}
+      />
       <ProfileTextField
         id="firstName"
         label={t("staff.first_name")}

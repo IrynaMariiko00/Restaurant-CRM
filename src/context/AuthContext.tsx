@@ -45,23 +45,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         throw new Error(response.message ?? "login_failed");
       }
 
-      const payload = response.data as {
-        token?: string;
-        accessToken?: string;
-        isAdmin?: boolean;
-      } | null;
-
-      const token = payload?.token ?? payload?.accessToken;
-
-      if (token) {
-        localStorage.setItem(TOKEN_KEY, token);
-      } else {
-        localStorage.setItem(TOKEN_KEY, "session");
-      }
-
-      const isAdmin = Boolean(payload?.isAdmin);
+      const isAdmin = await authApi.checkRole();
+      localStorage.setItem(TOKEN_KEY, "session");
       localStorage.setItem(IS_ADMIN_KEY, String(isAdmin));
-
       setAuth({ isAuthenticated: true, isAdmin });
 
       return { isAdmin };

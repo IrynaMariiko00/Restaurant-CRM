@@ -39,6 +39,7 @@ export default defineConfig({
       "/restaurant": apiProxy,
       "/schedule": apiProxy,
       "/images": apiProxy,
+      "/test": apiProxy,
     },
   },
   plugins: [

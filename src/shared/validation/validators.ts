@@ -57,8 +57,21 @@ export type ProfileFormValues = {
 };
 
 export type ProfileFormErrors = Partial<
-  Record<keyof ProfileFormValues, string>
+  Record<keyof ProfileFormValues | "avatar", string>
 >;
+
+const AVATAR_MAX_BYTES = 5 * 1024 * 1024;
+const AVATAR_MIME_TYPES = new Set(["image/jpeg", "image/png"]);
+
+export function validateProfilePicture(file: File): ValidationResult {
+  if (!AVATAR_MIME_TYPES.has(file.type)) {
+    return "validation.avatar_format";
+  }
+  if (file.size > AVATAR_MAX_BYTES) {
+    return "validation.avatar_size";
+  }
+  return null;
+}
 
 export function validateProfileForm(
   values: ProfileFormValues,

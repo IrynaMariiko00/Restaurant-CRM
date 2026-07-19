@@ -6,6 +6,7 @@ export interface Employee {
   lastName: string;
   email: string;
   emailConfirmed: boolean;
+  profilePictureId?: number | null;
   phone: string;
   isDeleted: boolean;
 }

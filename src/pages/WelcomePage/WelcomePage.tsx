@@ -3,20 +3,20 @@ import { useTranslation } from "react-i18next";
 import { Loader2 } from "lucide-react";
 import { AccentButton } from "@/ui/AccentButton";
 import { useAuth } from "@/context/AuthContext";
-import { useStaffWelcome } from "./hooks/useStaffWelcome";
+import { useWelcome } from "./hooks/useWelcome";
 
-export const StaffWelcomePage = () => {
+export const WelcomePage = () => {
   const { t } = useTranslation();
-  const { logout } = useAuth();
+  const { logout, isAdmin } = useAuth();
   const navigate = useNavigate();
-  const { name, isLoading } = useStaffWelcome();
+  const { name, isLoading } = useWelcome();
 
   const greeting = name
-    ? t("staff.welcome_waiter", {
+    ? t(isAdmin ? "staff.welcome_admin_named" : "staff.welcome_waiter", {
         firstName: name.firstName,
         lastName: name.lastName,
       })
-    : t("staff.welcome_waiter_fallback");
+    : t(isAdmin ? "staff.welcome_admin" : "staff.welcome_waiter_fallback");
 
   return (
     <main className="mx-auto flex min-h-svh max-w-[430px] flex-col items-center justify-center bg-[var(--bg-primary)] p-6 text-center">
@@ -36,10 +36,20 @@ export const StaffWelcomePage = () => {
       </h1>
 
       <p className="mt-3 text-sm text-[var(--secondary-text)]">
-        {t("staff.welcome_waiter_desc")}
+        {t(isAdmin ? "staff.welcome_admin_desc" : "staff.welcome_waiter_desc")}
       </p>
 
       <div className="mt-10 flex w-full max-w-xs flex-col items-center gap-2">
+        {isAdmin && (
+          <AccentButton
+            type="button"
+            onClick={() => navigate("/staff/admin")}
+            className="w-full"
+          >
+            {t("staff.admin_dashboard")}
+          </AccentButton>
+        )}
+
         <AccentButton
           type="button"
           onClick={() => navigate("/staff/profile")}

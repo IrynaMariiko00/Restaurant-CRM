@@ -22,9 +22,8 @@ export const useLogin = () => {
     setError(null);
 
     try {
-      const { isAdmin } = await login(email, password);
-      const defaultPath = isAdmin ? "/staff/admin" : "/staff";
-      navigate(from ?? defaultPath, { replace: true });
+      await login(email, password);
+      navigate(from ?? "/staff", { replace: true });
     } catch {
       setError(t("common.login_error"));
     }

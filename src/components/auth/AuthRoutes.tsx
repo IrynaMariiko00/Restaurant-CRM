@@ -13,10 +13,10 @@ export function ProtectedRoute() {
 }
 
 export function PublicOnlyRoute() {
-  const { isAuthenticated, isAdmin } = useAuth();
+  const { isAuthenticated } = useAuth();
 
   if (isAuthenticated) {
-    return <Navigate to={isAdmin ? "/staff/admin" : "/staff"} replace />;
+    return <Navigate to="/staff" replace />;
   }
 
   return <Outlet />;

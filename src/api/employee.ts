@@ -5,21 +5,14 @@ import type {
   FinalizeEmailChange,
   UpdateEmployeeRequest,
 } from "@/types/employee";
+import { toEmployeeMultipartBody } from "./employeeFormData";
 import { api } from "./api";
 
-function toEmployeeFormData(
+function toUpdateEmployeeFormData(
   data: UpdateEmployeeRequest,
   profilePicture?: File | null,
 ): FormData {
-  const formData = new FormData();
-  formData.append(
-    "employeeRequest",
-    new Blob([JSON.stringify(data)], { type: "application/json" }),
-  );
-  if (profilePicture) {
-    formData.append("profilePicture", profilePicture);
-  }
-  return formData;
+  return toEmployeeMultipartBody(data, profilePicture);
 }
 
 export const employeeApi = {
@@ -33,7 +26,7 @@ export const employeeApi = {
   ): Promise<EmployeeResponse> => {
     const response = await api.put(
       "/employees/me",
-      toEmployeeFormData(data, profilePicture),
+      toUpdateEmployeeFormData(data, profilePicture),
     );
     return response.data;
   },
@@ -48,7 +41,7 @@ export const employeeApi = {
   ): Promise<EmployeeResponse> => {
     const response = await api.put(
       `/employees/${id}`,
-      toEmployeeFormData(data, profilePicture),
+      toUpdateEmployeeFormData(data, profilePicture),
     );
     return response.data;
   },

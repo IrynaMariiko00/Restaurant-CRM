@@ -6,23 +6,25 @@ import type {
   RegisterEmployeeRequest,
   SetPasswordRequest,
 } from "@/types/auth";
+import { toEmployeeMultipartBody } from "./employeeFormData";
+import { parseActionResponse } from "./parseActionResponse";
 import { api } from "./api";
 import type { EmployeeResponse } from "@/types/employee";
 
 export const authApi = {
   login: async (credentials: LoginRequest): Promise<ActionResponse> => {
     const response = await api.post("/auth/login", credentials);
-    return response.data;
+    return parseActionResponse(response);
   },
   logout: async (): Promise<ActionResponse> => {
     const response = await api.post("/auth/logout");
-    return response.data;
+    return parseActionResponse(response);
   },
   changePassword: async (
     password: ChangePasswordRequest,
   ): Promise<ActionResponse> => {
     const response = await api.post("/auth/change-password", password);
-    return response.data;
+    return parseActionResponse(response);
   },
   triggerFinalizeEmployeeRegistration: async (
     email: EmailRequest,
@@ -31,23 +33,27 @@ export const authApi = {
       "/auth/trigger-finalize-employee-registration",
       email,
     );
-    return response.data;
+    return parseActionResponse(response);
   },
   startPasswordReset: async (email: EmailRequest): Promise<ActionResponse> => {
     const response = await api.post("/auth/start-password-reset", email);
-    return response.data;
+    return parseActionResponse(response);
   },
   registerEmployee: async (
     data: RegisterEmployeeRequest,
+    profilePicture?: File | null,
   ): Promise<EmployeeResponse> => {
-    const response = await api.post("/auth/register-employee", data);
+    const response = await api.post(
+      "/auth/register-employee",
+      toEmployeeMultipartBody(data, profilePicture),
+    );
     return response.data;
   },
   finalizePasswordReset: async (
     data: SetPasswordRequest,
   ): Promise<ActionResponse> => {
     const response = await api.post("/auth/finalize-password-reset", data);
-    return response.data;
+    return parseActionResponse(response);
   },
   finalizeEmployeeRegistration: async (
     data: SetPasswordRequest,

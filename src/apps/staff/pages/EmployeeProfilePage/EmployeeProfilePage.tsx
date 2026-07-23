@@ -1,10 +1,12 @@
 import { Link } from "react-router-dom";
 import { AuthLayout } from "@/layouts/AuthLayout";
 import { AuthFormCard } from "@/components/auth/AuthFormCard";
+import { useStaffHomePath } from "@/hooks/useStaffHomePath";
 import { ProfileForm } from "./components/ProfileForm";
 import { useEmployeeProfile } from "./hooks/useEmployeeProfile";
 
 export const EmployeeProfilePage = () => {
+  const homePath = useStaffHomePath();
   const {
     form,
     setField,
@@ -32,7 +34,7 @@ export const EmployeeProfilePage = () => {
       }
       footer={
         <Link
-          to="/staff"
+          to={homePath}
           className="font-medium text-[var(--color-violet-blue)] underline-offset-2 hover:underline"
         >
           {t("staff.back_to_home")}

@@ -49,6 +49,74 @@ export function validateUaPhone(value: string): ValidationResult {
   return null;
 }
 
+export function validatePasswordPolicy(value: string): ValidationResult {
+  if (!value) return "validation.required";
+  if (value.length < 8) return "validation.password_policy";
+  if (!/[A-Z]/.test(value)) return "validation.password_policy";
+  if (!/[a-z]/.test(value)) return "validation.password_policy";
+  if (!/\d/.test(value)) return "validation.password_policy";
+  if (!/[^A-Za-z0-9]/.test(value)) return "validation.password_policy";
+  return null;
+}
+
+export type ChangePasswordFormErrors = Partial<
+  Record<"currentPassword" | "newPassword" | "confirmPassword", string>
+>;
+
+export function validateChangePasswordForm(values: {
+  currentPassword: string;
+  newPassword: string;
+  confirmPassword: string;
+}): ChangePasswordFormErrors {
+  const errors: ChangePasswordFormErrors = {};
+
+  const currentPassword = validateRequired(values.currentPassword);
+  if (currentPassword) errors.currentPassword = currentPassword;
+
+  const newPassword = validatePasswordPolicy(values.newPassword);
+  if (newPassword) errors.newPassword = newPassword;
+
+  const confirmPassword = validatePasswordPolicy(values.confirmPassword);
+  if (confirmPassword) errors.confirmPassword = confirmPassword;
+
+  if (
+    !errors.newPassword &&
+    !errors.confirmPassword &&
+    values.newPassword !== values.confirmPassword
+  ) {
+    errors.confirmPassword = "validation.password_mismatch";
+  }
+
+  return errors;
+}
+
+export type SetPasswordFormErrors = Partial<
+  Record<"password" | "confirmPassword", string>
+>;
+
+export function validateSetPasswordForm(values: {
+  password: string;
+  confirmPassword: string;
+}): SetPasswordFormErrors {
+  const errors: SetPasswordFormErrors = {};
+
+  const password = validatePasswordPolicy(values.password);
+  if (password) errors.password = password;
+
+  const confirmPassword = validatePasswordPolicy(values.confirmPassword);
+  if (confirmPassword) errors.confirmPassword = confirmPassword;
+
+  if (
+    !errors.password &&
+    !errors.confirmPassword &&
+    values.password !== values.confirmPassword
+  ) {
+    errors.confirmPassword = "validation.password_mismatch";
+  }
+
+  return errors;
+}
+
 export type ProfileFormValues = {
   firstName: string;
   lastName: string;

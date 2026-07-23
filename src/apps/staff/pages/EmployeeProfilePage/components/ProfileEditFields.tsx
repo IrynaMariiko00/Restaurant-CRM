@@ -75,7 +75,7 @@ export const ProfileEditFields = ({
         error={errors.phone}
         type="tel"
         autoComplete="tel"
-        placeholder="0XXXXXXXXX або +380XXXXXXXXX"
+        placeholder="0XXXXXXXXX"
         onChange={(value) => onChange("phone", value)}
       />
     </div>

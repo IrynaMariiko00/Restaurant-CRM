@@ -30,7 +30,20 @@
     "forgot_password-success-title": "Check your email",
     "forgot_password-success-subtitle": "We sent instructions to your inbox",
     "forgot_password-success": "We sent a link to {{email}}",
-    "forgot_password-back-link-text": "Back to login"
+    "forgot_password-back-link-text": "Back to login",
+    "confirm_account-title": "Confirm your account",
+    "confirm_account-subtitle": "Create a password to finish registration",
+    "confirm_account-password": "Password",
+    "confirm_account-confirm-password": "Confirm password",
+    "confirm_account-button": "Confirm account",
+    "confirm_account-loading": "Confirming...",
+    "confirm_account-error": "Could not confirm the account. The link may have expired",
+    "confirm_account-invalid-link": "This confirmation link is incomplete or invalid",
+    "confirm_account-invalid-link-subtitle": "Open the email again or ask for a new link",
+    "confirm_account-success-title": "Account confirmed",
+    "confirm_account-success-subtitle": "You can sign in now",
+    "confirm_account-success": "Your password is saved. Sign in with your email and new password",
+    "confirm_account-login-link": "Go to login"
   },
   "validation": {
     "required": "This field is required",
@@ -42,6 +55,7 @@
     "avatar_format": "JPG or PNG only",
     "avatar_size": "Maximum 5 MB",
     "password_policy": "At least 8 characters with upper and lower case, a digit, and a special character",
+    "password_policy_hint": "At least 8 characters with upper and lower case, a digit, and a special character",
     "password_mismatch": "Passwords do not match"
   },
   "guest": {
@@ -120,6 +134,7 @@
     "back_to_users": "Back to list",
     "users_load_error": "Could not load employee list",
     "users_empty": "No employees yet",
+    "you_chip": "You",
     "user_deleted": "Deleted",
     "resend_email": "Resend registration email",
     "resend_email_sending": "Sending...",

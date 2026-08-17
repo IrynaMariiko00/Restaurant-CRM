@@ -31,7 +31,20 @@
     "theme_light": "Світла тема",
     "theme_dark": "Темна тема",
     "guest_hint": "Ви гість?",
-    "guest_link": "Перейти до сканування QR"
+    "guest_link": "Перейти до сканування QR",
+    "confirm_account-title": "Підтвердьте обліковий запис",
+    "confirm_account-subtitle": "Придумайте пароль, щоб завершити реєстрацію",
+    "confirm_account-password": "Пароль",
+    "confirm_account-confirm-password": "Підтвердження пароля",
+    "confirm_account-button": "Підтвердити обліковий запис",
+    "confirm_account-loading": "Підтвердження...",
+    "confirm_account-error": "Не вдалося підтвердити обліковий запис. Посилання могло застаріти",
+    "confirm_account-invalid-link": "Посилання неповне або некоректне",
+    "confirm_account-invalid-link-subtitle": "Відкрийте лист ще раз або попросіть надіслати нове посилання",
+    "confirm_account-success-title": "Обліковий запис підтверджено",
+    "confirm_account-success-subtitle": "Тепер можна увійти в систему",
+    "confirm_account-success": "Пароль збережено. Увійдіть, використовуючи email і новий пароль",
+    "confirm_account-login-link": "Перейти до входу"
   },
   "validation": {
     "required": "Обовʼязкове поле",
@@ -43,7 +56,8 @@
     "avatar_format": "Лише JPG або PNG",
     "avatar_size": "Максимум 5 МБ",
     "password_policy": "Мінімум 8 символів: велика і мала літера, цифра та спецсимвол",
-    "password_mismatch": "Паролі не співпадають"
+    "password_policy_hint": "Мінімум 8 символів: велика і мала літера, цифра та спецсимвол",
+    "password_mismatch": "Паролі не збігаються"
   },
   "guest": {
     "cart": "Кошик",
@@ -121,6 +135,7 @@
     "back_to_users": "Назад до списку",
     "users_load_error": "Не вдалося завантажити список",
     "users_empty": "Працівників ще немає",
+    "you_chip": "Це ви",
     "user_deleted": "Видалений",
     "resend_email": "Надіслати лист реєстрації",
     "resend_email_sending": "Надсилання...",

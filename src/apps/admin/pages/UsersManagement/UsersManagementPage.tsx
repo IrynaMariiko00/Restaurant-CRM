@@ -12,6 +12,7 @@ export const UsersManagementPage = () => {
 
   const {
     employees,
+    currentUserId,
     isLoading,
     loadError,
     resendingEmail,
@@ -73,6 +74,7 @@ export const UsersManagementPage = () => {
             <EmployeeListItem
               key={employee.id}
               employee={employee}
+              isCurrentUser={employee.id === currentUserId}
               isResending={resendingEmail === employee.email}
               onResendEmail={(email) => void resendRegistrationEmail(email)}
             />

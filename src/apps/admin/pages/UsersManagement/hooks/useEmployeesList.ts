@@ -4,9 +4,25 @@ import type { Employee } from "@/types/employee";
 import { useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
+function withCurrentUserFirst(
+  employees: Employee[],
+  currentUserId: number | null,
+) {
+  if (currentUserId == null) return employees;
+
+  const currentUser = employees.find((employee) => employee.id === currentUserId);
+  if (!currentUser) return employees;
+
+  return [
+    currentUser,
+    ...employees.filter((employee) => employee.id !== currentUserId),
+  ];
+}
+
 export const useEmployeesList = () => {
   const { t } = useTranslation();
   const [employees, setEmployees] = useState<Employee[]>([]);
+  const [currentUserId, setCurrentUserId] = useState<number | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [loadError, setLoadError] = useState<string | null>(null);
   const [resendingEmail, setResendingEmail] = useState<string | null>(null);
@@ -18,19 +34,25 @@ export const useEmployeesList = () => {
     setLoadError(null);
 
     try {
-      const response = await employeeApi.getAllEmployees({
-        page: 0,
-        size: 50,
-        sort: "lastName,asc",
-      });
+      const [listResponse, meResponse] = await Promise.all([
+        employeeApi.getAllEmployees({
+          page: 0,
+          size: 50,
+          sort: "lastName,asc",
+        }),
+        employeeApi.getMe(),
+      ]);
 
-      if (!response.success || !response.data) {
-        setLoadError(response.errors?.[0] ?? t("admin.users_load_error"));
+      if (!listResponse.success || !listResponse.data) {
+        setLoadError(listResponse.errors?.[0] ?? t("admin.users_load_error"));
         setEmployees([]);
         return;
       }
 
-      setEmployees(response.data.items);
+      const meId =
+        meResponse.success && meResponse.data ? meResponse.data.id : null;
+      setCurrentUserId(meId);
+      setEmployees(withCurrentUserFirst(listResponse.data.items, meId));
     } catch {
       setLoadError(t("admin.users_load_error"));
       setEmployees([]);
@@ -68,6 +90,7 @@ export const useEmployeesList = () => {
 
   return {
     employees,
+    currentUserId,
     isLoading,
     loadError,
     resendingEmail,

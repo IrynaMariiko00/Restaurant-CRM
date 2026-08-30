@@ -3,6 +3,7 @@ import { ScannerFrame } from "./components/ScannerFrame";
 import { useCamera } from "@/apps/guest/hooks/use-camera";
 import { AccentButton } from "@/ui/AccentButton";
 import { FooterStatus } from "./components/FooterStatus";
+import { GuestEntryNav } from "@/pages/AboutPage/GuestEntryNav";
 
 export const ScanQRCodePage = () => {
   const { t } = useTranslation();
@@ -46,6 +47,8 @@ export const ScanQRCodePage = () => {
           statusLabel={`${t("staff.table_status")}: ${t("common.waiting")}`}
           hintText={t("common.scan_hint")}
         />
+
+        <GuestEntryNav />
       </div>
     </main>
   );

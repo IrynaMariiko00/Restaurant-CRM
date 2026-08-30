@@ -32,6 +32,19 @@
     "forgot_password-success": "We sent a link to {{email}}",
     "forgot_password-back-link-text": "Back to login"
   },
+  "about": {
+    "nav_label": "Navigation",
+    "nav_scan": "Scan",
+    "nav_about": "About us",
+    "headline": "Made by two",
+    "lead": "A restaurant pet project: QR menu for guests and a workspace for staff.",
+    "ira_name": "Iryna Mariiko",
+    "ira_role": "Frontend",
+    "ira_bio": "I specialize in React and build polished product interfaces end to end — from guest QR flows to staff auth, profiles, and admin tools. TypeScript, Vite, and careful UX craft are my default stack.",
+    "adam_name": "Adam Mudrak",
+    "adam_role": "Backend",
+    "adam_bio": "Adam specializes in Java backend development with a strong command of the Hibernate and Spring frameworks. He has the technical expertise to deploy secure HTTPS servers on DigitalOcean, leveraging Docker for efficient containerization and managing both database and application droplets seamlessly."
+  },
   "validation": {
     "required": "This field is required",
     "name_min": "At least 2 characters",
@@ -125,6 +138,28 @@
     "resend_email_sending": "Sending...",
     "resend_email_success": "Email sent to {{email}}",
     "resend_email_error": "Could not send email"
+  },
+  "menu": {
+    "brand": "Restaurant CRM",
+    "nav_desc": "Restaurant dishes",
+    "list_subtitle": "Dishes currently on the menu",
+    "empty": "No items yet",
+    "load_error": "Could not load the menu",
+    "item_load_error": "Could not load this dish",
+    "invalid_id": "Invalid dish",
+    "page_prev": "Back",
+    "page_next": "Next",
+    "page_status": "{{page}} / {{pages}}",
+    "unavailable": "Hidden",
+    "allergenic": "Allergen",
+    "vegetarian": "Vegetarian",
+    "vegan": "Vegan",
+    "ingredients": "Ingredients",
+    "max_quantity": "Max per person",
+    "weight": "Weight",
+    "weight_g": "{{grams}} g",
+    "back_to_menu": "Back to menu",
+    "untitled": "Untitled"
   },
   "email_action": {
     "registration_title": "Confirm account",

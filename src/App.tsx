@@ -2,6 +2,9 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import { GuestApp } from "@/GuestApp";
 import { StaffApp } from "@/apps/staff/StaffApp";
 import { ScanQRCodePage } from "@/apps/guest/pages/ScanQRCodePage/ScanQRCodePage";
+import { AboutPage } from "@/pages/AboutPage/AboutPage";
+import { MenuListPage } from "@/pages/Menu/MenuListPage";
+import { MenuItemDetailPage } from "@/pages/Menu/MenuItemDetailPage";
 import { LoginPage } from "@/pages/LoginPage/LoginPage";
 import { PublicOnlyRoute } from "@/components/auth/AuthRoutes";
 import { ForgotPasswordPage } from "./pages/ForgotPasswordPage/ForgotPasswordPage";
@@ -18,14 +21,15 @@ function App() {
         {/* Гість */}
         <Route path="/table/:tableId/*" element={<GuestApp />} />
         <Route path="/" element={<ScanQRCodePage />} />
+        <Route path="/about" element={<AboutPage />} />
+        <Route path="/menu" element={<MenuListPage />} />
+        <Route path="/menu/:id" element={<MenuItemDetailPage />} />
 
-        {/* Спільний логін для офіціанта та адміна */}
         <Route element={<PublicOnlyRoute />}>
           <Route path="/login" element={<LoginPage />} />
           <Route path="/forgot-password" element={<ForgotPasswordPage />} />
         </Route>
 
-        {/* Email action links — доступні завжди, навіть якщо залогінений */}
         <Route
           path="/finalize-registration"
           element={<FinalizeRegistrationPage />}
@@ -36,7 +40,6 @@ function App() {
           element={<FinalizeEmailChangePage />}
         />
 
-        {/* Захищена зона персоналу */}
         <Route path="/staff/*" element={<StaffApp />} />
 
         <Route path="*" element={<Navigate to="/" />} />

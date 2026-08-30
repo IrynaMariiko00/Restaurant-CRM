@@ -5,8 +5,6 @@ import { Link } from "react-router-dom";
 export const WelcomePage: React.FC = () => {
   const { t } = useTranslation();
 
-  // Ці дані (лого та назва) зазвичай приходять з БД,
-  // тому вони залишаються в об'єкті, але описи беремо з перекладів
   const settings = {
     restaurantName: "La Spezia",
     logoUrl: "https://cdn-icons-png.flaticon.com/512/3443/3443338.png",
@@ -32,10 +30,8 @@ export const WelcomePage: React.FC = () => {
         </h1>
       </header>
 
-      {/* 2. Navigation Buttons */}
       <nav className="flex flex-col w-full gap-4 max-w-sm animate-in slide-in-from-bottom-10 duration-1000">
-        {/* Головна кнопка - Меню */}
-        <Link to="/menu" className="w-full">
+        <Link to="menu" className="w-full">
           <button className="w-full py-5 px-6 rounded-2xl bg-[var(--color-violet-blue)] text-white shadow-xl flex items-center justify-between group active:scale-[0.98] transition-all">
             <div className="flex items-center gap-4">
               <span className="text-2xl">🍽️</span>
@@ -82,7 +78,6 @@ export const WelcomePage: React.FC = () => {
           </button>
         </Link>
 
-        {/* Про заклад */}
         <Link to="/about" className="w-full">
           <button className="w-full py-5 px-6 rounded-2xl bg-white border-2 border-[var(--border-color)] text-[var(--primary-text)] flex items-center justify-between active:scale-[0.98] transition-all">
             <div className="flex items-center gap-4">
@@ -100,7 +95,6 @@ export const WelcomePage: React.FC = () => {
         </Link>
       </nav>
 
-      {/* 3. Footer / Help */}
       <footer className="mt-auto pt-10 pb-4">
         <button className="text-[var(--color-violet-blue)] font-bold text-sm flex items-center gap-2 py-3 px-6 rounded-full bg-[var(--bg-light)] border border-[var(--border-color)] active:bg-[var(--icon-color)] transition-colors">
           <span>🛎️</span> {t("guest.call_waiter")}

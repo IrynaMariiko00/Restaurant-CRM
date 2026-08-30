@@ -32,6 +32,16 @@ export const WelcomePage = () => {
     ? t("admin.dashboard_subtitle")
     : t("staff.welcome_waiter_desc");
 
+  const menuNav = (
+    <AdminNavButton
+      to="/staff/menu"
+      label={t("admin.menu_title")}
+      description={t("menu.nav_desc")}
+      icon={UtensilsCrossed}
+      accent={!isAdmin}
+    />
+  );
+
   return (
     <StaffScreenLayout>
       <header className="mb-8 text-center">
@@ -60,12 +70,7 @@ export const WelcomePage = () => {
             icon={Users}
             accent
           />
-          <AdminNavButton
-            label={t("admin.menu_title")}
-            description={t("admin.coming_soon_short")}
-            icon={UtensilsCrossed}
-            disabled
-          />
+          {menuNav}
           <AdminNavButton
             label={t("admin.restaurant_title")}
             description={t("admin.coming_soon_short")}
@@ -84,12 +89,12 @@ export const WelcomePage = () => {
       <div
         className={`space-y-2 ${isAdmin ? "mt-6 border-t border-[var(--border-color)] pt-6" : ""}`}
       >
+        {!isAdmin && menuNav}
         <AdminNavButton
           to="/staff/profile"
           label={t("staff.profile_title")}
           description={t("admin.profile_desc")}
           icon={UserCircle}
-          accent={!isAdmin}
         />
         <AdminNavButton
           to="/staff/change-password"

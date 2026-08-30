@@ -33,6 +33,19 @@
     "guest_hint": "Ви гість?",
     "guest_link": "Перейти до сканування QR"
   },
+  "about": {
+    "nav_label": "Навігація",
+    "nav_scan": "Сканувати",
+    "nav_about": "Про нас",
+    "headline": "Зроблено вдвох",
+    "lead": "Петпроєкт для ресторану: QR-меню для гостей і кабінет для персоналу.",
+    "ira_name": "Ірина Марійко",
+    "ira_role": "Фронтенд",
+    "ira_bio": "Спеціалізуюсь на React і збираю продуктові інтерфейси від ідеї до релізу — від QR-флоу для гостей до логіну персоналу, профілів і адмінки. TypeScript, Vite та уважна UX-робота — мій базовий стек.",
+    "adam_name": "Адам Мудрак",
+    "adam_role": "Бекенд",
+    "adam_bio": "Адам спеціалізується на Java-бекенді з глибоким володінням Hibernate і Spring. Вміє розгортати захищені HTTPS-сервери на DigitalOcean, використовує Docker для контейнеризації та впевнено веде database і application droplets."
+  },
   "validation": {
     "required": "Обовʼязкове поле",
     "name_min": "Мінімум 2 символи",
@@ -126,6 +139,28 @@
     "resend_email_sending": "Надсилання...",
     "resend_email_success": "Лист надіслано на {{email}}",
     "resend_email_error": "Не вдалося надіслати лист"
+  },
+  "menu": {
+    "brand": "Restaurant CRM",
+    "nav_desc": "Страви закладу",
+    "list_subtitle": "Страви, які зараз у меню",
+    "empty": "Позицій ще немає",
+    "load_error": "Не вдалося завантажити меню",
+    "item_load_error": "Не вдалося завантажити страву",
+    "invalid_id": "Некоректна страва",
+    "page_prev": "Назад",
+    "page_next": "Далі",
+    "page_status": "{{page}} / {{pages}}",
+    "unavailable": "Приховано",
+    "allergenic": "Алерген",
+    "vegetarian": "Вегетаріанське",
+    "vegan": "Веганське",
+    "ingredients": "Інгредієнти",
+    "max_quantity": "Макс. на особу",
+    "weight": "Вага",
+    "weight_g": "{{grams}} г",
+    "back_to_menu": "До меню",
+    "untitled": "Без назви"
   },
   "email_action": {
     "registration_title": "Підтвердження акаунта",

@@ -1,0 +1,118 @@
+@keyframes about-rise {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.about-page {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  min-height: 100svh;
+  background:
+    radial-gradient(
+      120% 80% at 0% 0%,
+      color-mix(in srgb, var(--color-violet-blue), transparent 92%) 0%,
+      transparent 55%
+    ),
+    radial-gradient(
+      90% 70% at 100% 100%,
+      color-mix(in srgb, var(--color-violet-blue-dark), transparent 90%) 0%,
+      transparent 50%
+    ),
+    var(--bg-primary);
+}
+
+.about-page__inner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  min-height: 100svh;
+  flex-direction: column;
+  padding: 5.5rem 1.5rem 2rem;
+}
+
+.about-page__brand {
+  animation: about-rise 700ms ease both;
+  font-size: 0.75rem;
+  letter-spacing: 0.32em;
+}
+
+.about-page__title {
+  animation: about-rise 800ms 80ms ease both;
+  font-size: clamp(2rem, 5vw, 3.25rem);
+  font-weight: 900;
+  letter-spacing: -0.035em;
+  line-height: 1.05;
+}
+
+.about-page__lead {
+  animation: about-rise 800ms 160ms ease both;
+  max-width: 28rem;
+  font-size: 1.05rem;
+  line-height: 1.55;
+}
+
+.about-page__makers {
+  animation: about-rise 900ms 240ms ease both;
+}
+
+.about-page__portrait {
+  aspect-ratio: 3 / 4;
+  width: 100%;
+  overflow: hidden;
+  border: 1px solid var(--color-violet-blue);
+  background: color-mix(in srgb, var(--color-violet-blue), transparent 94%);
+}
+
+.about-page__portrait img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+}
+
+.guest-entry-nav {
+  display: flex;
+  justify-content: center;
+  gap: 2.5rem;
+  width: min(100%, 22rem);
+  margin-inline: auto;
+}
+
+.guest-entry-nav__link {
+  position: relative;
+  padding: 0.5rem 0.15rem;
+  text-align: center;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--secondary-text);
+  text-decoration: none;
+  transition: color 180ms ease;
+}
+
+.guest-entry-nav__link:hover {
+  color: var(--primary-text);
+}
+
+.guest-entry-nav__link--active {
+  color: var(--color-violet-blue);
+}
+
+.guest-entry-nav__link--active::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background: var(--color-violet-blue);
+}

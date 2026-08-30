@@ -4,12 +4,14 @@ import type { Employee } from "@/types/employee";
 
 type EmployeeListItemProps = {
   employee: Employee;
+  isCurrentUser?: boolean;
   isResending: boolean;
   onResendEmail: (email: string) => void;
 };
 
 export const EmployeeListItem = ({
   employee,
+  isCurrentUser = false,
   isResending,
   onResendEmail,
 }: EmployeeListItemProps) => {
@@ -35,6 +37,11 @@ export const EmployeeListItem = ({
             {employee.phone}
           </p>
           <div className="mt-2 flex flex-wrap items-center gap-2">
+            {isCurrentUser && (
+              <span className="inline-flex items-center rounded-full bg-[color-mix(in_srgb,var(--color-violet-blue),transparent_88%)] px-2 py-0.5 text-xs font-medium text-[var(--color-violet-blue)]">
+                {t("admin.you_chip")}
+              </span>
+            )}
             <span
               className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-medium ${
                 employee.emailConfirmed

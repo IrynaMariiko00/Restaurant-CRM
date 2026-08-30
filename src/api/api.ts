@@ -1,9 +1,8 @@
 import axios from "axios";
 
 function normalizeBaseUrl(url: string | undefined) {
-  if (!url) return undefined;
-
-  return url.replace(/[;\s]+$/, "").replace(/\/$/, "");
+  const trimmed = url?.replace(/[;\s]+$/, "").replace(/\/$/, "");
+  return trimmed || undefined;
 }
 
 export const api = axios.create({

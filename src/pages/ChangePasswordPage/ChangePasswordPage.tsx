@@ -3,6 +3,7 @@ import { AuthFormCard } from "@/components/auth/AuthFormCard";
 import { PasswordField } from "@/components/auth/PasswordField";
 import { AuthLayout } from "@/layouts/AuthLayout";
 import { useStaffHomePath } from "@/hooks/useStaffHomePath";
+import { SuccessCheckmark } from "@/ui/SuccessCheckmark";
 import { useChangePassword } from "./hooks/useChangePassword";
 
 export const ChangePasswordPage = () => {
@@ -41,9 +42,10 @@ export const ChangePasswordPage = () => {
       }
     >
       {success ? (
-        <p className="rounded-2xl border border-[var(--border-color)] bg-[var(--bg-light)] p-6 text-center text-sm text-[var(--success-color)]">
-          {success}
-        </p>
+        <div className="rounded-2xl border border-[var(--border-color)] bg-[var(--bg-light)] p-6 text-center shadow-sm">
+          <SuccessCheckmark className="mb-4" />
+          <p className="text-sm text-[var(--success-color)]">{success}</p>
+        </div>
       ) : (
         <AuthFormCard
           onSubmit={handleSubmit}

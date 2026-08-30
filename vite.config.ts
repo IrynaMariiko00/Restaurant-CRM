@@ -1,52 +1,61 @@
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { defineConfig, type ProxyOptions } from "vite";
+import { defineConfig, loadEnv } from "vite";
 import react, { reactCompilerPreset } from "@vitejs/plugin-react";
 import babel from "@rolldown/plugin-babel";
 import tailwindcss from "@tailwindcss/vite";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-const apiTarget =
-  process.env.VITE_API_URL?.replace(/[;\s]+$/, "").replace(/\/$/, "") ||
-  "https://accanto.adammudrak.pp.ua";
+export default defineConfig(({ mode }) => {
+  const env = loadEnv(mode, process.cwd(), "");
+  const proxyTarget = env.DEV_API_PROXY_TARGET || "http://localhost:8080";
 
-const apiProxy: ProxyOptions = {
-  target: apiTarget,
-  changeOrigin: true,
-  secure: false,
-  configure: (proxy) => {
-    proxy.on("proxyReq", (proxyReq) => {
-      proxyReq.removeHeader("origin");
-      proxyReq.removeHeader("referer");
-    });
-  },
-};
+  return {
+    resolve: {
+      alias: {
+        "@": path.resolve(__dirname, "src"),
+      },
+    },
+    server: {
+      proxy: {
+        "/": {
+          target: proxyTarget,
+          changeOrigin: true,
+          secure: false,
+          bypass(req) {
+            const url = req.url ?? "";
+            const pathname = url.split("?")[0] ?? "";
 
-// https://vite.dev/config/
-export default defineConfig({
-  resolve: {
-    alias: {
-      "@": path.resolve(__dirname, "src"),
+            if (
+              pathname.startsWith("/@") ||
+              pathname.startsWith("/src/") ||
+              pathname.startsWith("/node_modules") ||
+              pathname.startsWith("/assets/") ||
+              /\.\w+$/.test(pathname)
+            ) {
+              return url;
+            }
+
+            if (req.headers.accept?.includes("text/html")) {
+              return "/index.html";
+            }
+          },
+          configure: (proxy) => {
+            proxy.on("proxyReq", (proxyReq) => {
+              proxyReq.removeHeader("origin");
+              proxyReq.removeHeader("referer");
+            });
+          },
+        },
+      },
     },
-  },
-  server: {
-    proxy: {
-      "/auth": apiProxy,
-      "/employees": apiProxy,
-      "/menu-items": apiProxy,
-      "/menu-categories": apiProxy,
-      "/restaurant": apiProxy,
-      "/schedule": apiProxy,
-      "/images": apiProxy,
-      "/test": apiProxy,
-    },
-  },
-  plugins: [
-    react(),
-    babel({ presets: [reactCompilerPreset()] }),
-    tailwindcss(),
-  ],
+    plugins: [
+      react(),
+      babel({ presets: [reactCompilerPreset()] }),
+      tailwindcss(),
+    ],
+  };
 });
 
 /*

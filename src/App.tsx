@@ -11,6 +11,7 @@ import { ForgotPasswordPage } from "./pages/ForgotPasswordPage/ForgotPasswordPag
 import { FinalizeRegistrationPage } from "./pages/EmailActionPages/FinalizeRegistrationPage";
 import { ResetPasswordPage } from "./pages/EmailActionPages/ResetPasswordPage";
 import { FinalizeEmailChangePage } from "./pages/EmailActionPages/FinalizeEmailChangePage";
+import { FinalizeEmployeeRegistrationPage } from "./pages/FinalizeEmployeeRegistrationPage/FinalizeEmployeeRegistrationPage";
 import { ThemeToggle } from "@/ui/ThemeToggle";
 
 function App() {
@@ -18,7 +19,6 @@ function App() {
     <>
       <ThemeToggle />
       <Routes>
-        {/* Гість */}
         <Route path="/table/:tableId/*" element={<GuestApp />} />
         <Route path="/" element={<ScanQRCodePage />} />
         <Route path="/about" element={<AboutPage />} />
@@ -28,13 +28,28 @@ function App() {
         <Route element={<PublicOnlyRoute />}>
           <Route path="/login" element={<LoginPage />} />
           <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+          <Route
+            path="/auth/finalize-employee-registration"
+            element={<FinalizeEmployeeRegistrationPage />}
+          />
         </Route>
+<<<<<<< HEAD
 
+=======
+>>>>>>> b77d628ad411f066002ffa86eecc667297b0099e
         <Route
           path="/finalize-registration"
           element={<FinalizeRegistrationPage />}
         />
+        <Route
+          path="/auth/finalize-password-reset"
+          element={<ResetPasswordPage />}
+        />
         <Route path="/reset-password" element={<ResetPasswordPage />} />
+        <Route
+          path="/employees/finalize-email-change"
+          element={<FinalizeEmailChangePage />}
+        />
         <Route
           path="/confirm-email-change"
           element={<FinalizeEmailChangePage />}

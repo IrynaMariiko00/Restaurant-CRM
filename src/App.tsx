@@ -33,10 +33,6 @@ function App() {
             element={<FinalizeEmployeeRegistrationPage />}
           />
         </Route>
-<<<<<<< HEAD
-
-=======
->>>>>>> b77d628ad411f066002ffa86eecc667297b0099e
         <Route
           path="/finalize-registration"
           element={<FinalizeRegistrationPage />}

@@ -5,10 +5,16 @@ import {
   Sprout,
 } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import type { MenuItem } from "@/types/menuItem";
 import type { LucideIcon } from "lucide-react";
 
-type FlagTone = "muted" | "warn" | "ok";
+export type MenuFlagSource = {
+  isAvailable?: boolean;
+  isAllergenic?: boolean;
+  isVegetarian?: boolean;
+  isVegan?: boolean;
+};
+
+type FlagTone = "muted" | "warn" | "vegetarian" | "vegan";
 
 type FlagChip = {
   key: string;
@@ -17,10 +23,11 @@ type FlagChip = {
   tone: FlagTone;
 };
 
-export const MenuDishFlags = ({ item }: { item: MenuItem }) => {
-  const { t } = useTranslation();
-
-  const chips: FlagChip[] = [
+export function buildMenuFlagChips(
+  item: MenuFlagSource,
+  t: (key: string) => string,
+): FlagChip[] {
+  return [
     item.isAvailable === false
       ? {
           key: "unavailable",
@@ -42,7 +49,7 @@ export const MenuDishFlags = ({ item }: { item: MenuItem }) => {
           key: "vegetarian",
           label: t("menu.vegetarian"),
           icon: Leaf,
-          tone: "ok" as const,
+          tone: "vegetarian" as const,
         }
       : null,
     item.isVegan
@@ -50,10 +57,15 @@ export const MenuDishFlags = ({ item }: { item: MenuItem }) => {
           key: "vegan",
           label: t("menu.vegan"),
           icon: Sprout,
-          tone: "ok" as const,
+          tone: "vegan" as const,
         }
       : null,
   ].filter((chip): chip is FlagChip => chip !== null);
+}
+
+export const MenuDishFlags = ({ item }: { item: MenuFlagSource }) => {
+  const { t } = useTranslation();
+  const chips = buildMenuFlagChips(item, t);
 
   if (chips.length === 0) return null;
 

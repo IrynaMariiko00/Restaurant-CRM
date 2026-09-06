@@ -1,16 +1,56 @@
-import { Link } from "react-router-dom";
-import { ArrowLeft, Loader2 } from "lucide-react";
+import { useCallback, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { ArrowLeft, Loader2, Pencil, Trash2 } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { menuItemsApi } from "@/api/menuItems";
+import { useAuth } from "@/context/AuthContext";
 import { formatMenuPrice, getMenuItemCopy } from "@/shared/menu/itemCopy";
+import { ConfirmDialog } from "@/ui/ConfirmDialog";
 import { MenuDishFlags } from "./components/MenuDishFlags";
 import { MenuDishImage } from "./components/MenuDishImage";
 import { useMenuBrowse } from "./hooks/useMenuBrowse";
 import { useMenuItemDetail } from "./hooks/useMenuItemDetail";
 
 export const MenuItemDetailPage = () => {
-  const { t } = useTranslation();
-  const { listTo } = useMenuBrowse();
+  const { t, i18n } = useTranslation();
+  const navigate = useNavigate();
+  const { isAdmin } = useAuth();
+  const { listTo, variant } = useMenuBrowse();
   const { item, isLoading, error } = useMenuItemDetail();
+  const canManage = variant === "staff" && isAdmin;
+
+  const [deleteOpen, setDeleteOpen] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [deleteError, setDeleteError] = useState<string | null>(null);
+
+  const closeDeleteDialog = useCallback(() => {
+    if (isDeleting) return;
+    setDeleteOpen(false);
+    setDeleteError(null);
+  }, [isDeleting]);
+
+  const confirmDelete = useCallback(async () => {
+    if (!item) return;
+    setIsDeleting(true);
+    setDeleteError(null);
+    try {
+      const response = await menuItemsApi.deleteMenuItem(item.id);
+      if (!response.success) {
+        setDeleteError(
+          response.errors?.[0] ??
+            response.message ??
+            t("menu.delete_error"),
+        );
+        return;
+      }
+      setDeleteOpen(false);
+      navigate(listTo, { replace: true });
+    } catch {
+      setDeleteError(t("menu.delete_error"));
+    } finally {
+      setIsDeleting(false);
+    }
+  }, [item, listTo, navigate, t]);
 
   const backLink = (
     <Link to={listTo} className="menu-page__back">
@@ -37,7 +77,7 @@ export const MenuItemDetailPage = () => {
     );
   }
 
-  const copy = getMenuItemCopy(item);
+  const copy = getMenuItemCopy(item, i18n.resolvedLanguage ?? i18n.language);
   const name = copy.name || t("menu.untitled");
 
   return (
@@ -82,7 +122,52 @@ export const MenuItemDetailPage = () => {
               </div>
             )}
         </dl>
+
+        {canManage && (
+          <div className="menu-detail__actions">
+            <Link
+              to={`/staff/menu/${item.id}/edit`}
+              className="btn-accent menu-detail__edit"
+            >
+              <Pencil className="h-4 w-4" aria-hidden />
+              {t("menu.edit_cta")}
+            </Link>
+            <button
+              type="button"
+              className="btn-danger menu-detail__delete"
+              onClick={() => setDeleteOpen(true)}
+            >
+              <Trash2 className="h-4 w-4" aria-hidden />
+              {t("menu.delete_cta")}
+            </button>
+          </div>
+        )}
       </div>
+
+      <ConfirmDialog
+        open={deleteOpen}
+        title={t("menu.delete_confirm_title")}
+        description={
+          <>
+            <p>
+              {t("menu.delete_confirm_lead", {
+                name,
+              })}
+            </p>
+            {deleteError && (
+              <p className="confirm-dialog__error">{deleteError}</p>
+            )}
+          </>
+        }
+        confirmLabel={t("menu.delete_confirm")}
+        cancelLabel={t("common.cancel")}
+        tone="danger"
+        isLoading={isDeleting}
+        onConfirm={() => {
+          void confirmDelete();
+        }}
+        onCancel={closeDeleteDialog}
+      />
     </main>
   );
 };

@@ -16,6 +16,14 @@ export const GuestEntryNav = () => {
         {t("about.nav_scan")}
       </NavLink>
       <NavLink
+        to="/menu"
+        className={({ isActive }) =>
+          `guest-entry-nav__link${isActive ? " guest-entry-nav__link--active" : ""}`
+        }
+      >
+        {t("about.nav_menu")}
+      </NavLink>
+      <NavLink
         to="/about"
         className={({ isActive }) =>
           `guest-entry-nav__link${isActive ? " guest-entry-nav__link--active" : ""}`

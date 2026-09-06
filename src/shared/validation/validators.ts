@@ -129,16 +129,40 @@ export type ProfileFormErrors = Partial<
 >;
 
 const AVATAR_MAX_BYTES = 5 * 1024 * 1024;
-const AVATAR_MIME_TYPES = new Set(["image/jpeg", "image/png"]);
+const IMAGE_MAX_BYTES = 5 * 1024 * 1024;
+const IMAGE_MIME_TYPES = new Set(["image/jpeg", "image/png"]);
 
-export function validateProfilePicture(file: File): ValidationResult {
-  if (!AVATAR_MIME_TYPES.has(file.type)) {
-    return "validation.avatar_format";
+type ImageValidationMessages = {
+  format: string;
+  size: string;
+};
+
+function validateImageFile(
+  file: File,
+  maxBytes: number,
+  messages: ImageValidationMessages,
+): ValidationResult {
+  if (!IMAGE_MIME_TYPES.has(file.type)) {
+    return messages.format;
   }
-  if (file.size > AVATAR_MAX_BYTES) {
-    return "validation.avatar_size";
+  if (file.size > maxBytes) {
+    return messages.size;
   }
   return null;
+}
+
+export function validateProfilePicture(file: File): ValidationResult {
+  return validateImageFile(file, AVATAR_MAX_BYTES, {
+    format: "validation.avatar_format",
+    size: "validation.avatar_size",
+  });
+}
+
+export function validateMenuItemImage(file: File): ValidationResult {
+  return validateImageFile(file, IMAGE_MAX_BYTES, {
+    format: "menu.create_image_format",
+    size: "menu.create_image_size",
+  });
 }
 
 export function validateProfileForm(

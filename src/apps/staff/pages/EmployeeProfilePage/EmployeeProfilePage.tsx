@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { AuthLayout } from "@/layouts/AuthLayout";
 import { AuthFormCard } from "@/components/auth/AuthFormCard";
 import { useStaffHomePath } from "@/hooks/useStaffHomePath";
+import { PageLoader } from "@/ui/PageLoader";
 import { ProfileForm } from "./components/ProfileForm";
 import { useEmployeeProfile } from "./hooks/useEmployeeProfile";
 
@@ -42,9 +43,7 @@ export const EmployeeProfilePage = () => {
       }
     >
       {isLoading ? (
-        <p className="text-center text-sm text-[var(--secondary-text)]">
-          {t("staff.profile_loading")}
-        </p>
+        <PageLoader />
       ) : loadError ? (
         <p className="text-center text-sm text-[var(--error-color)]">
           {loadError}

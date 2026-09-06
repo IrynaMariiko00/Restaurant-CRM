@@ -1,10 +1,30 @@
 import type { MenuItem } from "@/types/menuItem";
+import { pickLocalizedText, prefersUkrainian } from "./localeCopy";
 
-export function getMenuItemCopy(item: MenuItem) {
+export function getMenuItemCopy(
+  item: MenuItem,
+  language?: string | null,
+) {
+  const useUk = prefersUkrainian(language);
+
   return {
-    name: item.nameDefaultLanguage?.trim() || "",
-    description: item.descriptionDefaultLanguage?.trim() || "",
-    ingredients: item.ingredientsDefaultLanguage ?? [],
+    name: pickLocalizedText(
+      language,
+      item.nameDefaultLanguage,
+      item.nameSecondLanguage,
+    ),
+    description: pickLocalizedText(
+      language,
+      item.descriptionDefaultLanguage,
+      item.descriptionSecondLanguage,
+    ),
+    ingredients: useUk
+      ? item.ingredientsSecondLanguage?.length
+        ? item.ingredientsSecondLanguage
+        : (item.ingredientsDefaultLanguage ?? [])
+      : item.ingredientsDefaultLanguage?.length
+        ? item.ingredientsDefaultLanguage
+        : (item.ingredientsSecondLanguage ?? []),
   };
 }
 

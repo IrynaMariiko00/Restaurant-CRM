@@ -2,9 +2,11 @@
 @use "typography" as *;
 @use "buttons" as *;
 @use "forms" as *;
+@use "dialog" as *;
 @use "theme-toggle" as *;
 @use "about" as *;
 @use "menu" as *;
+@use "menu-admin" as *;
 
 *,
 *::before,
@@ -20,5 +22,6 @@ body {
 }
 
 #root {
+  position: relative;
   min-height: 100svh;
 }

@@ -1,9 +1,11 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { Link } from "react-router-dom";
+import { Link, useOutletContext } from "react-router-dom";
+import type { DiningTable } from "@/types/diningTable";
 
 export const WelcomePage: React.FC = () => {
   const { t } = useTranslation();
+  const { table } = useOutletContext<{ table: DiningTable }>();
 
   const settings = {
     restaurantName: "La Spezia",
@@ -11,35 +13,37 @@ export const WelcomePage: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col items-center min-h-[100dvh] bg-[var(--bg-primary)] px-6 py-10">
-      {/* 1. Header: Logo & Welcome Text */}
-      <header className="flex flex-col items-center mb-12 animate-in fade-in zoom-in duration-700">
-        <div className="relative w-28 h-28 mb-4">
-          <div className="absolute inset-0 rounded-full border-2 border-[var(--color-violet-blue-light)] animate-pulse opacity-30"></div>
+    <div className="flex min-h-[100dvh] flex-col items-center bg-[var(--bg-primary)] px-6 py-10">
+      <header className="mb-12 flex animate-in fade-in zoom-in flex-col items-center duration-700">
+        <div className="relative mb-4 h-28 w-28">
+          <div className="absolute inset-0 animate-pulse rounded-full border-2 border-[var(--color-violet-blue-light)] opacity-30" />
           <img
             src={settings.logoUrl}
             alt="Logo"
-            className="w-full h-full object-contain rounded-full border-4 border-white shadow-lg"
+            className="h-full w-full rounded-full border-4 border-white object-contain shadow-lg"
           />
         </div>
-        <span className="text-[var(--accent-text)] text-xs uppercase tracking-[0.2em] font-bold mb-2">
-          {t("common.welcome")}
+        <span className="mb-2 text-xs font-bold uppercase tracking-[0.2em] text-[var(--accent-text)]">
+          {t("guest.table_welcome", { id: table.id })}
         </span>
-        <h1 className="text-3xl font-extrabold text-[var(--primary-text)] tracking-tight">
+        <h1 className="text-3xl font-extrabold tracking-tight text-[var(--primary-text)]">
           {settings.restaurantName}
         </h1>
       </header>
 
-      <nav className="flex flex-col w-full gap-4 max-w-sm animate-in slide-in-from-bottom-10 duration-1000">
+      <nav className="flex w-full max-w-sm animate-in slide-in-from-bottom-10 flex-col gap-4 duration-1000">
         <Link to="menu" className="w-full">
-          <button className="w-full py-5 px-6 rounded-2xl bg-[var(--color-violet-blue)] text-white shadow-xl flex items-center justify-between group active:scale-[0.98] transition-all">
+          <button
+            type="button"
+            className="group flex w-full items-center justify-between rounded-2xl bg-[var(--color-violet-blue)] px-6 py-5 text-white shadow-xl transition-all active:scale-[0.98]"
+          >
             <div className="flex items-center gap-4">
               <span className="text-2xl">🍽️</span>
               <div className="text-left">
-                <span className="block font-bold text-lg leading-none">
+                <span className="block text-lg font-bold leading-none">
                   {t("guest.main_menu")}
                 </span>
-                <span className="text-xs opacity-80 font-normal">
+                <span className="text-xs font-normal opacity-80">
                   {t("guest.main_menu_desc")}
                 </span>
               </div>
@@ -61,32 +65,18 @@ export const WelcomePage: React.FC = () => {
           </button>
         </Link>
 
-        {/* Напої */}
-        <Link to="/drinks" className="w-full">
-          <button className="w-full py-5 px-6 rounded-2xl bg-white border-2 border-[var(--border-color)] text-[var(--primary-text)] flex items-center justify-between active:scale-[0.98] transition-all">
-            <div className="flex items-center gap-4">
-              <span className="text-2xl">🍷</span>
-              <div className="text-left">
-                <span className="block font-bold text-lg leading-none">
-                  {t("guest.drinks")}
-                </span>
-                <span className="text-xs text-[var(--secondary-text)] font-normal">
-                  {t("guest.drinks_desc")}
-                </span>
-              </div>
-            </div>
-          </button>
-        </Link>
-
         <Link to="/about" className="w-full">
-          <button className="w-full py-5 px-6 rounded-2xl bg-white border-2 border-[var(--border-color)] text-[var(--primary-text)] flex items-center justify-between active:scale-[0.98] transition-all">
+          <button
+            type="button"
+            className="flex w-full items-center justify-between rounded-2xl border-2 border-[var(--border-color)] bg-white px-6 py-5 text-[var(--primary-text)] transition-all active:scale-[0.98]"
+          >
             <div className="flex items-center gap-4">
               <span className="text-2xl">🏛️</span>
               <div className="text-left">
-                <span className="block font-bold text-lg leading-none">
+                <span className="block text-lg font-bold leading-none">
                   {t("guest.about_us")}
                 </span>
-                <span className="text-xs text-[var(--secondary-text)] font-normal">
+                <span className="text-xs font-normal text-[var(--secondary-text)]">
                   {t("guest.about_us_desc")}
                 </span>
               </div>
@@ -96,7 +86,10 @@ export const WelcomePage: React.FC = () => {
       </nav>
 
       <footer className="mt-auto pt-10 pb-4">
-        <button className="text-[var(--color-violet-blue)] font-bold text-sm flex items-center gap-2 py-3 px-6 rounded-full bg-[var(--bg-light)] border border-[var(--border-color)] active:bg-[var(--icon-color)] transition-colors">
+        <button
+          type="button"
+          className="flex items-center gap-2 rounded-full border border-[var(--border-color)] bg-[var(--bg-light)] px-6 py-3 text-sm font-bold text-[var(--color-violet-blue)] transition-colors active:bg-[var(--icon-color)]"
+        >
           <span>🛎️</span> {t("guest.call_waiter")}
         </button>
       </footer>

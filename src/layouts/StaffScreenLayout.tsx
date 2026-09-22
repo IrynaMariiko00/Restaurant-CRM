@@ -2,12 +2,16 @@ import type { ReactNode } from "react";
 
 type StaffScreenLayoutProps = {
   children: ReactNode;
+  narrow?: boolean;
 };
 
-export const StaffScreenLayout = ({ children }: StaffScreenLayoutProps) => {
+export const StaffScreenLayout = ({
+  children,
+  narrow = false,
+}: StaffScreenLayoutProps) => {
   return (
-    <main className="mx-auto flex min-h-svh max-w-[430px] flex-col bg-[var(--bg-primary)] p-6">
-      <div className="my-auto flex w-full flex-col">{children}</div>
-    </main>
+    <div className={`staff-page${narrow ? " staff-page--narrow" : ""}`}>
+      {children}
+    </div>
   );
 };

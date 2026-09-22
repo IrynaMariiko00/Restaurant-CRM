@@ -78,7 +78,7 @@ export function MenuItemEditorPage({
   if (savedItem) {
     return (
       <main className="menu-studio">
-        <Link to="/staff/menu" className="menu-page__back">
+        <Link to="/staff/menu" className="menu-page__back menu-page__back--inline">
           <ArrowLeft className="menu-page__back-icon" aria-hidden />
           {t("menu.back_to_menu")}
         </Link>
@@ -94,7 +94,7 @@ export function MenuItemEditorPage({
   if (mode === "edit" && (isLoadingItem || loadError)) {
     return (
       <main className="menu-studio">
-        <Link to="/staff/menu" className="menu-page__back">
+        <Link to="/staff/menu" className="menu-page__back menu-page__back--inline">
           <ArrowLeft className="menu-page__back-icon" aria-hidden />
           {t("menu.back_to_menu")}
         </Link>
@@ -116,7 +116,7 @@ export function MenuItemEditorPage({
 
   return (
     <main className="menu-studio">
-      <Link to="/staff/menu" className="menu-page__back">
+      <Link to="/staff/menu" className="menu-page__back menu-page__back--inline">
         <ArrowLeft className="menu-page__back-icon" aria-hidden />
         {t("menu.back_to_menu")}
       </Link>

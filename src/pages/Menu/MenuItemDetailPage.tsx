@@ -61,8 +61,10 @@ export const MenuItemDetailPage = () => {
 
   if (isLoading || error || !item) {
     return (
-      <main className="menu-detail menu-detail--plain">
-        {backLink}
+      <main
+        className={`menu-detail menu-detail--plain${variant === "staff" ? " menu-detail--staff" : ""}`}
+      >
+        {variant !== "staff" && backLink}
         {isLoading ? (
           <Loader2
             className="mx-auto mt-16 h-8 w-8 animate-spin text-[var(--color-violet-blue)]"
@@ -81,8 +83,13 @@ export const MenuItemDetailPage = () => {
   const name = copy.name || t("menu.untitled");
 
   return (
-    <main className="menu-detail">
-      {backLink}
+    <main className={`menu-detail${variant === "staff" ? " menu-detail--staff" : ""}`}>
+      {variant !== "staff" ? backLink : (
+        <Link to={listTo} className="menu-page__back menu-page__back--inline">
+          <ArrowLeft className="menu-page__back-icon" aria-hidden />
+          {t("menu.back_to_menu")}
+        </Link>
+      )}
       <div className="menu-detail__media">
         <MenuDishImage
           imageId={item.imageId}

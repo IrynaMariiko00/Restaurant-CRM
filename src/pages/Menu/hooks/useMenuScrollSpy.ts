@@ -33,44 +33,54 @@ export function useMenuScrollSpy({
     );
   }, [sectionIds]);
 
-  const onIntersect = useEffectEvent((id: number) => {
+  const onSpy = useEffectEvent((id: number) => {
     if (Date.now() < ignoreSpyUntil.current) return;
-    setActiveId(id);
+    setActiveId((prev) => (prev === id ? prev : id));
   });
 
   useEffect(() => {
     if (!enabled || sectionIds.length === 0) return;
 
-    const elements = sectionIds
-      .map((id) => sectionRefs.current.get(id))
-      .filter((el): el is HTMLElement => Boolean(el));
-
-    if (elements.length === 0) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort(
-            (a, b) =>
-              a.boundingClientRect.top - b.boundingClientRect.top,
-          );
-        const top = visible[0];
-        if (!top) return;
-        const id = Number(
-          (top.target as HTMLElement).dataset.categoryId,
+    const resolveActive = () => {
+      const elements = sectionIds
+        .map((id) => {
+          const el = sectionRefs.current.get(id);
+          return el ? { id, el } : null;
+        })
+        .filter((item): item is { id: number; el: HTMLElement } =>
+          Boolean(item),
         );
-        if (Number.isFinite(id)) onIntersect(id);
-      },
-      {
-        root: null,
-        rootMargin: "-28% 0px -55% 0px",
-        threshold: [0, 0.15, 0.4],
-      },
-    );
 
-    for (const el of elements) observer.observe(el);
-    return () => observer.disconnect();
+      if (elements.length === 0) return;
+
+      const scrollBottom =
+        window.scrollY + document.documentElement.clientHeight;
+      const docHeight = document.documentElement.scrollHeight;
+      const nearBottom = scrollBottom >= docHeight - 48;
+      if (nearBottom) {
+        onSpy(elements[elements.length - 1].id);
+        return;
+      }
+
+      const marker = Math.min(window.innerHeight * 0.28, 180);
+      let current = elements[0].id;
+
+      for (const { id, el } of elements) {
+        const top = el.getBoundingClientRect().top;
+        if (top - marker <= 0) current = id;
+        else break;
+      }
+
+      onSpy(current);
+    };
+
+    resolveActive();
+    window.addEventListener("scroll", resolveActive, { passive: true });
+    window.addEventListener("resize", resolveActive);
+    return () => {
+      window.removeEventListener("scroll", resolveActive);
+      window.removeEventListener("resize", resolveActive);
+    };
   }, [enabled, sectionIds]);
 
   useEffect(() => {

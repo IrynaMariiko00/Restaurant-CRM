@@ -1,13 +1,10 @@
-import { Link } from "react-router-dom";
-import { AuthLayout } from "@/layouts/AuthLayout";
+import { AdminPageShell } from "@/apps/admin/components/AdminPageShell";
 import { AuthFormCard } from "@/components/auth/AuthFormCard";
-import { useStaffHomePath } from "@/hooks/useStaffHomePath";
 import { PageLoader } from "@/ui/PageLoader";
 import { ProfileForm } from "./components/ProfileForm";
 import { useEmployeeProfile } from "./hooks/useEmployeeProfile";
 
 export const EmployeeProfilePage = () => {
-  const homePath = useStaffHomePath();
   const {
     form,
     setField,
@@ -28,19 +25,14 @@ export const EmployeeProfilePage = () => {
   } = useEmployeeProfile();
 
   return (
-    <AuthLayout
+    <AdminPageShell
       title={t("staff.profile_title")}
       subtitle={
-        isEditing ? t("staff.profile_edit_subtitle") : t("staff.profile_subtitle")
+        isEditing
+          ? t("staff.profile_edit_subtitle")
+          : t("staff.profile_subtitle")
       }
-      footer={
-        <Link
-          to={homePath}
-          className="font-medium text-[var(--color-violet-blue)] underline-offset-2 hover:underline"
-        >
-          {t("staff.back_to_home")}
-        </Link>
-      }
+      narrow
     >
       {isLoading ? (
         <PageLoader />
@@ -96,6 +88,6 @@ export const EmployeeProfilePage = () => {
           )}
         </AuthFormCard>
       )}
-    </AuthLayout>
+    </AdminPageShell>
   );
 };

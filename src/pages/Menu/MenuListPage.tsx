@@ -66,11 +66,13 @@ export const MenuListPage = () => {
   }, [deleteTarget, removeItem, t]);
 
   return (
-    <main className="menu-page">
-      <Link to={homeTo} className="menu-page__back">
-        <ArrowLeft className="menu-page__back-icon" aria-hidden />
-        {t("staff.back_to_home")}
-      </Link>
+    <main className={`menu-page${variant === "staff" ? " menu-page--staff" : ""}`}>
+      {variant !== "staff" && (
+        <Link to={homeTo} className="menu-page__back">
+          <ArrowLeft className="menu-page__back-icon" aria-hidden />
+          {t("staff.back_to_home")}
+        </Link>
+      )}
 
       <div className="menu-page__inner">
         <div className="menu-page__sidebar">

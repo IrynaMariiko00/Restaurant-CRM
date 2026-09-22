@@ -20,6 +20,7 @@ type ProfileEditFieldsProps = {
     value: string,
   ) => void;
   onAvatarChange?: (file: File) => void;
+  className?: string;
 };
 
 export const ProfileEditFields = ({
@@ -31,11 +32,12 @@ export const ProfileEditFields = ({
   errors,
   onChange,
   onAvatarChange,
+  className = "",
 }: ProfileEditFieldsProps) => {
   const { t } = useTranslation();
 
   return (
-    <div className="space-y-4">
+    <div className={`space-y-4 ${className}`.trim()}>
       <ChangeAvatar
         firstName={firstName}
         lastName={lastName}
@@ -43,41 +45,45 @@ export const ProfileEditFields = ({
         avatarError={errors.avatar}
         onAvatarChange={onAvatarChange}
       />
-      <ProfileTextField
-        id="firstName"
-        label={t("staff.first_name")}
-        value={firstName}
-        error={errors.firstName}
-        autoComplete="given-name"
-        onChange={(value) => onChange("firstName", value)}
-      />
-      <ProfileTextField
-        id="lastName"
-        label={t("staff.last_name")}
-        value={lastName}
-        error={errors.lastName}
-        autoComplete="family-name"
-        onChange={(value) => onChange("lastName", value)}
-      />
-      <ProfileTextField
-        id="email"
-        label={t("common.email")}
-        value={email}
-        error={errors.email}
-        type="email"
-        autoComplete="email"
-        onChange={(value) => onChange("email", value)}
-      />
-      <ProfileTextField
-        id="phone"
-        label={t("staff.phone")}
-        value={phone}
-        error={errors.phone}
-        type="tel"
-        autoComplete="tel"
-        placeholder="0XXXXXXXXX"
-        onChange={(value) => onChange("phone", value)}
-      />
+      <div className="profile-edit-fields__row space-y-4">
+        <ProfileTextField
+          id="firstName"
+          label={t("staff.first_name")}
+          value={firstName}
+          error={errors.firstName}
+          autoComplete="given-name"
+          onChange={(value) => onChange("firstName", value)}
+        />
+        <ProfileTextField
+          id="lastName"
+          label={t("staff.last_name")}
+          value={lastName}
+          error={errors.lastName}
+          autoComplete="family-name"
+          onChange={(value) => onChange("lastName", value)}
+        />
+      </div>
+      <div className="profile-edit-fields__row space-y-4">
+        <ProfileTextField
+          id="email"
+          label={t("common.email")}
+          value={email}
+          error={errors.email}
+          type="email"
+          autoComplete="email"
+          onChange={(value) => onChange("email", value)}
+        />
+        <ProfileTextField
+          id="phone"
+          label={t("staff.phone")}
+          value={phone}
+          error={errors.phone}
+          type="tel"
+          autoComplete="tel"
+          placeholder="0XXXXXXXXX"
+          onChange={(value) => onChange("phone", value)}
+        />
+      </div>
     </div>
   );
 };

@@ -1,7 +1,8 @@
-import { Navigate, Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import { GuestApp } from "@/GuestApp";
 import { StaffApp } from "@/apps/staff/StaffApp";
 import { ScanQRCodePage } from "@/apps/guest/pages/ScanQRCodePage/ScanQRCodePage";
+import { GuestTableJoinPage } from "@/apps/guest/pages/GuestTableJoinPage/GuestTableJoinPage";
 import { AboutPage } from "@/pages/AboutPage/AboutPage";
 import { MenuListPage } from "@/pages/Menu/MenuListPage";
 import { MenuItemDetailPage } from "@/pages/Menu/MenuItemDetailPage";
@@ -14,12 +15,19 @@ import { FinalizeEmailChangePage } from "./pages/EmailActionPages/FinalizeEmailC
 import { FinalizeEmployeeRegistrationPage } from "./pages/FinalizeEmployeeRegistrationPage/FinalizeEmployeeRegistrationPage";
 import { ThemeToggle } from "@/ui/ThemeToggle";
 
+function AppThemeToggle() {
+  const { pathname } = useLocation();
+  if (pathname === "/") return null;
+  return <ThemeToggle />;
+}
+
 function App() {
   return (
     <>
-      <ThemeToggle />
+      <AppThemeToggle />
       <Routes>
         <Route path="/table/:tableId/*" element={<GuestApp />} />
+        <Route path="/join" element={<GuestTableJoinPage />} />
         <Route path="/" element={<ScanQRCodePage />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/menu" element={<MenuListPage />} />

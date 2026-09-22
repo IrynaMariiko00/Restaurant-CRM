@@ -1,13 +1,10 @@
-import { Link } from "react-router-dom";
+import { AdminPageShell } from "@/apps/admin/components/AdminPageShell";
 import { AuthFormCard } from "@/components/auth/AuthFormCard";
 import { PasswordField } from "@/components/auth/PasswordField";
-import { AuthLayout } from "@/layouts/AuthLayout";
-import { useStaffHomePath } from "@/hooks/useStaffHomePath";
 import { SuccessCheckmark } from "@/ui/SuccessCheckmark";
 import { useChangePassword } from "./hooks/useChangePassword";
 
 export const ChangePasswordPage = () => {
-  const homePath = useStaffHomePath();
   const {
     currentPassword,
     setCurrentPassword,
@@ -29,17 +26,10 @@ export const ChangePasswordPage = () => {
   };
 
   return (
-    <AuthLayout
+    <AdminPageShell
       title={t("admin.change_password_title")}
       subtitle={t("admin.change_password_page_subtitle")}
-      footer={
-        <Link
-          to={homePath}
-          className="font-medium text-[var(--color-violet-blue)] underline-offset-2 hover:underline"
-        >
-          {t("staff.back_to_home")}
-        </Link>
-      }
+      narrow
     >
       {success ? (
         <div className="rounded-2xl border border-[var(--border-color)] bg-[var(--bg-light)] p-6 text-center shadow-sm">
@@ -83,6 +73,6 @@ export const ChangePasswordPage = () => {
           />
         </AuthFormCard>
       )}
-    </AuthLayout>
+    </AdminPageShell>
   );
 };

@@ -265,3 +265,28 @@ select.form-input {
     color: var(--color-violet-blue);
   }
 }
+
+.auth-form-card {
+  border-radius: 1.5rem;
+  border: 1px solid var(--border-color);
+  background: var(--bg-light);
+  padding: 1.5rem;
+  box-shadow: 0 1px 2px color-mix(in srgb, var(--color-black, #000), transparent 94%);
+}
+
+.auth-form-card__fields {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.auth-form-card__error {
+  margin: 1rem 0 0;
+  font-size: 0.875rem;
+  color: var(--error-color);
+}
+
+.auth-form-card__submit {
+  margin-top: 0.85rem;
+  width: 100%;
+}

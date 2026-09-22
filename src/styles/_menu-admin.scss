@@ -72,6 +72,10 @@
 }
 
 .menu-studio__preview-media {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
   aspect-ratio: 4 / 3;
   background: color-mix(in srgb, var(--color-violet-blue), transparent 92%);
 
@@ -80,6 +84,7 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: center center;
   }
 }
 

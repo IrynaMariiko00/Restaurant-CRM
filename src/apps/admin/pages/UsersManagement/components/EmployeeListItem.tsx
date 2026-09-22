@@ -19,65 +19,71 @@ export const EmployeeListItem = ({
   const initials =
     `${employee.firstName.charAt(0)}${employee.lastName.charAt(0)}`.toUpperCase() ||
     "?";
+  const canResend = !employee.emailConfirmed && !employee.isDeleted;
 
   return (
-    <div className="rounded-2xl border border-[var(--border-color)] bg-[var(--bg-light)] p-4">
-      <div className="flex items-start gap-3">
-        <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[color-mix(in_srgb,var(--color-violet-blue),transparent_88%)] text-sm font-semibold text-[var(--color-violet-blue)]">
+    <div className="employee-card">
+      {canResend && (
+        <button
+          type="button"
+          disabled={isResending}
+          onClick={() => onResendEmail(employee.email)}
+          className="employee-card__resend"
+          title={
+            isResending
+              ? t("admin.resend_email_sending")
+              : t("admin.resend_email")
+          }
+          aria-label={
+            isResending
+              ? t("admin.resend_email_sending")
+              : t("admin.resend_email")
+          }
+        >
+          <Mail className="employee-card__resend-icon" aria-hidden />
+        </button>
+      )}
+
+      <div className="employee-card__head">
+        <div className="employee-card__avatar" aria-hidden>
           {initials}
         </div>
-        <div className="min-w-0 flex-1">
-          <p className="font-semibold text-[var(--primary-text)]">
+        <div className="employee-card__meta">
+          <p className="employee-card__name">
             {employee.firstName} {employee.lastName}
           </p>
-          <p className="mt-0.5 truncate text-sm text-[var(--secondary-text)]">
-            {employee.email}
-          </p>
-          <p className="mt-0.5 text-sm text-[var(--secondary-text)]">
-            {employee.phone}
-          </p>
-          <div className="mt-2 flex flex-wrap items-center gap-2">
+          <p className="employee-card__email">{employee.email}</p>
+          {employee.phone?.trim() ? (
+            <p className="employee-card__phone">{employee.phone}</p>
+          ) : null}
+          <div className="employee-card__chips">
             {isCurrentUser && (
-              <span className="inline-flex items-center rounded-full bg-[color-mix(in_srgb,var(--color-violet-blue),transparent_88%)] px-2 py-0.5 text-xs font-medium text-[var(--color-violet-blue)]">
+              <span className="employee-card__chip employee-card__chip--you">
                 {t("admin.you_chip")}
               </span>
             )}
             <span
-              className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-medium ${
+              className={`employee-card__chip${
                 employee.emailConfirmed
-                  ? "bg-[color-mix(in_srgb,var(--success-color),transparent_88%)] text-[var(--success-color)]"
-                  : "bg-[var(--bg-primary)] text-[var(--secondary-text)]"
+                  ? " employee-card__chip--ok"
+                  : " employee-card__chip--pending"
               }`}
             >
               {employee.emailConfirmed && (
-                <CheckCircle2 className="h-3 w-3" aria-hidden />
+                <CheckCircle2 className="employee-card__chip-icon" aria-hidden />
               )}
               {employee.emailConfirmed
                 ? t("staff.email_confirmed")
                 : t("staff.email_unconfirmed")}
             </span>
             {employee.isDeleted && (
-              <span className="rounded-full bg-[color-mix(in_srgb,var(--error-color),transparent_88%)] px-2 py-0.5 text-xs font-medium text-[var(--error-color)]">
+              <span className="employee-card__chip employee-card__chip--deleted">
                 {t("admin.user_deleted")}
               </span>
             )}
           </div>
         </div>
       </div>
-
-      {!employee.emailConfirmed && !employee.isDeleted && (
-        <button
-          type="button"
-          disabled={isResending}
-          onClick={() => onResendEmail(employee.email)}
-          className="btn-ghost mt-3 flex w-full items-center justify-center gap-2 text-sm"
-        >
-          <Mail className="h-4 w-4" aria-hidden />
-          {isResending
-            ? t("admin.resend_email_sending")
-            : t("admin.resend_email")}
-        </button>
-      )}
     </div>
   );
 };

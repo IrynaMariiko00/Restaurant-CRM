@@ -29,7 +29,7 @@ export const UsersManagementPage = () => {
     >
       <Link
         to="/staff/users/new"
-        className="btn-accent mb-4 flex w-full items-center justify-center gap-2"
+        className="btn-accent mb-8 inline-flex w-fit items-center justify-center gap-2"
       >
         <UserPlus className="h-4 w-4" aria-hidden />
         {t("admin.register_employee")}
@@ -69,7 +69,7 @@ export const UsersManagementPage = () => {
           {t("admin.users_empty")}
         </p>
       ) : (
-        <div className="space-y-3">
+        <div className="employees-grid grid grid-cols-1 gap-4 md:grid-cols-2">
           {employees.map((employee) => (
             <EmployeeListItem
               key={employee.id}

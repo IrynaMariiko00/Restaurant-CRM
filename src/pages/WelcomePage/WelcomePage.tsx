@@ -3,6 +3,7 @@ import {
   KeyRound,
   Loader2,
   LogOut,
+  SquareStack,
   Store,
   UserCircle,
   Users,
@@ -10,7 +11,6 @@ import {
 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { AdminNavButton } from "@/apps/admin/components/AdminNavButton";
-import { StaffScreenLayout } from "@/layouts/StaffScreenLayout";
 import { useAuth } from "@/context/AuthContext";
 import { useWelcome } from "./hooks/useWelcome";
 
@@ -43,12 +43,10 @@ export const WelcomePage = () => {
   );
 
   return (
-    <StaffScreenLayout>
-      <header className="mb-8 text-center">
-        <p className="title title--s title--accent mb-2 uppercase tracking-widest">
-          Restaurant CRM
-        </p>
-        <h1 className="title title--l title--primary flex min-h-[2.5rem] items-center justify-center">
+    <div className="staff-page">
+      <header className="staff-page__header staff-hub__header">
+        <p className="staff-page__eyebrow">Restaurant CRM</p>
+        <h1 className="staff-page__title flex min-h-[2.5rem] items-center">
           {isLoading ? (
             <Loader2
               className="h-8 w-8 animate-spin text-[var(--color-violet-blue)]"
@@ -58,60 +56,70 @@ export const WelcomePage = () => {
             greeting
           )}
         </h1>
-        <p className="mt-2 text-sm text-[var(--secondary-text)]">{subtitle}</p>
+        <p className="staff-page__subtitle">{subtitle}</p>
       </header>
 
-      {isAdmin && (
-        <div className="space-y-2">
+      <p className="staff-hub__desktop-note">{t("staff.hub_desktop_hint")}</p>
+
+      <div className="staff-hub__nav">
+        {isAdmin && (
+          <div className="space-y-2">
+            <AdminNavButton
+              to="/staff/users"
+              label={t("admin.users_title")}
+              description={t("admin.users_desc")}
+              icon={Users}
+              accent
+            />
+            {menuNav}
+            <AdminNavButton
+              to="/staff/tables"
+              label={t("admin.tables_title")}
+              description={t("admin.tables_desc")}
+              icon={SquareStack}
+            />
+            <AdminNavButton
+              label={t("admin.restaurant_title")}
+              description={t("admin.coming_soon_short")}
+              icon={Store}
+              disabled
+            />
+            <AdminNavButton
+              label={t("admin.schedule_title")}
+              description={t("admin.coming_soon_short")}
+              icon={CalendarDays}
+              disabled
+            />
+          </div>
+        )}
+
+        <div
+          className={`space-y-2 ${isAdmin ? "mt-6 border-t border-[var(--border-color)] pt-6" : ""}`}
+        >
+          {!isAdmin && menuNav}
           <AdminNavButton
-            to="/staff/users"
-            label={t("admin.users_title")}
-            description={t("admin.users_desc")}
-            icon={Users}
-            accent
+            to="/staff/profile"
+            label={t("staff.profile_title")}
+            description={t("admin.profile_desc")}
+            icon={UserCircle}
           />
-          {menuNav}
           <AdminNavButton
-            label={t("admin.restaurant_title")}
-            description={t("admin.coming_soon_short")}
-            icon={Store}
-            disabled
-          />
-          <AdminNavButton
-            label={t("admin.schedule_title")}
-            description={t("admin.coming_soon_short")}
-            icon={CalendarDays}
-            disabled
+            to="/staff/change-password"
+            label={t("admin.change_password_title")}
+            description={t("admin.change_password_desc")}
+            icon={KeyRound}
           />
         </div>
-      )}
 
-      <div
-        className={`space-y-2 ${isAdmin ? "mt-6 border-t border-[var(--border-color)] pt-6" : ""}`}
-      >
-        {!isAdmin && menuNav}
-        <AdminNavButton
-          to="/staff/profile"
-          label={t("staff.profile_title")}
-          description={t("admin.profile_desc")}
-          icon={UserCircle}
-        />
-        <AdminNavButton
-          to="/staff/change-password"
-          label={t("admin.change_password_title")}
-          description={t("admin.change_password_desc")}
-          icon={KeyRound}
-        />
+        <button
+          type="button"
+          onClick={() => void logout()}
+          className="btn-ghost mt-6 flex w-full items-center justify-center gap-2"
+        >
+          <LogOut className="h-4 w-4" aria-hidden />
+          {t("common.logout")}
+        </button>
       </div>
-
-      <button
-        type="button"
-        onClick={() => void logout()}
-        className="btn-ghost mt-6 flex w-full items-center justify-center gap-2"
-      >
-        <LogOut className="h-4 w-4" aria-hidden />
-        {t("common.logout")}
-      </button>
-    </StaffScreenLayout>
+    </div>
   );
 };

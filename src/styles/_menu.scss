@@ -25,6 +25,17 @@
       transparent 50%
     ),
     var(--bg-primary);
+
+  &--staff {
+    min-height: auto;
+    background: var(--bg-primary);
+
+    .menu-page__inner {
+      width: 100%;
+      max-width: none;
+      padding: 0;
+    }
+  }
 }
 
 .menu-page__inner {
@@ -128,8 +139,19 @@
     background: color-mix(in srgb, var(--color-violet-blue), transparent 92%);
   }
 
+  &--inline {
+    position: static;
+    margin: 1rem 1.25rem 0;
+    width: fit-content;
+  }
+
   @media (min-width: 960px) {
     position: fixed;
+
+    &--inline {
+      position: static;
+      margin: 1.25rem 1.75rem 0;
+    }
   }
 }
 
@@ -173,12 +195,11 @@
     max-width: calc(100% + 2.5rem);
     margin: 0 -1.25rem;
     padding: 0.55rem 1.25rem 0.65rem;
+    background: var(--bg-primary);
   }
 
   &--stuck {
     @media (max-width: 959.98px) {
-      background: color-mix(in srgb, var(--bg-primary), transparent 12%);
-      backdrop-filter: blur(14px);
       border-bottom: 1px solid
         color-mix(in srgb, var(--border-color), transparent 35%);
     }
@@ -221,6 +242,10 @@
   scroll-snap-type: x proximity;
   scroll-padding-inline: 0;
   box-sizing: border-box;
+
+  @media (max-width: 959.98px) {
+    background: var(--bg-primary);
+  }
 
   &::-webkit-scrollbar {
     display: none;
@@ -484,6 +509,9 @@
 }
 
 .menu-dish__media {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   overflow: hidden;
   aspect-ratio: 4 / 3;
   background: var(--bg-light);
@@ -494,6 +522,7 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center center;
   background: linear-gradient(
     160deg,
     color-mix(in srgb, var(--color-violet-blue), transparent 82%),
@@ -663,6 +692,10 @@
 }
 
 .menu-detail__media {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
   min-height: 42vh;
   background: var(--bg-light);
 
@@ -675,16 +708,24 @@
 }
 
 .menu-detail__photo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 100%;
   height: 100%;
   min-height: 42vh;
+  overflow: hidden;
 
   @media (min-width: 900px) {
     min-height: 100svh;
   }
 
   .menu-dish-image {
+    width: 100%;
+    height: 100%;
     min-height: inherit;
+    object-fit: cover;
+    object-position: center center;
   }
 }
 

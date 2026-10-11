@@ -115,7 +115,12 @@ export const useEmployeeProfile = () => {
           emailConfirmed,
           profilePictureId: pictureId,
         } = response.data;
-        const profileData = { firstName, lastName, email, phone };
+        const profileData = {
+          firstName: firstName ?? "",
+          lastName: lastName ?? "",
+          email: email ?? "",
+          phone: phone ?? "",
+        };
 
         setForm(profileData);
         setInitialData(profileData);
@@ -241,7 +246,12 @@ export const useEmployeeProfile = () => {
         emailConfirmed: newConfirmed,
         profilePictureId: newPictureId,
       } = response.data;
-      const updatedData = { firstName, lastName, email, phone };
+      const updatedData = {
+        firstName: firstName ?? "",
+        lastName: lastName ?? "",
+        email: email ?? "",
+        phone: phone ?? "",
+      };
 
       setForm(updatedData);
       setInitialData(updatedData);

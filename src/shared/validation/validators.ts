@@ -4,13 +4,13 @@ const NAME_PATTERN = /^[\p{L}'’\- ]+$/u;
 
 const UA_PHONE_DIGITS = /^(?:\+?380|0)(\d{9})$/;
 
-export function validateRequired(value: string): ValidationResult {
-  if (!value.trim()) return "validation.required";
+export function validateRequired(value: string | null | undefined): ValidationResult {
+  if (!value?.trim()) return "validation.required";
   return null;
 }
 
-export function validateName(value: string): ValidationResult {
-  const trimmed = value.trim();
+export function validateName(value: string | null | undefined): ValidationResult {
+  const trimmed = value?.trim() ?? "";
   if (!trimmed) return "validation.required";
   if (trimmed.length < 2) return "validation.name_min";
   if (trimmed.length > 50) return "validation.name_max";
@@ -18,8 +18,8 @@ export function validateName(value: string): ValidationResult {
   return null;
 }
 
-export function validateEmail(value: string): ValidationResult {
-  const trimmed = value.trim();
+export function validateEmail(value: string | null | undefined): ValidationResult {
+  const trimmed = value?.trim() ?? "";
   if (!trimmed) return "validation.required";
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmed)) {
     return "validation.email_format";
@@ -28,23 +28,23 @@ export function validateEmail(value: string): ValidationResult {
 }
 
 /** Strip spaces, dashes, parentheses. */
-export function normalizePhoneInput(value: string): string {
-  return value.replace(/[\s\-()]/g, "");
+export function normalizePhoneInput(value: string | null | undefined): string {
+  return (value ?? "").replace(/[\s\-()]/g, "");
 }
 
 /**
  * Accepts UA numbers with or without +38 / leading 0.
  * Returns local format 0XXXXXXXXX (what the backend expects).
  */
-export function normalizeUaPhone(value: string): string | null {
+export function normalizeUaPhone(value: string | null | undefined): string | null {
   const digits = normalizePhoneInput(value);
   const match = digits.match(UA_PHONE_DIGITS);
   if (!match) return null;
   return `0${match[1]}`;
 }
 
-export function validateUaPhone(value: string): ValidationResult {
-  if (!value.trim()) return "validation.required";
+export function validateUaPhone(value: string | null | undefined): ValidationResult {
+  if (!value?.trim()) return "validation.required";
   if (!normalizeUaPhone(value)) return "validation.phone_ua";
   return null;
 }

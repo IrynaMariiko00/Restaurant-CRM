@@ -1,0 +1,108 @@
+.feedback-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  width: 100%;
+  padding: 0.85rem 0.95rem;
+  border: 1px solid var(--border-color);
+  border-radius: 1rem;
+  background: var(--bg-primary);
+  color: var(--primary-text);
+  font-size: 0.9rem;
+  line-height: 1.4;
+  box-sizing: border-box;
+}
+
+.feedback-banner__icon {
+  width: 1.15rem;
+  height: 1.15rem;
+  flex-shrink: 0;
+  margin-top: 0.1rem;
+}
+
+.feedback-banner__body {
+  flex: 1;
+  min-width: 0;
+  color: var(--secondary-text);
+}
+
+.feedback-banner__close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.6rem;
+  height: 1.6rem;
+  flex-shrink: 0;
+  margin: -0.15rem -0.2rem 0 0;
+  border: none;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--secondary-text);
+  opacity: 0.75;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 1;
+    background: color-mix(in srgb, var(--color-violet-blue), transparent 90%);
+    color: var(--color-violet-blue);
+  }
+}
+
+.feedback-banner--success {
+  border-color: color-mix(in srgb, var(--success-color), transparent 45%);
+  background: color-mix(in srgb, var(--bg-primary), var(--success-color) 12%);
+
+  .feedback-banner__icon {
+    color: var(--success-color);
+  }
+
+  .feedback-banner__body {
+    color: color-mix(in srgb, var(--success-color), var(--primary-text) 35%);
+  }
+}
+
+.feedback-banner--error {
+  border-color: var(--error-color);
+  background: var(--bg-primary);
+
+  .feedback-banner__icon {
+    color: var(--error-color);
+  }
+}
+
+.feedback-host {
+  position: fixed;
+  top: 4.75rem;
+  right: 1rem;
+  z-index: 120;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  width: min(22.5rem, calc(100vw - 2rem));
+  pointer-events: none;
+}
+
+.feedback-host__item {
+  pointer-events: auto;
+  animation: feedback-in 180ms ease both;
+  box-shadow:
+    0 2px 8px color-mix(in srgb, var(--color-violet-blue), transparent 88%),
+    0 12px 28px color-mix(in srgb, #000, transparent 90%);
+}
+
+@keyframes feedback-in {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .feedback-host__item {
+    animation: none;
+  }
+}

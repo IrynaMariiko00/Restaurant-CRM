@@ -4,7 +4,6 @@ import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { getCategoryLabel } from "@/shared/menu/categoryCopy";
 import { MenuItemEditorForm } from "./components/MenuItemEditorForm";
-import { MenuItemEditorSuccess } from "./components/MenuItemEditorSuccess";
 import { MenuItemLivePreview } from "./components/MenuItemLivePreview";
 import { useMenuCategories } from "./hooks/useMenuCategories";
 import { useMenuItemEditor } from "./hooks/useMenuItemEditor";
@@ -34,9 +33,7 @@ export function MenuItemEditorPage({
     isSubmitting,
     isLoadingItem,
     loadError,
-    savedItem,
     handleSubmit,
-    resetForm,
   } = useMenuItemEditor({ mode, itemId });
 
   const {
@@ -74,22 +71,6 @@ export function MenuItemEditorPage({
   const categoryLabel = selectedChild
     ? getCategoryLabel(selectedChild, i18n.resolvedLanguage ?? i18n.language)
     : null;
-
-  if (savedItem) {
-    return (
-      <main className="menu-studio">
-        <Link to="/staff/menu" className="menu-page__back menu-page__back--inline">
-          <ArrowLeft className="menu-page__back-icon" aria-hidden />
-          {t("menu.back_to_menu")}
-        </Link>
-        <MenuItemEditorSuccess
-          mode={mode}
-          item={savedItem}
-          onCreateAnother={mode === "create" ? resetForm : undefined}
-        />
-      </main>
-    );
-  }
 
   if (mode === "edit" && (isLoadingItem || loadError)) {
     return (

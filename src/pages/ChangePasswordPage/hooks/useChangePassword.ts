@@ -1,4 +1,5 @@
 import { authApi } from "@/api/auth";
+import { useFeedback } from "@/context/FeedbackContext";
 import {
   validateChangePasswordForm,
   type ChangePasswordFormErrors,
@@ -8,12 +9,12 @@ import { useTranslation } from "react-i18next";
 
 export const useChangePassword = () => {
   const { t } = useTranslation();
+  const feedback = useFeedback();
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [fieldErrors, setFieldErrors] = useState<ChangePasswordFormErrors>({});
-  const [success, setSuccess] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
   const clearFieldError = (key: keyof ChangePasswordFormErrors) => {
@@ -28,7 +29,6 @@ export const useChangePassword = () => {
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setError(null);
-    setSuccess(null);
 
     const errors = validateChangePasswordForm({
       currentPassword,
@@ -59,7 +59,7 @@ export const useChangePassword = () => {
       setCurrentPassword("");
       setNewPassword("");
       setConfirmPassword("");
-      setSuccess(t("admin.change_password_success"));
+      feedback.success(t("admin.change_password_success"));
     } catch {
       setError(t("admin.change_password_error"));
     } finally {
@@ -89,7 +89,6 @@ export const useChangePassword = () => {
     },
     error,
     fieldErrors,
-    success,
     isLoading,
     handleSubmit,
     t,

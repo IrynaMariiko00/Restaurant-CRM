@@ -1,5 +1,5 @@
 .form-field {
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
 }
 
 .form-label {
@@ -25,7 +25,9 @@
   color: var(--primary-text);
   font-size: 1rem;
   outline: none;
-  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
 
   &--with-toggle {
     padding-right: 3rem;
@@ -114,7 +116,9 @@ select.form-input {
   background: transparent;
   color: var(--secondary-text);
   cursor: pointer;
-  transition: color 0.15s ease, transform 0.15s ease;
+  transition:
+    color 0.15s ease,
+    transform 0.15s ease;
 
   &:hover {
     color: var(--color-violet-blue);
@@ -190,8 +194,7 @@ select.form-input {
 
 .form-select--error.form-select--open .form-select__trigger {
   border-color: var(--error-color);
-  box-shadow: 0 0 0 3px
-    color-mix(in srgb, var(--error-color), transparent 80%);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--error-color), transparent 80%);
 }
 
 .form-select__value {
@@ -271,7 +274,8 @@ select.form-input {
   border: 1px solid var(--border-color);
   background: var(--bg-light);
   padding: 1.5rem;
-  box-shadow: 0 1px 2px color-mix(in srgb, var(--color-black, #000), transparent 94%);
+  box-shadow: 0 1px 2px
+    color-mix(in srgb, var(--color-black, #000), transparent 94%);
 }
 
 .auth-form-card__fields {
@@ -280,10 +284,8 @@ select.form-input {
   gap: 1rem;
 }
 
-.auth-form-card__error {
-  margin: 1rem 0 0;
-  font-size: 0.875rem;
-  color: var(--error-color);
+.auth-form-card__feedback {
+  margin-top: 1rem;
 }
 
 .auth-form-card__submit {

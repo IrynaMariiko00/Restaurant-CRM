@@ -1,6 +1,7 @@
 import type { FormEvent } from "react";
 import { Loader2, Plus, Save } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { FeedbackBanner } from "@/ui/FeedbackBanner";
 import type { MenuCategory } from "@/types/menuCategory";
 import type {
   MenuItemEditorMode,
@@ -97,9 +98,9 @@ export function MenuItemEditorForm({
       />
 
       {submitError && (
-        <p className="menu-studio__error menu-studio__error--banner">
+        <FeedbackBanner tone="error" className="menu-studio__feedback">
           {submitError}
-        </p>
+        </FeedbackBanner>
       )}
 
       <button

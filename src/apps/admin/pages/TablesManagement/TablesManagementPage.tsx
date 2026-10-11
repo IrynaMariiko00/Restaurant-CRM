@@ -17,9 +17,7 @@ export const TablesManagementPage = () => {
     isLoading,
     loadError,
     isCreating,
-    createError,
     togglingId,
-    toggleError,
     createTable,
     setTableActive,
     t,
@@ -73,12 +71,6 @@ export const TablesManagementPage = () => {
           </button>
         ))}
       </div>
-
-      {(createError || toggleError) && (
-        <p className="mb-4 text-center text-sm text-[var(--error-color)]">
-          {createError ?? toggleError}
-        </p>
-      )}
 
       {isLoading ? (
         <PageLoader />

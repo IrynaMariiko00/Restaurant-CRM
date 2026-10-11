@@ -1,4 +1,5 @@
 import { diningTablesApi } from "@/api/diningTables";
+import { useFeedback } from "@/context/FeedbackContext";
 import type { DiningTable } from "@/types/diningTable";
 import { useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -7,15 +8,14 @@ export type TablesActivityFilter = "all" | "active" | "inactive";
 
 export function useDiningTablesList() {
   const { t } = useTranslation();
+  const feedback = useFeedback();
   const [tables, setTables] = useState<DiningTable[]>([]);
   const [activityFilter, setActivityFilter] =
     useState<TablesActivityFilter>("all");
   const [isLoading, setIsLoading] = useState(true);
   const [loadError, setLoadError] = useState<string | null>(null);
   const [isCreating, setIsCreating] = useState(false);
-  const [createError, setCreateError] = useState<string | null>(null);
   const [togglingId, setTogglingId] = useState<number | null>(null);
-  const [toggleError, setToggleError] = useState<string | null>(null);
 
   const loadTables = useCallback(async () => {
     setIsLoading(true);
@@ -55,33 +55,35 @@ export function useDiningTablesList() {
 
   const createTable = useCallback(async () => {
     setIsCreating(true);
-    setCreateError(null);
 
     try {
       const response = await diningTablesApi.createDiningTable();
 
       if (!response.success || !response.data) {
-        setCreateError(response.errors?.[0] ?? t("admin.tables_create_error"));
+        feedback.error(
+          response.errors?.[0] ?? t("admin.tables_create_error"),
+        );
         return;
       }
 
       const created = response.data;
+      feedback.success(t("admin.tables_create_success"));
+
       if (activityFilter === "inactive") {
         return;
       }
 
       setTables((prev) => [...prev, created].sort((a, b) => a.id - b.id));
     } catch {
-      setCreateError(t("admin.tables_create_error"));
+      feedback.error(t("admin.tables_create_error"));
     } finally {
       setIsCreating(false);
     }
-  }, [activityFilter, t]);
+  }, [activityFilter, feedback, t]);
 
   const setTableActive = useCallback(
     async (id: number, isActive: boolean) => {
       setTogglingId(id);
-      setToggleError(null);
 
       try {
         const response = await diningTablesApi.updateDiningTableActivity(
@@ -90,7 +92,7 @@ export function useDiningTablesList() {
         );
 
         if (!response.success || !response.data) {
-          setToggleError(
+          feedback.error(
             response.errors?.[0] ?? t("admin.tables_toggle_error"),
           );
           return;
@@ -110,12 +112,12 @@ export function useDiningTablesList() {
           return prev.map((table) => (table.id === id ? updated : table));
         });
       } catch {
-        setToggleError(t("admin.tables_toggle_error"));
+        feedback.error(t("admin.tables_toggle_error"));
       } finally {
         setTogglingId(null);
       }
     },
-    [activityFilter, t],
+    [activityFilter, feedback, t],
   );
 
   return {
@@ -125,9 +127,7 @@ export function useDiningTablesList() {
     isLoading,
     loadError,
     isCreating,
-    createError,
     togglingId,
-    toggleError,
     createTable,
     setTableActive,
     reload: loadTables,

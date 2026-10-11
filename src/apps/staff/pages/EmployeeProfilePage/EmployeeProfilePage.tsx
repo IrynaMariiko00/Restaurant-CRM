@@ -18,7 +18,6 @@ export const EmployeeProfilePage = () => {
     isSaving,
     loadError,
     saveError,
-    success,
     fieldErrors,
     handleSubmit,
     t,
@@ -80,12 +79,6 @@ export const EmployeeProfilePage = () => {
               </button>
             )}
           </div>
-
-          {success && !isEditing && (
-            <p className="mt-2 text-center text-sm text-[var(--success-color)]">
-              {success}
-            </p>
-          )}
         </AuthFormCard>
       )}
     </AdminPageShell>

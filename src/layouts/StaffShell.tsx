@@ -2,11 +2,36 @@ import { useEffect, useState } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { useRestaurantProfile } from "@/hooks/useRestaurantProfile";
 import { StaffSidebarNav } from "./StaffSidebarNav";
+
+function StaffBrand() {
+  const { t } = useTranslation();
+  const { name, logoUrl } = useRestaurantProfile();
+
+  return (
+    <div className="staff-shell__brand">
+      {logoUrl ? (
+        <img
+          src={logoUrl}
+          alt=""
+          className="staff-shell__brand-logo"
+        />
+      ) : null}
+      <div className="staff-shell__brand-copy">
+        <p className="staff-shell__brand-eyebrow">
+          {name ?? "Restaurant CRM"}
+        </p>
+        <p className="staff-shell__brand-title">{t("staff.nav_workspace")}</p>
+      </div>
+    </div>
+  );
+}
 
 export function StaffShell() {
   const { t } = useTranslation();
   const location = useLocation();
+  const { name } = useRestaurantProfile();
   const [mobileOpen, setMobileOpen] = useState(false);
 
   useEffect(() => {
@@ -25,10 +50,7 @@ export function StaffShell() {
   return (
     <div className="staff-shell">
       <aside className="staff-shell__aside staff-shell__aside--desktop">
-        <div className="staff-shell__brand">
-          <p className="staff-shell__brand-eyebrow">Restaurant CRM</p>
-          <p className="staff-shell__brand-title">{t("staff.nav_workspace")}</p>
-        </div>
+        <StaffBrand />
         <StaffSidebarNav />
       </aside>
 
@@ -43,7 +65,9 @@ export function StaffShell() {
           <Menu className="h-5 w-5" aria-hidden />
           <span>{t("staff.nav_menu")}</span>
         </button>
-        <p className="staff-shell__mobile-brand">Restaurant CRM</p>
+        <p className="staff-shell__mobile-brand">
+          {name ?? "Restaurant CRM"}
+        </p>
       </div>
 
       {mobileOpen && (
@@ -56,12 +80,7 @@ export function StaffShell() {
           />
           <aside className="staff-shell__aside staff-shell__aside--mobile">
             <div className="staff-shell__drawer-head">
-              <div className="staff-shell__brand">
-                <p className="staff-shell__brand-eyebrow">Restaurant CRM</p>
-                <p className="staff-shell__brand-title">
-                  {t("staff.nav_workspace")}
-                </p>
-              </div>
+              <StaffBrand />
               <button
                 type="button"
                 className="staff-shell__close"

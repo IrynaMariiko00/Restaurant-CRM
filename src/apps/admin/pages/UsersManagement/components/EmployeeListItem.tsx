@@ -1,4 +1,4 @@
-import { CheckCircle2, Mail } from "lucide-react";
+import { AlertCircle, CheckCircle2, Mail } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import type { Employee } from "@/types/employee";
 
@@ -53,9 +53,9 @@ export const EmployeeListItem = ({
             {employee.firstName} {employee.lastName}
           </p>
           <p className="employee-card__email">{employee.email}</p>
-          {employee.phone?.trim() ? (
-            <p className="employee-card__phone">{employee.phone}</p>
-          ) : null}
+          <p className="employee-card__phone">
+            {employee.phone?.trim() ? employee.phone : "\u00A0"}
+          </p>
           <div className="employee-card__chips">
             {isCurrentUser && (
               <span className="employee-card__chip employee-card__chip--you">
@@ -69,8 +69,10 @@ export const EmployeeListItem = ({
                   : " employee-card__chip--pending"
               }`}
             >
-              {employee.emailConfirmed && (
+              {employee.emailConfirmed ? (
                 <CheckCircle2 className="employee-card__chip-icon" aria-hidden />
+              ) : (
+                <AlertCircle className="employee-card__chip-icon" aria-hidden />
               )}
               {employee.emailConfirmed
                 ? t("staff.email_confirmed")

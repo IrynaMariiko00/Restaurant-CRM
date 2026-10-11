@@ -1,5 +1,6 @@
 import { employeeApi } from "@/api/employee";
 import { imagesApi } from "@/api/images";
+import { useFeedback } from "@/context/FeedbackContext";
 import type { UpdateEmployeeRequest } from "@/types/employee";
 import {
   normalizeUaPhone,
@@ -20,6 +21,7 @@ const emptyForm: UpdateEmployeeRequest = {
 
 export const useEmployeeProfile = () => {
   const { t } = useTranslation();
+  const feedback = useFeedback();
   const [form, setForm] = useState<UpdateEmployeeRequest>(emptyForm);
   const [initialData, setInitialData] =
     useState<UpdateEmployeeRequest>(emptyForm);
@@ -35,7 +37,6 @@ export const useEmployeeProfile = () => {
   const [isSaving, setIsSaving] = useState(false);
   const [loadError, setLoadError] = useState<string | null>(null);
   const [saveError, setSaveError] = useState<string | null>(null);
-  const [success, setSuccess] = useState<string | null>(null);
   const [fieldErrors, setFieldErrors] = useState<ProfileFormErrors>({});
 
   const revokeAvatarUrl = () => {
@@ -133,7 +134,6 @@ export const useEmployeeProfile = () => {
   };
 
   const startEditing = () => {
-    setSuccess(null);
     setFieldErrors({});
     setIsEditing(true);
   };
@@ -159,7 +159,6 @@ export const useEmployeeProfile = () => {
       return next;
     });
     if (saveError) setSaveError(null);
-    if (success) setSuccess(null);
   };
 
   const handleAvatarChange = (file: File) => {
@@ -178,13 +177,11 @@ export const useEmployeeProfile = () => {
       return next;
     });
     if (saveError) setSaveError(null);
-    if (success) setSuccess(null);
   };
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setSaveError(null);
-    setSuccess(null);
 
     const errors = validateProfileForm(form);
     if (Object.keys(errors).length > 0) {
@@ -232,7 +229,7 @@ export const useEmployeeProfile = () => {
       setProfilePictureFile(null);
       setFieldErrors({});
       setIsEditing(false);
-      setSuccess(
+      feedback.success(
         newConfirmed
           ? t("staff.profile_save_success")
           : t("staff.profile_email_pending"),
@@ -259,7 +256,6 @@ export const useEmployeeProfile = () => {
     isSaving,
     loadError,
     saveError,
-    success,
     fieldErrors,
     setField,
     handleAvatarChange,

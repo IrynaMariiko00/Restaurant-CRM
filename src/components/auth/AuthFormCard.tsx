@@ -1,10 +1,12 @@
 import { AccentButton } from "@/ui/AccentButton";
+import { FeedbackBanner } from "@/ui/FeedbackBanner";
 import type { FormEventHandler, ReactNode } from "react";
 
 type AuthFormCardProps = {
   onSubmit: FormEventHandler<HTMLFormElement>;
   submitText: string;
   isLoading?: boolean;
+  /** Form submit error — local state only; do not also call useFeedback().error */
   error?: string | null;
   hideSubmit?: boolean;
   className?: string;
@@ -30,7 +32,9 @@ export const AuthFormCard = ({
       <div className="auth-form-card__fields">{children}</div>
 
       {error && (
-        <p className="auth-form-card__error">{error}</p>
+        <FeedbackBanner tone="error" className="auth-form-card__feedback">
+          {error}
+        </FeedbackBanner>
       )}
 
       {!hideSubmit && (

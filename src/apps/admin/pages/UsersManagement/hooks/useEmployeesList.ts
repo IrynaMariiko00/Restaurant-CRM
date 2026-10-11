@@ -1,5 +1,6 @@
 import { authApi } from "@/api/auth";
 import { employeeApi } from "@/api/employee";
+import { useFeedback } from "@/context/FeedbackContext";
 import type { Employee } from "@/types/employee";
 import { useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -21,13 +22,12 @@ function withCurrentUserFirst(
 
 export const useEmployeesList = () => {
   const { t } = useTranslation();
+  const feedback = useFeedback();
   const [employees, setEmployees] = useState<Employee[]>([]);
   const [currentUserId, setCurrentUserId] = useState<number | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [loadError, setLoadError] = useState<string | null>(null);
   const [resendingEmail, setResendingEmail] = useState<string | null>(null);
-  const [resendSuccess, setResendSuccess] = useState<string | null>(null);
-  const [resendError, setResendError] = useState<string | null>(null);
 
   const loadEmployees = useCallback(async () => {
     setIsLoading(true);
@@ -67,8 +67,6 @@ export const useEmployeesList = () => {
 
   const resendRegistrationEmail = async (email: string) => {
     setResendingEmail(email);
-    setResendError(null);
-    setResendSuccess(null);
 
     try {
       const response = await authApi.triggerFinalizeEmployeeRegistration({
@@ -76,13 +74,15 @@ export const useEmployeesList = () => {
       });
 
       if (!response.success) {
-        setResendError(response.errors?.[0] ?? t("admin.resend_email_error"));
+        feedback.error(
+          response.errors?.[0] ?? t("admin.resend_email_error"),
+        );
         return;
       }
 
-      setResendSuccess(email);
+      feedback.success(t("admin.resend_email_success", { email }));
     } catch {
-      setResendError(t("admin.resend_email_error"));
+      feedback.error(t("admin.resend_email_error"));
     } finally {
       setResendingEmail(null);
     }
@@ -94,8 +94,6 @@ export const useEmployeesList = () => {
     isLoading,
     loadError,
     resendingEmail,
-    resendSuccess,
-    resendError,
     reload: loadEmployees,
     resendRegistrationEmail,
     t,

@@ -1,23 +1,16 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Loader2, UserPlus } from "lucide-react";
 import { AdminPageShell } from "@/apps/admin/components/AdminPageShell";
 import { EmployeeListItem } from "./components/EmployeeListItem";
 import { useEmployeesList } from "./hooks/useEmployeesList";
 
 export const UsersManagementPage = () => {
-  const location = useLocation();
-  const registeredEmail = (
-    location.state as { registeredEmail?: string } | null
-  )?.registeredEmail;
-
   const {
     employees,
     currentUserId,
     isLoading,
     loadError,
     resendingEmail,
-    resendSuccess,
-    resendError,
     resendRegistrationEmail,
     t,
   } = useEmployeesList();
@@ -34,24 +27,6 @@ export const UsersManagementPage = () => {
         <UserPlus className="h-4 w-4" aria-hidden />
         {t("admin.register_employee")}
       </Link>
-
-      {registeredEmail && (
-        <p className="mb-4 rounded-2xl border border-[var(--border-color)] bg-[color-mix(in_srgb,var(--success-color),transparent_92%)] p-4 text-center text-sm text-[var(--success-color)]">
-          {t("admin.register_success", { email: registeredEmail })}
-        </p>
-      )}
-
-      {resendSuccess && (
-        <p className="mb-4 rounded-2xl border border-[var(--border-color)] bg-[color-mix(in_srgb,var(--success-color),transparent_92%)] p-4 text-center text-sm text-[var(--success-color)]">
-          {t("admin.resend_email_success", { email: resendSuccess })}
-        </p>
-      )}
-
-      {resendError && (
-        <p className="mb-4 text-center text-sm text-[var(--error-color)]">
-          {resendError}
-        </p>
-      )}
 
       {isLoading ? (
         <div className="flex justify-center py-10">

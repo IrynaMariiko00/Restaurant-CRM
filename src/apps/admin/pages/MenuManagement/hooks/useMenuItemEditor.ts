@@ -1,9 +1,10 @@
 import { menuItemsApi } from "@/api/menuItems";
-import type { MenuItem } from "@/types/menuItem";
+import { useFeedback } from "@/context/FeedbackContext";
 import { useImageUrl } from "@/hooks/useImageUrl";
 import { validateMenuItemImage } from "@/shared/validation/validators";
 import { useEffect, useState, type FormEvent } from "react";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 import {
   emptyMenuItemForm,
   menuItemToFormValues,
@@ -24,6 +25,8 @@ export function useMenuItemEditor({
   itemId,
 }: UseMenuItemEditorOptions = {}) {
   const { t } = useTranslation();
+  const feedback = useFeedback();
+  const navigate = useNavigate();
   const [form, setForm] = useState<MenuItemFormValues>(emptyMenuItemForm);
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [localPreviewUrl, setLocalPreviewUrl] = useState<string | null>(null);
@@ -34,7 +37,6 @@ export function useMenuItemEditor({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isLoadingItem, setIsLoadingItem] = useState(mode === "edit");
   const [loadError, setLoadError] = useState<string | null>(null);
-  const [savedItem, setSavedItem] = useState<MenuItem | null>(null);
 
   const existingImageUrl = useImageUrl(existingImageId);
   const imagePreviewUrl =
@@ -132,21 +134,6 @@ export function useMenuItemEditor({
     if (submitError) setSubmitError(null);
   };
 
-  const resetForm = () => {
-    setForm(emptyMenuItemForm);
-    setImageFile(null);
-    setLocalPreviewUrl((prev) => {
-      if (prev) URL.revokeObjectURL(prev);
-      return null;
-    });
-    setExistingImageId(null);
-    setShowExistingImage(true);
-    setFieldErrors({});
-    setSubmitError(null);
-    setSavedItem(null);
-    setLoadError(null);
-  };
-
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setSubmitError(null);
@@ -173,7 +160,11 @@ export function useMenuItemEditor({
         );
         return;
       }
-      setSavedItem(response.data);
+
+      feedback.success(
+        t(mode === "edit" ? "menu.edit_success_title" : "menu.create_success_title"),
+      );
+      navigate("/staff/menu", { replace: true });
     } catch {
       setSubmitError(
         t(mode === "edit" ? "menu.edit_error" : "menu.create_error"),
@@ -194,8 +185,6 @@ export function useMenuItemEditor({
     isSubmitting,
     isLoadingItem,
     loadError,
-    savedItem,
     handleSubmit,
-    resetForm,
   };
 }

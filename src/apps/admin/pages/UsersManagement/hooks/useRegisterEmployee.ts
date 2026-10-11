@@ -1,4 +1,5 @@
 import { authApi } from "@/api/auth";
+import { useFeedback } from "@/context/FeedbackContext";
 import type { RegisterEmployeeRequest } from "@/types/auth";
 import {
   normalizeUaPhone,
@@ -20,6 +21,7 @@ const emptyForm: RegisterEmployeeRequest = {
 
 export const useRegisterEmployee = () => {
   const { t } = useTranslation();
+  const feedback = useFeedback();
   const navigate = useNavigate();
   const [form, setForm] = useState<RegisterEmployeeRequest>(emptyForm);
   const [profilePictureFile, setProfilePictureFile] = useState<File | null>(
@@ -104,12 +106,10 @@ export const useRegisterEmployee = () => {
         return;
       }
 
-      navigate("/staff/users", {
-        replace: true,
-        state: {
-          registeredEmail: response.data.email,
-        },
-      });
+      feedback.success(
+        t("admin.register_success", { email: response.data.email }),
+      );
+      navigate("/staff/users", { replace: true });
     } catch {
       setSubmitError(t("admin.register_error"));
     } finally {

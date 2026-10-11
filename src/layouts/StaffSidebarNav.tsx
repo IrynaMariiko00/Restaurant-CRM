@@ -47,9 +47,9 @@ export function StaffSidebarNav({ onNavigate }: StaffSidebarNavProps) {
           icon: SquareStack,
         },
         {
+          to: "/staff/restaurant",
           label: t("admin.restaurant_title"),
           icon: Store,
-          disabled: true,
         },
         {
           label: t("admin.schedule_title"),

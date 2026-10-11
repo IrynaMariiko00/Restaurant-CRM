@@ -19,13 +19,12 @@ export const RestaurantSettingsPage = () => {
     defaultRegion,
     logoPreviewUrl,
     backgroundPreviewUrl,
-    canClearLogo,
-    canClearBackground,
     fieldErrors,
     loadError,
     submitError,
     isLoading,
     isSubmitting,
+    canSubmit,
     handleNameChange,
     handleRegionChange,
     handleLogoChange,
@@ -55,6 +54,7 @@ export const RestaurantSettingsPage = () => {
                 : t("admin.restaurant_save")
             }
             isLoading={isSubmitting}
+            submitDisabled={!canSubmit}
             error={submitError}
             className="restaurant-settings__card"
             submitClassName="restaurant-settings__submit"
@@ -66,7 +66,6 @@ export const RestaurantSettingsPage = () => {
                 previewUrl={logoPreviewUrl}
                 error={fieldErrors.logo}
                 variant="logo"
-                canClear={canClearLogo}
                 onChange={handleLogoChange}
               />
 
@@ -122,7 +121,6 @@ export const RestaurantSettingsPage = () => {
               previewUrl={backgroundPreviewUrl}
               error={fieldErrors.backgroundImage}
               variant="background"
-              canClear={canClearBackground}
               onChange={handleBackgroundChange}
             />
           </AuthFormCard>

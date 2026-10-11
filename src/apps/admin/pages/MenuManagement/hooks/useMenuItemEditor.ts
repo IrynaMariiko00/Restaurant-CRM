@@ -1,5 +1,6 @@
 import { menuItemsApi } from "@/api/menuItems";
 import { useFeedback } from "@/context/FeedbackContext";
+import { useFormSubmitGate } from "@/hooks/useFormSubmitGate";
 import { useImageUrl } from "@/hooks/useImageUrl";
 import { validateMenuItemImage } from "@/shared/validation/validators";
 import { useEffect, useState, type FormEvent } from "react";
@@ -20,6 +21,12 @@ type UseMenuItemEditorOptions = {
   itemId?: number;
 };
 
+type MenuItemEditorSnapshot = {
+  form: MenuItemFormValues;
+  hasNewImage: boolean;
+  imageCleared: boolean;
+};
+
 export function useMenuItemEditor({
   mode = "create",
   itemId,
@@ -37,10 +44,25 @@ export function useMenuItemEditor({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isLoadingItem, setIsLoadingItem] = useState(mode === "edit");
   const [loadError, setLoadError] = useState<string | null>(null);
+  const [baseline, setBaseline] = useState<MenuItemEditorSnapshot | undefined>(
+    undefined,
+  );
 
   const existingImageUrl = useImageUrl(existingImageId);
   const imagePreviewUrl =
     localPreviewUrl ?? (showExistingImage ? existingImageUrl : null);
+
+  const values: MenuItemEditorSnapshot = {
+    form,
+    hasNewImage: imageFile != null,
+    imageCleared: mode === "edit" && imageFile == null && !showExistingImage,
+  };
+  const { canSubmit } = useFormSubmitGate({
+    values,
+    baseline: mode === "edit" ? baseline : undefined,
+    isComplete: Object.keys(validateMenuItemForm(form)).length === 0,
+    isBusy: isSubmitting || isLoadingItem,
+  });
 
   useEffect(() => {
     return () => {
@@ -51,6 +73,7 @@ export function useMenuItemEditor({
   useEffect(() => {
     if (mode !== "edit" || itemId == null || !Number.isFinite(itemId)) {
       setIsLoadingItem(false);
+      setBaseline(undefined);
       return;
     }
 
@@ -66,9 +89,16 @@ export function useMenuItemEditor({
           setLoadError(response.errors?.[0] ?? "menu.item_load_error");
           return;
         }
-        setForm(menuItemToFormValues(response.data));
+        const formValues = menuItemToFormValues(response.data);
+        setForm(formValues);
         setExistingImageId(response.data.imageId);
         setShowExistingImage(true);
+        setImageFile(null);
+        setBaseline({
+          form: formValues,
+          hasNewImage: false,
+          imageCleared: false,
+        });
       } catch {
         if (!cancelled) setLoadError("menu.item_load_error");
       } finally {
@@ -136,6 +166,7 @@ export function useMenuItemEditor({
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    if (!canSubmit) return;
     setSubmitError(null);
 
     const errors = validateMenuItemForm(form);
@@ -162,7 +193,11 @@ export function useMenuItemEditor({
       }
 
       feedback.success(
-        t(mode === "edit" ? "menu.edit_success_title" : "menu.create_success_title"),
+        t(
+          mode === "edit"
+            ? "menu.edit_success_title"
+            : "menu.create_success_title",
+        ),
       );
       navigate("/staff/menu", { replace: true });
     } catch {
@@ -183,6 +218,7 @@ export function useMenuItemEditor({
     fieldErrors,
     submitError,
     isSubmitting,
+    canSubmit,
     isLoadingItem,
     loadError,
     handleSubmit,

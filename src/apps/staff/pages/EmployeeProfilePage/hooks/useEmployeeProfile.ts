@@ -1,6 +1,7 @@
 import { employeeApi } from "@/api/employee";
 import { imagesApi } from "@/api/images";
 import { useFeedback } from "@/context/FeedbackContext";
+import { useFormSubmitGate } from "@/hooks/useFormSubmitGate";
 import type { UpdateEmployeeRequest } from "@/types/employee";
 import {
   normalizeUaPhone,
@@ -17,6 +18,10 @@ const emptyForm: UpdateEmployeeRequest = {
   lastName: "",
   email: "",
   phone: "",
+};
+
+type ProfileSnapshot = UpdateEmployeeRequest & {
+  hasNewAvatar: boolean;
 };
 
 export const useEmployeeProfile = () => {
@@ -38,6 +43,21 @@ export const useEmployeeProfile = () => {
   const [loadError, setLoadError] = useState<string | null>(null);
   const [saveError, setSaveError] = useState<string | null>(null);
   const [fieldErrors, setFieldErrors] = useState<ProfileFormErrors>({});
+
+  const values: ProfileSnapshot = {
+    ...form,
+    hasNewAvatar: profilePictureFile != null,
+  };
+  const baseline: ProfileSnapshot = {
+    ...initialData,
+    hasNewAvatar: false,
+  };
+  const { canSubmit } = useFormSubmitGate({
+    values,
+    baseline,
+    isComplete: Object.keys(validateProfileForm(form)).length === 0,
+    isBusy: isSaving,
+  });
 
   const revokeAvatarUrl = () => {
     if (avatarObjectUrlRef.current) {
@@ -181,6 +201,7 @@ export const useEmployeeProfile = () => {
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    if (!canSubmit) return;
     setSaveError(null);
 
     const errors = validateProfileForm(form);
@@ -254,6 +275,7 @@ export const useEmployeeProfile = () => {
     isEditing,
     isLoading,
     isSaving,
+    canSubmit,
     loadError,
     saveError,
     fieldErrors,

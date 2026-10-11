@@ -161,6 +161,8 @@
     "tables_qr_error": "Could not load QR code",
     "tables_qr_inactive": "QR is available only for an active table",
     "tables_qr_alt": "QR code for table #{{id}}",
+    "tables_copy_uuid": "Copy UUID",
+    "tables_uuid_copied": "Copied",
     "restaurant_title": "Restaurant",
     "restaurant_desc": "Name, region, logo and background",
     "restaurant_name": "Restaurant name",

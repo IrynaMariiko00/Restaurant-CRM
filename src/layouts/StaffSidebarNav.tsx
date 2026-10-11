@@ -1,7 +1,6 @@
 import {
   CalendarDays,
   Home,
-  KeyRound,
   LogOut,
   SquareStack,
   Store,
@@ -61,11 +60,6 @@ export function StaffSidebarNav({ onNavigate }: StaffSidebarNavProps) {
           label: t("staff.profile_title"),
           icon: UserCircle,
         },
-        {
-          to: "/staff/change-password",
-          label: t("admin.change_password_title"),
-          icon: KeyRound,
-        },
       ]
     : [
         {
@@ -77,11 +71,6 @@ export function StaffSidebarNav({ onNavigate }: StaffSidebarNavProps) {
           to: "/staff/profile",
           label: t("staff.profile_title"),
           icon: UserCircle,
-        },
-        {
-          to: "/staff/change-password",
-          label: t("admin.change_password_title"),
-          icon: KeyRound,
         },
       ];
 

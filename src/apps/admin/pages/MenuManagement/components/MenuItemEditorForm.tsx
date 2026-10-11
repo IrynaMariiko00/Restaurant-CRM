@@ -22,6 +22,7 @@ type MenuItemEditorFormProps = {
   fieldErrors: MenuItemFormFieldErrors;
   submitError: string | null;
   isSubmitting: boolean;
+  canSubmit: boolean;
   imagePreviewUrl: string | null;
   parents: MenuCategory[];
   children: MenuCategory[];
@@ -44,6 +45,7 @@ export function MenuItemEditorForm({
   fieldErrors,
   submitError,
   isSubmitting,
+  canSubmit,
   imagePreviewUrl,
   parents,
   children,
@@ -106,7 +108,7 @@ export function MenuItemEditorForm({
       <button
         type="submit"
         className="btn-accent menu-studio__submit"
-        disabled={isSubmitting}
+        disabled={isSubmitting || !canSubmit}
       >
         {isSubmitting ? (
           <>

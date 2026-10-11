@@ -14,6 +14,7 @@ export const RegisterEmployeePage = () => {
     fieldErrors,
     submitError,
     isSubmitting,
+    canSubmit,
     handleSubmit,
     t,
   } = useRegisterEmployee();
@@ -37,6 +38,7 @@ export const RegisterEmployeePage = () => {
               : t("admin.register_submit")
           }
           isLoading={isSubmitting}
+          submitDisabled={!canSubmit}
           error={submitError}
           className="register-employee__card"
           submitClassName="register-employee__submit"

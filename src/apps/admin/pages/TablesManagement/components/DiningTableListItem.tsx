@@ -1,4 +1,4 @@
-import { Loader2, QrCode } from "lucide-react";
+import { Check, Copy, Loader2, Power, QrCode } from "lucide-react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import type { DiningTable } from "@/types/diningTable";
@@ -17,72 +17,128 @@ export function DiningTableListItem({
 }: DiningTableListItemProps) {
   const { t } = useTranslation();
   const [showQr, setShowQr] = useState(false);
+  const [copied, setCopied] = useState(false);
   const { qrUrl, isLoading: qrLoading, error: qrError } = useDiningTableQr(
     table.qrUuid,
     showQr && table.isActive,
   );
 
+  const copyUuid = async () => {
+    try {
+      await navigator.clipboard.writeText(table.qrUuid);
+      setCopied(true);
+      window.setTimeout(() => setCopied(false), 1600);
+    } catch {
+      /* ignore */
+    }
+  };
+
   return (
-    <div className="flex h-full flex-col rounded-2xl border border-[var(--border-color)] bg-[var(--bg-light)] p-4">
-      <div className="flex items-start justify-between gap-3">
-        <div className="min-w-0">
-          <p className="font-semibold text-[var(--primary-text)]">
+    <li
+      className={`dining-table-row${
+        table.isActive ? "" : " dining-table-row--inactive"
+      }${showQr ? " dining-table-row--open" : ""}`}
+    >
+      <div className="dining-table-row__main">
+        <span
+          className={`dining-table-row__dot${
+            table.isActive
+              ? " dining-table-row__dot--on"
+              : " dining-table-row__dot--off"
+          }`}
+          aria-hidden
+        />
+
+        <div className="dining-table-row__label">
+          <p className="dining-table-row__title">
             {t("admin.table_label", { id: table.id })}
           </p>
-          <p className="mt-1 truncate font-mono text-xs text-[var(--secondary-text)]">
-            {table.qrUuid}
+          <p className="dining-table-row__status">
+            {table.isActive
+              ? t("admin.table_active")
+              : t("admin.table_inactive")}
           </p>
         </div>
-        <span
-          className={`inline-flex shrink-0 items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${
-            table.isActive
-              ? "bg-[color-mix(in_srgb,var(--success-color),transparent_88%)] text-[var(--success-color)]"
-              : "bg-[color-mix(in_srgb,var(--secondary-text),transparent_88%)] text-[var(--secondary-text)]"
-          }`}
-        >
-          {table.isActive
-            ? t("admin.table_active")
-            : t("admin.table_inactive")}
-        </span>
-      </div>
 
-      <div className="mt-auto grid grid-cols-2 gap-2 pt-3">
-        <button
-          type="button"
-          className={`dining-table__action ${
-            table.isActive ? "btn-ghost dining-table__off-btn" : "btn-ghost"
-          }`}
-          disabled={isToggling}
-          onClick={() => onSetActive(table.id, !table.isActive)}
-        >
-          {isToggling ? (
-            <Loader2 className="h-3.5 w-3.5 animate-spin" aria-hidden />
-          ) : table.isActive ? (
-            t("admin.tables_deactivate")
-          ) : (
-            t("admin.tables_activate")
-          )}
-        </button>
-        <button
-          type="button"
-          className="btn-ghost dining-table__action dining-table__qr-btn"
-          disabled={!table.isActive}
-          onClick={() => setShowQr((open) => !open)}
-        >
-          <QrCode className="h-3.5 w-3.5" aria-hidden />
-          {showQr ? t("admin.tables_qr_hide") : t("admin.tables_qr_show")}
-        </button>
+        <div className="dining-table-row__actions">
+          <button
+            type="button"
+            className="dining-table-row__icon-btn"
+            onClick={() => void copyUuid()}
+            title={
+              copied
+                ? t("admin.tables_uuid_copied")
+                : t("admin.tables_copy_uuid")
+            }
+            aria-label={
+              copied
+                ? t("admin.tables_uuid_copied")
+                : t("admin.tables_copy_uuid")
+            }
+          >
+            {copied ? (
+              <Check className="h-4 w-4" aria-hidden />
+            ) : (
+              <Copy className="h-4 w-4" aria-hidden />
+            )}
+          </button>
+
+          <button
+            type="button"
+            className={`dining-table-row__icon-btn${
+              table.isActive
+                ? " dining-table-row__icon-btn--off"
+                : " dining-table-row__icon-btn--on"
+            }`}
+            disabled={isToggling}
+            onClick={() => onSetActive(table.id, !table.isActive)}
+            title={
+              table.isActive
+                ? t("admin.tables_deactivate")
+                : t("admin.tables_activate")
+            }
+            aria-label={
+              table.isActive
+                ? t("admin.tables_deactivate")
+                : t("admin.tables_activate")
+            }
+          >
+            {isToggling ? (
+              <Loader2 className="h-4 w-4 animate-spin" aria-hidden />
+            ) : (
+              <Power className="h-4 w-4" aria-hidden />
+            )}
+          </button>
+
+          <button
+            type="button"
+            className={`dining-table-row__icon-btn dining-table-row__icon-btn--qr${
+              showQr ? " is-open" : ""
+            }`}
+            disabled={!table.isActive}
+            onClick={() => setShowQr((open) => !open)}
+            title={
+              showQr ? t("admin.tables_qr_hide") : t("admin.tables_qr_show")
+            }
+            aria-label={
+              showQr ? t("admin.tables_qr_hide") : t("admin.tables_qr_show")
+            }
+            aria-expanded={showQr}
+          >
+            <QrCode className="h-4 w-4" aria-hidden />
+          </button>
+        </div>
       </div>
 
       {showQr && (
-        <div className="mt-3 rounded-xl border border-[var(--border-color)] bg-[var(--bg-primary)] p-3 text-center">
+        <div className="dining-table-row__qr">
           {!table.isActive ? (
-            <p className="text-sm text-[var(--secondary-text)]">
+            <p className="dining-table-row__qr-note">
               {t("admin.tables_qr_inactive")}
             </p>
           ) : qrLoading ? (
             <Loader2
-              className="mx-auto h-6 w-6 animate-spin text-[var(--color-violet-blue)]"
+              className="mx-auto h-5 w-5 animate-spin text-[var(--color-violet-blue)]"
               aria-label={t("common.waiting")}
             />
           ) : qrError ? (
@@ -91,11 +147,11 @@ export function DiningTableListItem({
             <img
               src={qrUrl}
               alt={t("admin.tables_qr_alt", { id: table.id })}
-              className="mx-auto h-44 w-44 rounded-lg bg-white p-2"
+              className="dining-table-row__qr-img"
             />
           ) : null}
         </div>
       )}
-    </div>
+    </li>
   );
 }

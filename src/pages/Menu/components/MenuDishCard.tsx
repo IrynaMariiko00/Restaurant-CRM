@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import type { MenuItem } from "@/types/menuItem";
+import { useRestaurantProfile } from "@/hooks/useRestaurantProfile";
 import { formatMenuPrice, getMenuItemCopy } from "@/shared/menu/itemCopy";
 import { MenuDishCardMenu } from "./MenuDishCardMenu";
 import { MenuDishFlags } from "./MenuDishFlags";
@@ -20,6 +21,7 @@ export const MenuDishCard = ({
   onDelete,
 }: MenuDishCardProps) => {
   const { t, i18n } = useTranslation();
+  const { restaurant } = useRestaurantProfile();
   const copy = getMenuItemCopy(
     item,
     i18n.resolvedLanguage ?? i18n.language,
@@ -44,7 +46,13 @@ export const MenuDishCard = ({
           className="menu-dish__media"
         />
         <div className="menu-dish__body">
-          <p className="menu-dish__price">{formatMenuPrice(item.price)}</p>
+          <p className="menu-dish__price">
+            {formatMenuPrice(
+              item.price,
+              i18n.resolvedLanguage ?? i18n.language,
+              restaurant?.currency,
+            )}
+          </p>
           <h2 className="menu-dish__name">{name}</h2>
           <MenuDishFlags item={item} />
         </div>

@@ -1,4 +1,5 @@
 import { Image } from "lucide-react";
+import { useRestaurantProfile } from "@/hooks/useRestaurantProfile";
 import { formatMenuPrice } from "@/shared/menu/itemCopy";
 import { MenuDishFlags } from "@/pages/Menu/components/MenuDishFlags";
 import type { MenuItemFormValues } from "../hooks/menuItemForm";
@@ -15,7 +16,8 @@ export function MenuItemLivePreview({
   imagePreviewUrl,
   categoryLabel,
 }: MenuItemLivePreviewProps) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const { restaurant } = useRestaurantProfile();
   const name =
     form.nameDefaultLanguage.trim() ||
     form.nameSecondLanguage.trim() ||
@@ -26,7 +28,11 @@ export function MenuItemLivePreview({
   const priceNumber = Number(form.price.replace(",", "."));
   const priceLabel =
     form.price.trim() && Number.isFinite(priceNumber)
-      ? formatMenuPrice(priceNumber)
+      ? formatMenuPrice(
+          priceNumber,
+          i18n.resolvedLanguage ?? i18n.language,
+          restaurant?.currency,
+        )
       : "—";
 
   return (

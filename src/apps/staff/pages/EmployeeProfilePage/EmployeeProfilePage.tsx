@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { AdminPageShell } from "@/apps/admin/components/AdminPageShell";
 import { AuthFormCard } from "@/components/auth/AuthFormCard";
 import { PageLoader } from "@/ui/PageLoader";
@@ -16,6 +17,7 @@ export const EmployeeProfilePage = () => {
     handleAvatarChange,
     isLoading,
     isSaving,
+    canSubmit,
     loadError,
     saveError,
     fieldErrors,
@@ -47,6 +49,7 @@ export const EmployeeProfilePage = () => {
             isSaving ? t("staff.profile_saving") : t("staff.profile_save")
           }
           isLoading={isSaving}
+          submitDisabled={!canSubmit}
           error={saveError}
         >
           <ProfileForm
@@ -80,6 +83,17 @@ export const EmployeeProfilePage = () => {
             )}
           </div>
         </AuthFormCard>
+      )}
+
+      {!isLoading && !loadError && !isEditing && (
+        <p className="mt-5 text-center">
+          <Link
+            to="/staff/change-password"
+            className="text-sm font-medium text-[var(--color-violet-blue)] underline-offset-2 hover:underline"
+          >
+            {t("admin.change_password_title")}
+          </Link>
+        </p>
       )}
     </AdminPageShell>
   );

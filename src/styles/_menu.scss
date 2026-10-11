@@ -548,9 +548,9 @@
 
 .menu-dish__price {
   margin: 0;
-  font-size: 0.82rem;
+  font-size: 1.05rem;
   font-weight: 700;
-  letter-spacing: 0.04em;
+  letter-spacing: -0.01em;
   color: var(--color-violet-blue);
 }
 
@@ -757,16 +757,16 @@
 }
 
 .menu-detail__price {
-  margin: 0;
-  font-size: 0.9rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  margin: 1.75rem 0 0;
+  font-size: clamp(1.6rem, 3.5vw, 2.25rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
   color: var(--color-violet-blue);
 }
 
 .menu-detail__title {
-  margin: 0.4rem 0 0.8rem;
+  margin: 0 0 0.8rem;
   font-size: clamp(2rem, 5vw, 3.5rem);
   font-weight: 900;
   letter-spacing: -0.045em;

@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { AdminPageShell } from "@/apps/admin/components/AdminPageShell";
 import { AuthFormCard } from "@/components/auth/AuthFormCard";
 import { PasswordField } from "@/components/auth/PasswordField";
@@ -64,6 +65,15 @@ export const ChangePasswordPage = () => {
           error={fieldError("confirmPassword")}
         />
       </AuthFormCard>
+
+      <p className="mt-5 text-center">
+        <Link
+          to="/staff/profile"
+          className="text-sm font-medium text-[var(--color-violet-blue)] underline-offset-2 hover:underline"
+        >
+          {t("staff.profile_title")}
+        </Link>
+      </p>
     </AdminPageShell>
   );
 };

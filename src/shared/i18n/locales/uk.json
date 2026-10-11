@@ -161,6 +161,8 @@
     "tables_qr_error": "Не вдалося завантажити QR",
     "tables_qr_inactive": "QR доступний лише для активного столу",
     "tables_qr_alt": "QR-код столу №{{id}}",
+    "tables_copy_uuid": "Скопіювати UUID",
+    "tables_uuid_copied": "Скопійовано",
     "restaurant_title": "Заклад",
     "restaurant_desc": "Назва, регіон, логотип і фон",
     "restaurant_name": "Назва закладу",

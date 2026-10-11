@@ -1,6 +1,5 @@
 import {
   CalendarDays,
-  KeyRound,
   Loader2,
   LogOut,
   SquareStack,
@@ -102,12 +101,6 @@ export const WelcomePage = () => {
             label={t("staff.profile_title")}
             description={t("admin.profile_desc")}
             icon={UserCircle}
-          />
-          <AdminNavButton
-            to="/staff/change-password"
-            label={t("admin.change_password_title")}
-            description={t("admin.change_password_desc")}
-            icon={KeyRound}
           />
         </div>
 

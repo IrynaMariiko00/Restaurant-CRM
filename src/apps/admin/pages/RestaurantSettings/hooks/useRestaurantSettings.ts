@@ -1,5 +1,6 @@
 import { restaurantApi } from "@/api/restaurant";
 import { useFeedback } from "@/context/FeedbackContext";
+import { useFormSubmitGate } from "@/hooks/useFormSubmitGate";
 import { useImageUrl } from "@/hooks/useImageUrl";
 import { setRestaurantProfileCache } from "@/hooks/useRestaurantProfile";
 import { validateMenuItemImage } from "@/shared/validation/validators";
@@ -11,6 +12,13 @@ type FieldErrors = {
   name?: string;
   logo?: string;
   backgroundImage?: string;
+};
+
+type RestaurantSettingsSnapshot = {
+  name: string;
+  defaultRegion: RestaurantRegion;
+  hasLogoFile: boolean;
+  hasBackgroundFile: boolean;
 };
 
 export function useRestaurantSettings() {
@@ -36,8 +44,28 @@ export function useRestaurantSettings() {
   const existingBackgroundUrl = useImageUrl(restaurant?.backgroundImageId);
 
   const logoPreviewUrl = logoPreviewLocal ?? existingLogoUrl;
-  const backgroundPreviewUrl =
-    backgroundPreviewLocal ?? existingBackgroundUrl;
+  const backgroundPreviewUrl = backgroundPreviewLocal ?? existingBackgroundUrl;
+
+  const values: RestaurantSettingsSnapshot = {
+    name,
+    defaultRegion,
+    hasLogoFile: logoFile != null,
+    hasBackgroundFile: backgroundFile != null,
+  };
+  const baseline: RestaurantSettingsSnapshot | undefined = restaurant
+    ? {
+        name: restaurant.name ?? "",
+        defaultRegion: restaurant.defaultRegion ?? "UKRAINE",
+        hasLogoFile: false,
+        hasBackgroundFile: false,
+      }
+    : undefined;
+  const { canSubmit } = useFormSubmitGate({
+    values,
+    baseline,
+    isComplete: name.trim().length > 0,
+    isBusy: isSubmitting,
+  });
 
   useEffect(() => {
     return () => {
@@ -151,6 +179,8 @@ export function useRestaurantSettings() {
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
+    if (!canSubmit) return;
+
     const trimmed = name.trim();
     if (!trimmed) {
       setFieldErrors((prev) => ({ ...prev, name: "validation.required" }));
@@ -204,13 +234,12 @@ export function useRestaurantSettings() {
     defaultRegion,
     logoPreviewUrl,
     backgroundPreviewUrl,
-    canClearLogo: Boolean(logoFile),
-    canClearBackground: Boolean(backgroundFile),
     fieldErrors,
     loadError,
     submitError,
     isLoading,
     isSubmitting,
+    canSubmit,
     handleNameChange,
     handleRegionChange,
     handleLogoChange,

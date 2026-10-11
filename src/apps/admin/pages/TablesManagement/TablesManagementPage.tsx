@@ -35,67 +35,69 @@ export const TablesManagementPage = () => {
       title={t("admin.tables_title")}
       subtitle={t("admin.tables_desc")}
     >
-      <button
-        type="button"
-        className="btn-accent mb-8 inline-flex w-fit items-center justify-center gap-2"
-        disabled={isCreating || isLoading}
-        onClick={() => void createTable()}
-      >
-        {isCreating ? (
-          <Loader2 className="h-4 w-4 animate-spin" aria-hidden />
-        ) : (
-          <Plus className="h-4 w-4" aria-hidden />
-        )}
-        {isCreating ? t("admin.tables_creating") : t("admin.tables_create")}
-      </button>
-
-      <div
-        className="mb-4 grid grid-cols-3 gap-2"
-        role="tablist"
-        aria-label={t("admin.tables_filter_label")}
-      >
-        {FILTERS.map((filter) => (
-          <button
-            key={filter}
-            type="button"
-            role="tab"
-            aria-selected={activityFilter === filter}
-            className={`rounded-xl border px-2 py-2 text-center text-xs font-semibold transition sm:text-sm ${
-              activityFilter === filter
-                ? "border-[var(--color-violet-blue)] bg-[color-mix(in_srgb,var(--color-violet-blue),transparent_90%)] text-[var(--color-violet-blue)]"
-                : "border-[var(--border-color)] bg-[var(--bg-light)] text-[var(--secondary-text)] hover:border-[color-mix(in_srgb,var(--color-violet-blue),transparent_55%)]"
-            }`}
-            onClick={() => setActivityFilter(filter)}
+      <div className="tables-page">
+        <div className="tables-page__toolbar">
+          <div
+            className="tables-page__filters"
+            role="tablist"
+            aria-label={t("admin.tables_filter_label")}
           >
-            {t(`admin.tables_filter_${filter}`)}
-          </button>
-        ))}
-      </div>
+            {FILTERS.map((filter) => (
+              <button
+                key={filter}
+                type="button"
+                role="tab"
+                aria-selected={activityFilter === filter}
+                className={`tables-page__filter${
+                  activityFilter === filter
+                    ? " tables-page__filter--active"
+                    : ""
+                }`}
+                onClick={() => setActivityFilter(filter)}
+              >
+                {t(`admin.tables_filter_${filter}`)}
+              </button>
+            ))}
+          </div>
 
-      {isLoading ? (
-        <PageLoader />
-      ) : loadError ? (
-        <p className="text-center text-sm text-[var(--error-color)]">
-          {loadError}
-        </p>
-      ) : tables.length === 0 ? (
-        <p className="rounded-2xl border border-dashed border-[var(--border-color)] bg-[var(--bg-light)] p-6 text-center text-sm text-[var(--secondary-text)]">
-          {emptyLabel}
-        </p>
-      ) : (
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-          {tables.map((table) => (
-            <DiningTableListItem
-              key={table.id}
-              table={table}
-              isToggling={togglingId === table.id}
-              onSetActive={(id, isActive) => {
-                void setTableActive(id, isActive);
-              }}
-            />
-          ))}
+          <button
+            type="button"
+            className="btn-accent tables-page__create"
+            disabled={isCreating || isLoading}
+            onClick={() => void createTable()}
+          >
+            {isCreating ? (
+              <Loader2 className="h-4 w-4 animate-spin" aria-hidden />
+            ) : (
+              <Plus className="h-4 w-4" aria-hidden />
+            )}
+            {isCreating ? t("admin.tables_creating") : t("admin.tables_create")}
+          </button>
         </div>
-      )}
+
+        {isLoading ? (
+          <PageLoader />
+        ) : loadError ? (
+          <p className="text-center text-sm text-[var(--error-color)]">
+            {loadError}
+          </p>
+        ) : tables.length === 0 ? (
+          <p className="tables-page__empty">{emptyLabel}</p>
+        ) : (
+          <ul className="tables-page__list">
+            {tables.map((table) => (
+              <DiningTableListItem
+                key={table.id}
+                table={table}
+                isToggling={togglingId === table.id}
+                onSetActive={(id, isActive) => {
+                  void setTableActive(id, isActive);
+                }}
+              />
+            ))}
+          </ul>
+        )}
+      </div>
     </AdminPageShell>
   );
 };

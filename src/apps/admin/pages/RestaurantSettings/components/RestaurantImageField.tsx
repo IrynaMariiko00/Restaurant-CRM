@@ -1,4 +1,4 @@
-import { ImagePlus, X } from "lucide-react";
+import { ImagePlus } from "lucide-react";
 import { useRef } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -8,7 +8,6 @@ type RestaurantImageFieldProps = {
   previewUrl: string | null;
   error?: string | null;
   variant?: "logo" | "background";
-  canClear?: boolean;
   onChange: (file: File | null) => void;
 };
 
@@ -18,14 +17,15 @@ export function RestaurantImageField({
   previewUrl,
   error,
   variant = "background",
-  canClear = false,
   onChange,
 }: RestaurantImageFieldProps) {
   const { t } = useTranslation();
   const inputRef = useRef<HTMLInputElement>(null);
 
   return (
-    <div className={`restaurant-image-field restaurant-image-field--${variant}`}>
+    <div
+      className={`restaurant-image-field restaurant-image-field--${variant}`}
+    >
       <label className="form-label" htmlFor={id}>
         {label}
       </label>
@@ -55,16 +55,6 @@ export function RestaurantImageField({
             >
               {t("admin.restaurant_change_image")}
             </button>
-            {canClear && (
-              <button
-                type="button"
-                className="restaurant-image-field__remove"
-                onClick={() => onChange(null)}
-                aria-label={t("menu.create_remove_image")}
-              >
-                <X className="h-4 w-4" aria-hidden />
-              </button>
-            )}
           </div>
         </div>
       ) : (

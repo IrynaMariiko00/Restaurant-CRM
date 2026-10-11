@@ -1,5 +1,6 @@
 import { authApi } from "@/api/auth";
 import { useFeedback } from "@/context/FeedbackContext";
+import { useFormSubmitGate } from "@/hooks/useFormSubmitGate";
 import type { RegisterEmployeeRequest } from "@/types/auth";
 import {
   normalizeUaPhone,
@@ -33,6 +34,12 @@ export const useRegisterEmployee = () => {
   >({});
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const { canSubmit } = useFormSubmitGate({
+    values: form,
+    isComplete: Object.keys(validateProfileForm(form)).length === 0,
+    isBusy: isSubmitting,
+  });
 
   const setField = <K extends keyof RegisterEmployeeRequest>(
     key: K,
@@ -71,6 +78,7 @@ export const useRegisterEmployee = () => {
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    if (!canSubmit) return;
     setSubmitError(null);
 
     const errors = validateProfileForm(form);
@@ -125,6 +133,7 @@ export const useRegisterEmployee = () => {
     fieldErrors,
     submitError,
     isSubmitting,
+    canSubmit,
     handleSubmit,
     t,
   };

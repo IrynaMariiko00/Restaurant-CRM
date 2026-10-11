@@ -28,8 +28,15 @@ export function getMenuItemCopy(
   };
 }
 
-export function formatMenuPrice(price: number) {
-  return new Intl.NumberFormat(undefined, {
+export function formatMenuPrice(
+  price: number,
+  language?: string | null,
+  currency?: string | null,
+) {
+  const useUk = prefersUkrainian(language);
+  const formatted = new Intl.NumberFormat(useUk ? "uk-UA" : "en-US", {
     maximumFractionDigits: 2,
   }).format(price);
+  const code = currency?.trim();
+  return code ? `${formatted} ${code}` : formatted;
 }

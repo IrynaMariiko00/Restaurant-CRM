@@ -6,6 +6,8 @@ type AuthFormCardProps = {
   onSubmit: FormEventHandler<HTMLFormElement>;
   submitText: string;
   isLoading?: boolean;
+  /** When true, submit stays disabled even if not loading (incomplete / unchanged). */
+  submitDisabled?: boolean;
   /** Form submit error — local state only; do not also call useFeedback().error */
   error?: string | null;
   hideSubmit?: boolean;
@@ -18,6 +20,7 @@ export const AuthFormCard = ({
   onSubmit,
   submitText,
   isLoading,
+  submitDisabled = false,
   error,
   hideSubmit = false,
   className = "",
@@ -25,10 +28,7 @@ export const AuthFormCard = ({
   children,
 }: AuthFormCardProps) => {
   return (
-    <form
-      onSubmit={onSubmit}
-      className={`auth-form-card ${className}`.trim()}
-    >
+    <form onSubmit={onSubmit} className={`auth-form-card ${className}`.trim()}>
       <div className="auth-form-card__fields">{children}</div>
 
       {error && (
@@ -40,7 +40,7 @@ export const AuthFormCard = ({
       {!hideSubmit && (
         <AccentButton
           type="submit"
-          disabled={isLoading}
+          disabled={isLoading || submitDisabled}
           className={`auth-form-card__submit ${submitClassName}`.trim()}
         >
           {submitText}

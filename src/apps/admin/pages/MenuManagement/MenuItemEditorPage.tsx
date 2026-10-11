@@ -31,6 +31,7 @@ export function MenuItemEditorPage({
     fieldErrors,
     submitError,
     isSubmitting,
+    canSubmit,
     isLoadingItem,
     loadError,
     handleSubmit,
@@ -131,6 +132,7 @@ export function MenuItemEditorPage({
           fieldErrors={fieldErrors}
           submitError={submitError}
           isSubmitting={isSubmitting}
+          canSubmit={canSubmit}
           imagePreviewUrl={imagePreviewUrl}
           parents={parents}
           children={children}

@@ -4,6 +4,7 @@ import { ArrowLeft, Loader2, Pencil, Trash2 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { menuItemsApi } from "@/api/menuItems";
 import { useAuth } from "@/context/AuthContext";
+import { useRestaurantProfile } from "@/hooks/useRestaurantProfile";
 import { formatMenuPrice, getMenuItemCopy } from "@/shared/menu/itemCopy";
 import { ConfirmDialog } from "@/ui/ConfirmDialog";
 import { MenuDishFlags } from "./components/MenuDishFlags";
@@ -15,6 +16,7 @@ export const MenuItemDetailPage = () => {
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
   const { isAdmin } = useAuth();
+  const { restaurant } = useRestaurantProfile();
   const { listTo, variant } = useMenuBrowse();
   const { item, isLoading, error } = useMenuItemDetail();
   const canManage = variant === "staff" && isAdmin;
@@ -99,7 +101,6 @@ export const MenuItemDetailPage = () => {
       </div>
 
       <div className="menu-detail__copy">
-        <p className="menu-detail__price">{formatMenuPrice(item.price)}</p>
         <h1 className="menu-detail__title">{name}</h1>
         <MenuDishFlags item={item} />
 
@@ -129,6 +130,14 @@ export const MenuItemDetailPage = () => {
               </div>
             )}
         </dl>
+
+        <p className="menu-detail__price">
+          {formatMenuPrice(
+            item.price,
+            i18n.resolvedLanguage ?? i18n.language,
+            restaurant?.currency,
+          )}
+        </p>
 
         {canManage && (
           <div className="menu-detail__actions">

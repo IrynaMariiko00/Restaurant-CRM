@@ -81,13 +81,21 @@ export const MenuListPage = () => {
             <h1 className="menu-page__title">{t("admin.menu_title")}</h1>
             <p className="menu-page__lead">{t("menu.list_subtitle")}</p>
             {showManage && (
-              <Link
-                to="/staff/menu/new"
-                className="btn-accent menu-page__create"
-              >
-                <Plus className="h-4 w-4" aria-hidden />
-                {t("menu.create_cta")}
-              </Link>
+              <div className="menu-page__manage">
+                <Link
+                  to="/staff/menu/new"
+                  className="btn-accent menu-page__create"
+                >
+                  <Plus className="h-4 w-4" aria-hidden />
+                  {t("menu.create_cta")}
+                </Link>
+                <Link
+                  to="/staff/menu/categories"
+                  className="btn-ghost menu-page__categories"
+                >
+                  {t("admin.categories_manage")}
+                </Link>
+              </div>
             )}
           </aside>
 

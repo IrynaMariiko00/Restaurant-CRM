@@ -9,6 +9,7 @@ import { RegisterEmployeePage } from "@/apps/admin/pages/UsersManagement/Registe
 import { RestaurantSettingsPage } from "@/apps/admin/pages/RestaurantSettings/RestaurantSettingsPage";
 import { ScheduleManagementPage } from "@/apps/admin/pages/ScheduleManagement/ScheduleManagementPage";
 import { TablesManagementPage } from "@/apps/admin/pages/TablesManagement/TablesManagementPage";
+import { CategoriesManagementPage } from "@/apps/admin/pages/MenuManagement/CategoriesManagementPage";
 import { MenuItemEditorPage } from "@/apps/admin/pages/MenuManagement/MenuItemEditorPage";
 import { MenuListPage } from "@/pages/Menu/MenuListPage";
 import { MenuItemDetailPage } from "@/pages/Menu/MenuItemDetailPage";
@@ -24,6 +25,10 @@ export const StaffApp = () => {
           <Route path="menu" element={<MenuListPage />} />
 
           <Route element={<RequireAdmin />}>
+            <Route
+              path="menu/categories"
+              element={<CategoriesManagementPage />}
+            />
             <Route
               path="menu/new"
               element={<MenuItemEditorPage mode="create" />}

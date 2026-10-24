@@ -1,10 +1,15 @@
-import type { BaseResponse } from "./auth";
+import type { ActionResponse, BaseResponse } from "./auth";
 
 export interface MenuCategory {
   id: number;
   nameDefaultLanguage: string;
   nameSecondLanguage: string;
   parentCategoryId: number | null;
+}
+
+export interface MenuCategoryRequest {
+  nameDefaultLanguage?: string;
+  nameSecondLanguage?: string;
 }
 
 export interface MenuCategoryListParams {
@@ -24,4 +29,6 @@ export interface MenuCategoryListData {
   meta: MenuCategoryPageMeta;
 }
 
+export type MenuCategoryResponse = BaseResponse<MenuCategory>;
 export type MenuCategoryListResponse = BaseResponse<MenuCategoryListData>;
+export type MenuCategoryDeleteResponse = ActionResponse;

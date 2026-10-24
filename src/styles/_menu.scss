@@ -101,12 +101,18 @@
   }
 }
 
-.menu-page__create {
+.menu-page__manage {
+  display: grid;
+  gap: 0.55rem;
+  margin-top: 1.25rem;
+}
+
+.menu-page__create,
+.menu-page__categories {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 0.45rem;
-  margin-top: 1.25rem;
   width: 100%;
   box-sizing: border-box;
 }

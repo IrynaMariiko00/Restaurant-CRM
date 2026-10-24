@@ -5,6 +5,7 @@ import { WelcomePage } from "@/pages/WelcomePage/WelcomePage";
 import { EmployeeProfilePage } from "@/apps/staff/pages/EmployeeProfilePage/EmployeeProfilePage";
 import { ChangePasswordPage } from "@/pages/ChangePasswordPage/ChangePasswordPage";
 import { UsersManagementPage } from "@/apps/admin/pages/UsersManagement/UsersManagementPage";
+import { EditEmployeePage } from "@/apps/admin/pages/UsersManagement/EditEmployeePage";
 import { RegisterEmployeePage } from "@/apps/admin/pages/UsersManagement/RegisterEmployeePage";
 import { RestaurantSettingsPage } from "@/apps/admin/pages/RestaurantSettings/RestaurantSettingsPage";
 import { ScheduleManagementPage } from "@/apps/admin/pages/ScheduleManagement/ScheduleManagementPage";
@@ -39,6 +40,7 @@ export const StaffApp = () => {
             />
             <Route path="users" element={<UsersManagementPage />} />
             <Route path="users/new" element={<RegisterEmployeePage />} />
+            <Route path="users/:id" element={<EditEmployeePage />} />
             <Route path="tables" element={<TablesManagementPage />} />
             <Route path="restaurant" element={<RestaurantSettingsPage />} />
             <Route path="schedule" element={<ScheduleManagementPage />} />

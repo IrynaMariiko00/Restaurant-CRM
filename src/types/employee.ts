@@ -8,6 +8,7 @@ export interface Employee {
   emailConfirmed: boolean;
   profilePictureId?: number | null;
   phone: string;
+  isAdmin?: boolean;
   isDeleted: boolean;
 }
 

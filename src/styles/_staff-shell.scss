@@ -607,11 +607,18 @@
   box-sizing: border-box;
 }
 
-.employee-card__resend {
+.employee-card__actions {
   position: absolute;
   top: 0.7rem;
   right: 0.7rem;
   z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.employee-card__edit,
+.employee-card__resend {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -623,6 +630,7 @@
   background: var(--bg-primary);
   color: var(--secondary-text);
   font: inherit;
+  text-decoration: none;
   cursor: pointer;
   transition:
     color 150ms ease,
@@ -641,6 +649,7 @@
   }
 }
 
+.employee-card__edit-icon,
 .employee-card__resend-icon {
   width: 0.9rem;
   height: 0.9rem;
@@ -652,10 +661,7 @@
   align-items: flex-start;
   gap: 0.85rem;
   min-width: 0;
-}
-
-.employee-card:has(.employee-card__resend) .employee-card__head {
-  padding-right: 2.25rem;
+  padding-right: 4.5rem;
 }
 
 .employee-card__avatar {
@@ -736,6 +742,11 @@
   border-color: color-mix(in srgb, var(--error-color), transparent 35%);
   background: color-mix(in srgb, var(--error-color), transparent 92%);
   color: var(--error-color);
+}
+
+.employee-card__chip--admin {
+  background: color-mix(in srgb, var(--color-violet-blue), transparent 88%);
+  color: var(--color-violet-blue);
 }
 
 .employee-card__chip--deleted {
@@ -1184,7 +1195,7 @@
     padding: 1.25rem 1.35rem;
   }
 
-  .employee-card__resend {
+  .employee-card__actions {
     top: 0.85rem;
     right: 0.85rem;
   }

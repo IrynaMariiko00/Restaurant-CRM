@@ -1,4 +1,5 @@
-import { AlertCircle, CheckCircle2, Mail } from "lucide-react";
+import { AlertCircle, CheckCircle2, Mail, Pencil } from "lucide-react";
+import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import type { Employee } from "@/types/employee";
 
@@ -23,26 +24,36 @@ export const EmployeeListItem = ({
 
   return (
     <div className="employee-card">
-      {canResend && (
-        <button
-          type="button"
-          disabled={isResending}
-          onClick={() => onResendEmail(employee.email)}
-          className="employee-card__resend"
-          title={
-            isResending
-              ? t("admin.resend_email_sending")
-              : t("admin.resend_email")
-          }
-          aria-label={
-            isResending
-              ? t("admin.resend_email_sending")
-              : t("admin.resend_email")
-          }
+      <div className="employee-card__actions">
+        <Link
+          to={`/staff/users/${employee.id}`}
+          className="employee-card__edit"
+          aria-label={t("common.edit")}
+          title={t("common.edit")}
         >
-          <Mail className="employee-card__resend-icon" aria-hidden />
-        </button>
-      )}
+          <Pencil className="employee-card__edit-icon" aria-hidden />
+        </Link>
+        {canResend && (
+          <button
+            type="button"
+            disabled={isResending}
+            onClick={() => onResendEmail(employee.email)}
+            className="employee-card__resend"
+            title={
+              isResending
+                ? t("admin.resend_email_sending")
+                : t("admin.resend_email")
+            }
+            aria-label={
+              isResending
+                ? t("admin.resend_email_sending")
+                : t("admin.resend_email")
+            }
+          >
+            <Mail className="employee-card__resend-icon" aria-hidden />
+          </button>
+        )}
+      </div>
 
       <div className="employee-card__head">
         <div className="employee-card__avatar" aria-hidden>
@@ -60,6 +71,11 @@ export const EmployeeListItem = ({
             {isCurrentUser && (
               <span className="employee-card__chip employee-card__chip--you">
                 {t("admin.you_chip")}
+              </span>
+            )}
+            {employee.isAdmin && (
+              <span className="employee-card__chip employee-card__chip--admin">
+                {t("admin.user_admin")}
               </span>
             )}
             <span

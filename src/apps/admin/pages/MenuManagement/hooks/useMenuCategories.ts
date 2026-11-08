@@ -46,7 +46,6 @@ export function useMenuCategories() {
   }, []);
 
   useEffect(() => {
-    // children are reset in selectParent, so nothing to clear here
     if (parentId == null) return;
 
     let cancelled = false;
@@ -83,7 +82,6 @@ export function useMenuCategories() {
     setChildren([]);
   }, []);
 
-  /** Resolve the parent of a child category with a single GET /menu-categories/{id}. */
   const hydrateFromChildId = useCallback(async (childCategoryId: number) => {
     try {
       const response = await menuCategoriesApi.getCategory(childCategoryId);
@@ -92,7 +90,7 @@ export function useMenuCategories() {
         setParentId(resolvedParentId);
       }
     } catch {
-      // parent stays unselected; user can pick it manually
+      setParentId(null);
     }
   }, []);
 

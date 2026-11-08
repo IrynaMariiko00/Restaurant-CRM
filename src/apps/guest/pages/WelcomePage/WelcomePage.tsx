@@ -103,15 +103,6 @@ export const WelcomePage: React.FC = () => {
           </button>
         </Link>
       </nav>
-
-      <footer className="relative z-10 mt-auto pt-10 pb-4">
-        <button
-          type="button"
-          className="flex items-center gap-2 rounded-full border border-[var(--border-color)] bg-[var(--bg-light)] px-6 py-3 text-sm font-bold text-[var(--color-violet-blue)] transition-colors active:bg-[var(--icon-color)]"
-        >
-          <span>🛎️</span> {t("guest.call_waiter")}
-        </button>
-      </footer>
     </div>
   );
 };

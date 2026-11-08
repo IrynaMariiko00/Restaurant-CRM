@@ -7,6 +7,7 @@ import { useAuth } from "@/context/useAuth";
 import { useRestaurantProfile } from "@/hooks/useRestaurantProfile";
 import { formatMenuPrice, getMenuItemCopy } from "@/shared/menu/itemCopy";
 import { ConfirmDialog } from "@/ui/ConfirmDialog";
+import { AddToOrderPanel } from "./components/AddToOrderPanel";
 import { MenuDishFlags } from "./components/MenuDishFlags";
 import { MenuDishImage } from "./components/MenuDishImage";
 import { useMenuBrowse } from "./hooks/useMenuBrowse";
@@ -138,6 +139,8 @@ export const MenuItemDetailPage = () => {
             restaurant?.currency,
           )}
         </p>
+
+        {variant === "table" && <AddToOrderPanel item={item} />}
 
         {canManage && (
           <div className="menu-detail__actions">

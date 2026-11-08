@@ -9,6 +9,7 @@ export type ConfirmDialogProps = {
   confirmLabel: string;
   cancelLabel: string;
   tone?: "default" | "danger";
+  align?: "start" | "center";
   isLoading?: boolean;
   onConfirm: () => void;
   onCancel: () => void;
@@ -21,6 +22,7 @@ export function ConfirmDialog({
   confirmLabel,
   cancelLabel,
   tone = "default",
+  align = "start",
   isLoading = false,
   onConfirm,
   onCancel,
@@ -61,7 +63,9 @@ export function ConfirmDialog({
         }}
       />
       <div
-        className="confirm-dialog__panel"
+        className={`confirm-dialog__panel${
+          align === "center" ? " confirm-dialog__panel--center" : ""
+        }`}
         role="alertdialog"
         aria-modal="true"
         aria-labelledby={titleId}

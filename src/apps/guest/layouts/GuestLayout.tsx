@@ -3,11 +3,14 @@ import type { DiningTable } from "@/types/diningTable";
 import { PageLoader } from "@/ui/PageLoader";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Link, Outlet, useParams } from "react-router-dom";
+import { ShoppingBag } from "lucide-react";
+import { Link, Outlet, useLocation, useParams } from "react-router-dom";
 
 export const GuestLayout = () => {
   const { t } = useTranslation();
   const { tableId } = useParams<{ tableId: string }>();
+  const { pathname } = useLocation();
+  const isOrderPage = pathname.endsWith("/order");
   const [table, setTable] = useState<DiningTable | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -82,6 +85,12 @@ export const GuestLayout = () => {
   return (
     <div className="guest-layout-wrapper">
       <Outlet context={{ table }} />
+      {!isOrderPage && (
+        <Link to={`/table/${tableId}/order`} className="guest-cart-fab">
+          <ShoppingBag className="h-5 w-5" aria-hidden />
+          {t("orders.guest_cart")}
+        </Link>
+      )}
     </div>
   );
 };

@@ -453,6 +453,10 @@
   z-index: 5;
 }
 
+.menu-dish-menu--open {
+  z-index: 30;
+}
+
 .menu-dish-menu__trigger {
   display: inline-flex;
   align-items: center;

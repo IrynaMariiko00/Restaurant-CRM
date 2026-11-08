@@ -86,6 +86,20 @@
   color: var(--error-color);
 }
 
+.confirm-dialog__panel--center {
+  .confirm-dialog__title {
+    padding-left: 2.25rem;
+    text-align: center;
+  }
+
+  .confirm-dialog__description {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+}
+
 .confirm-dialog__actions {
   display: grid;
   grid-template-columns: 1fr 1fr;

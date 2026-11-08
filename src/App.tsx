@@ -1,5 +1,6 @@
-import { Navigate, Route, Routes, useLocation } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import { GuestApp } from "@/GuestApp";
+import { TableLinkRedirect } from "@/apps/guest/components/TableLinkRedirect";
 import { StaffApp } from "@/apps/staff/StaffApp";
 import { ScanQRCodePage } from "@/apps/guest/pages/ScanQRCodePage/ScanQRCodePage";
 import { GuestTableJoinPage } from "@/apps/guest/pages/GuestTableJoinPage/GuestTableJoinPage";
@@ -28,7 +29,14 @@ function App() {
       <Routes>
         <Route path="/table/:tableId/*" element={<GuestApp />} />
         <Route path="/join" element={<GuestTableJoinPage />} />
-        <Route path="/" element={<ScanQRCodePage />} />
+        <Route
+          path="/"
+          element={
+            <TableLinkRedirect>
+              <ScanQRCodePage />
+            </TableLinkRedirect>
+          }
+        />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/menu" element={<MenuListPage />} />
         <Route path="/menu/:id" element={<MenuItemDetailPage />} />
@@ -61,7 +69,7 @@ function App() {
 
         <Route path="/staff/*" element={<StaffApp />} />
 
-        <Route path="*" element={<Navigate to="/" />} />
+        <Route path="*" element={<TableLinkRedirect />} />
       </Routes>
     </>
   );

@@ -5,9 +5,13 @@ import { GuestEntryNav } from "@/pages/AboutPage/GuestEntryNav";
 import { useRestaurantProfile } from "@/hooks/useRestaurantProfile";
 import { parseDiningTableUuid } from "@/shared/diningTables/parseDiningTableUuid";
 import { AccentButton } from "@/ui/AccentButton";
+import jsQR from "jsqr";
 import { useCallback, useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
+
+const MAX_SCAN_WIDTH = 640;
+const SCAN_INTERVAL_MS = 120;
 
 type BarcodeDetectorLike = {
   detect: (source: ImageBitmapSource) => Promise<Array<{ rawValue?: string }>>;
@@ -51,29 +55,53 @@ export const ScanQRCodePage = () => {
     }
 
     const Detector = getBarcodeDetector();
-    if (!Detector) return;
-
     let cancelled = false;
     let detector: BarcodeDetectorLike | null = null;
     let raf = 0;
+    let lastScanAt = 0;
 
-    try {
-      detector = new Detector({ formats: ["qr_code"] });
-    } catch {
-      return;
+    if (Detector) {
+      try {
+        detector = new Detector({ formats: ["qr_code"] });
+      } catch {
+        detector = null;
+      }
     }
+
+    const canvas = document.createElement("canvas");
+    const context = canvas.getContext("2d", { willReadFrequently: true });
+
+    const readFrame = async (video: HTMLVideoElement) => {
+      if (detector) {
+        const codes = await detector.detect(video);
+        return codes[0]?.rawValue ?? null;
+      }
+
+      if (!context || !video.videoWidth || !video.videoHeight) return null;
+
+      const scale = Math.min(1, MAX_SCAN_WIDTH / video.videoWidth);
+      canvas.width = Math.round(video.videoWidth * scale);
+      canvas.height = Math.round(video.videoHeight * scale);
+      context.drawImage(video, 0, 0, canvas.width, canvas.height);
+      const image = context.getImageData(0, 0, canvas.width, canvas.height);
+      const result = jsQR(image.data, image.width, image.height, {
+        inversionAttempts: "dontInvert",
+      });
+      return result?.data ?? null;
+    };
 
     const tick = async () => {
       if (cancelled || handledRef.current) return;
       const video = videoRef.current;
+      const now = performance.now();
       if (
         video &&
         video.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA &&
-        detector
+        now - lastScanAt >= SCAN_INTERVAL_MS
       ) {
+        lastScanAt = now;
         try {
-          const codes = await detector.detect(video);
-          const raw = codes[0]?.rawValue;
+          const raw = await readFrame(video);
           if (raw) {
             goToTable(raw);
             return;

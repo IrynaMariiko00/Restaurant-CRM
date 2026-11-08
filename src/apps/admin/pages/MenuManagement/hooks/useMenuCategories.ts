@@ -46,10 +46,8 @@ export function useMenuCategories() {
   }, []);
 
   useEffect(() => {
-    if (parentId == null) {
-      setChildren([]);
-      return;
-    }
+    // children are reset in selectParent, so nothing to clear here
+    if (parentId == null) return;
 
     let cancelled = false;
 
@@ -85,31 +83,18 @@ export function useMenuCategories() {
     setChildren([]);
   }, []);
 
-  const hydrateFromChildId = useCallback(
-    async (childCategoryId: number) => {
-      if (parents.length === 0) return;
-
-      for (const parent of parents) {
-        try {
-          const response = await menuCategoriesApi.getChildren(parent.id, {
-            page: 0,
-            size: 50,
-            sort: "nameDefaultLanguage,asc",
-          });
-          const found = response.data?.items.some(
-            (child) => child.id === childCategoryId,
-          );
-          if (found) {
-            setParentId(parent.id);
-            return;
-          }
-        } catch {
-          // try next parent
-        }
+  /** Resolve the parent of a child category with a single GET /menu-categories/{id}. */
+  const hydrateFromChildId = useCallback(async (childCategoryId: number) => {
+    try {
+      const response = await menuCategoriesApi.getCategory(childCategoryId);
+      const resolvedParentId = response.data?.parentCategoryId;
+      if (response.success && resolvedParentId != null) {
+        setParentId(resolvedParentId);
       }
-    },
-    [parents],
-  );
+    } catch {
+      // parent stays unselected; user can pick it manually
+    }
+  }, []);
 
   return {
     parents,

@@ -1,34 +1,14 @@
-import {
-  createContext,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-  type ReactNode,
-} from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import {
   FeedbackBanner,
   type FeedbackTone,
 } from "@/ui/FeedbackBanner";
+import { FeedbackContext, type FeedbackContextValue } from "./useFeedback";
 
 type Toast = {
   tone: FeedbackTone;
   message: string;
 };
-
-/**
- * Transient toasts for background / list actions (create table, resend email, save+navigate).
- *
- * Do NOT use for form submit errors — keep those in local state and pass to
- * AuthFormCard `error` / inline FeedbackBanner so the message stays next to the form.
- * Do NOT call both channels for the same failure.
- */
-type FeedbackContextValue = {
-  success: (message: string) => void;
-  error: (message: string) => void;
-};
-
-const FeedbackContext = createContext<FeedbackContextValue | null>(null);
 
 export function FeedbackProvider({ children }: { children: ReactNode }) {
   const [toast, setToast] = useState<Toast | null>(null);
@@ -80,12 +60,4 @@ export function FeedbackProvider({ children }: { children: ReactNode }) {
       )}
     </FeedbackContext.Provider>
   );
-}
-
-export function useFeedback() {
-  const ctx = useContext(FeedbackContext);
-  if (!ctx) {
-    throw new Error("useFeedback must be used within FeedbackProvider");
-  }
-  return ctx;
 }

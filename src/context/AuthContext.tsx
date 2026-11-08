@@ -1,28 +1,16 @@
 import {
-  createContext,
   useCallback,
-  useContext,
+  useEffect,
   useMemo,
   useState,
   type ReactNode,
 } from "react";
+import { setUnauthorizedHandler } from "@/api/api";
 import { authApi } from "@/api/auth";
+import { AuthContext, type AuthContextValue, type AuthState } from "./useAuth";
 
 const TOKEN_KEY = "token";
 const IS_ADMIN_KEY = "isAdmin";
-
-interface AuthState {
-  isAuthenticated: boolean;
-  isAdmin: boolean;
-  isLoading: boolean;
-}
-
-interface AuthContextValue extends AuthState {
-  login: (email: string, password: string) => Promise<{ isAdmin: boolean }>;
-  logout: () => Promise<void>;
-}
-
-const AuthContext = createContext<AuthContextValue | null>(null);
 
 function readInitialAuth(): Pick<AuthState, "isAuthenticated" | "isAdmin"> {
   return {
@@ -73,6 +61,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   }, []);
 
+  useEffect(() => {
+    setUnauthorizedHandler(() => {
+      void logout();
+    });
+
+    return () => setUnauthorizedHandler(null);
+  }, [logout]);
+
   const value = useMemo<AuthContextValue>(
     () => ({
       ...auth,
@@ -84,14 +80,4 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
-}
-
-export function useAuth() {
-  const context = useContext(AuthContext);
-
-  if (!context) {
-    throw new Error("useAuth must be used within AuthProvider");
-  }
-
-  return context;
 }

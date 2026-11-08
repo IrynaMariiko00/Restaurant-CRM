@@ -1,5 +1,5 @@
 import { authApi } from "@/api/auth";
-import { useFeedback } from "@/context/FeedbackContext";
+import { useFeedback } from "@/context/useFeedback";
 import {
   validateChangePasswordForm,
   type ChangePasswordFormErrors,

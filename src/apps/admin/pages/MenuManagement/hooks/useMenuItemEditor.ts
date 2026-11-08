@@ -1,5 +1,5 @@
 import { menuItemsApi } from "@/api/menuItems";
-import { useFeedback } from "@/context/FeedbackContext";
+import { useFeedback } from "@/context/useFeedback";
 import { useFormSubmitGate } from "@/hooks/useFormSubmitGate";
 import { useImageUrl } from "@/hooks/useImageUrl";
 import { validateMenuItemImage } from "@/shared/validation/validators";

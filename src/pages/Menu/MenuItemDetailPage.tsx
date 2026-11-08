@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { ArrowLeft, Loader2, Pencil, Trash2 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { menuItemsApi } from "@/api/menuItems";
-import { useAuth } from "@/context/AuthContext";
+import { useAuth } from "@/context/useAuth";
 import { useRestaurantProfile } from "@/hooks/useRestaurantProfile";
 import { formatMenuPrice, getMenuItemCopy } from "@/shared/menu/itemCopy";
 import { ConfirmDialog } from "@/ui/ConfirmDialog";

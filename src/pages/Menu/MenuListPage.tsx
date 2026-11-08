@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { ArrowLeft, Loader2, Plus } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { menuItemsApi } from "@/api/menuItems";
-import { useAuth } from "@/context/AuthContext";
+import { useAuth } from "@/context/useAuth";
 import { getCategoryLabel } from "@/shared/menu/categoryCopy";
 import { getMenuItemCopy } from "@/shared/menu/itemCopy";
 import { ConfirmDialog } from "@/ui/ConfirmDialog";

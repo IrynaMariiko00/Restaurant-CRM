@@ -1,5 +1,5 @@
 import { diningTablesApi } from "@/api/diningTables";
-import { useFeedback } from "@/context/FeedbackContext";
+import { useFeedback } from "@/context/useFeedback";
 import type { DiningTable } from "@/types/diningTable";
 import { useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";

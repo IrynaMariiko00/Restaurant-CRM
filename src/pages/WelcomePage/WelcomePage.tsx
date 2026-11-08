@@ -10,7 +10,7 @@ import {
 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { AdminNavButton } from "@/apps/admin/components/AdminNavButton";
-import { useAuth } from "@/context/AuthContext";
+import { useAuth } from "@/context/useAuth";
 import { useWelcome } from "./hooks/useWelcome";
 
 export const WelcomePage = () => {

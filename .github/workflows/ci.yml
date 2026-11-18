@@ -127,7 +127,7 @@ jobs:
               --restart unless-stopped \
               $ENV_FILE_ARG \
               $NETWORK_ARG \
-              -p "$APP_PORT:3000" \
+              -p "127.0.0.1:$APP_PORT:3000" \
               "$IMAGE_NAME:latest"
 
             rm -f "$TARGET/$APP_NAME.tar"
